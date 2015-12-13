@@ -1,0 +1,16 @@
+{
+  "name": "CheckUAI",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native start"
+  },
+  "dependencies": {
+    "fbemitter": "^2.0.0",
+    "react-native": "^0.16.0",
+    "react-native-button": "latest",
+    "react-native-progress": "^2.2.0",
+    "react-native-tableview-simple": "^0.4.0",
+    "tcomb-form-native": "^0.3.3"
+  }
+}
