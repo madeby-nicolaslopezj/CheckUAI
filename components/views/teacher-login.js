@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react-native');
 var UAI = require('../api/base');
 var TeacherPrepareView = require('./teacher-prepare');
@@ -12,7 +10,7 @@ var {
   StyleSheet,
   Text,
   View,
-  AlertIOS
+  AlertIOS,
 } = React;
 
 var TeacherLoginModel = t.struct({
@@ -24,13 +22,13 @@ var options = {
   fields: {
     email: {
       label: 'Email',
-      placeholder: 'Email'
+      placeholder: 'Email',
     },
     password: {
       label: 'Contraseña',
-      placeholder: 'Contraseña'
-    }
-  }
+      placeholder: 'Contraseña',
+    },
+  },
 };
 
 var TeacherLoginView = React.createClass({
@@ -39,43 +37,47 @@ var TeacherLoginView = React.createClass({
       isLoading: false,
       value: {
         email: 'jorge.villalon@uai.cl',
-        password: '1234'
-      }
+        password: '1234',
+      },
     };
   },
+
   onChange(value) {
     this.setState({value});
   },
+
   onPress: async function() {
     try {
       this.setState({ isLoading: true });
 
       var token = await UAI.loginTeacher({
         email: this.state.value.email,
-        password: this.state.value.password
+        password: this.state.value.password,
       });
 
       this.props.navigator.push({
         title: 'Teacher Prepare',
         component: TeacherPrepareView,
         passProps: {
-          token: token
-        }
+          token: token,
+        },
       });
 
       this.setState({ isLoading: false });
-    } catch(error) {
+    } catch (error) {
       AlertIOS.alert('Error', error.message);
       this.setState({ isLoading: false });
     }
   },
+
   render() {
     var loadingOrButton;
     if (this.state.isLoading) {
-      loadingOrButton = <View style={styles.loadingContainer}><Progress.Bar indeterminate={true} width={200} /></View>
+      loadingOrButton = <View style={styles.loadingContainer}><Progress.Bar indeterminate={true} width={200} /></View>;
     } else {
-      loadingOrButton = <Button onPress={this.onPress}>Entrar</Button>
+      loadingOrButton = <Button onPress={this.onPress}>Entrar</Button>;
     }
+
     return (
       <View style={styles.container}>
         <Text style={styles.textTopForm}>Profesor Titular</Text>
@@ -89,14 +91,14 @@ var TeacherLoginView = React.createClass({
         {loadingOrButton}
       </View>
     );
-  }
+  },
 });
 
 var styles = StyleSheet.create({
   loadingContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 5
+    marginTop: 5,
   },
   container: {
     justifyContent: 'center',
@@ -106,14 +108,13 @@ var styles = StyleSheet.create({
     marginLeft: 200,
   },
   button: {
-    marginTop: 100
+    marginTop: 100,
   },
   textTopForm: {
     marginBottom: 20,
     marginTop: 20,
     fontSize: 20,
-  }
+  },
 });
-
 
 module.exports = TeacherLoginView;

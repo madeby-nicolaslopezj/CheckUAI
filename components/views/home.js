@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react-native');
 var Button = require('react-native-button');
 var TeacherLoginView = require('./teacher-login');
@@ -9,9 +7,8 @@ var {
   StyleSheet,
   Text,
   View,
-  Platform
+  Platform,
 } = React;
-
 
 var HomeView = React.createClass({
   handlePress: function(event) {
@@ -20,6 +17,7 @@ var HomeView = React.createClass({
       component: TeacherLoginView,
     });
   },
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -31,24 +29,25 @@ var HomeView = React.createClass({
         </Button>
       </View>
     );
-  }
+  },
 });
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+
     //justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     marginTop: 40,
-    color: '#000000'
+    color: '#000000',
   },
   button: {
-    marginTop: 100
-  }
+    marginTop: 100,
+  },
 });
 
 module.exports = HomeView;

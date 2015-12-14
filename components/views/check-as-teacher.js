@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react-native');
 var UAI = require('../api/base');
 var Progress = require('react-native-progress');
@@ -8,7 +6,7 @@ var {
   StyleSheet,
   Text,
   View,
-  AlertIOS
+  AlertIOS,
 } = React;
 
 var CheckAsTeacherView = React.createClass({
@@ -17,11 +15,12 @@ var CheckAsTeacherView = React.createClass({
       isLoading: true,
     };
   },
+
   componentDidMount: async function() {
     try {
       var students = await UAI.getSessionStudents({
         token: this.props.token,
-        sessionId: this.props.sessionId
+        sessionId: this.props.sessionId,
       });
 
       this.setState({ students, isLoading: false });
@@ -30,6 +29,7 @@ var CheckAsTeacherView = React.createClass({
       this.setState({ isLoading: false });
     }
   },
+
   render: function() {
     if (this.state.isLoading) {
       return (
@@ -38,12 +38,13 @@ var CheckAsTeacherView = React.createClass({
         </View>
       );
     }
+
     return (
       <View style={styles.container}>
         <Text>Hola</Text>
       </View>
     );
-  }
+  },
 });
 
 var styles = StyleSheet.create({

@@ -1,8 +1,6 @@
-'use strict';
-
 var React = require('react-native');
 var AppToken = '1234';
-var BaseUrl = 'http://webapitest.uai.cl/'
+var BaseUrl = 'http://webapitest.uai.cl/';
 
 var {
   StyleSheet,
@@ -22,9 +20,9 @@ UAI.loginTeacher = async function({ email, password }) {
     path: 'Asistencia/LoginProfesor',
     params: {
       email: email,
-      password: password
+      password: password,
     },
-    addToken: true
+    addToken: true,
   });
   if (response.token) {
     return response.token;
@@ -33,9 +31,10 @@ UAI.loginTeacher = async function({ email, password }) {
     if (response.respuesta) {
       message = response.respuesta;
     }
+
     throw new Error(message);
   }
-}
+};
 
 UAI.getTeacherSessions = async function({ token, academicUnit }) {
   var response = await this._makeCall({
@@ -43,11 +42,11 @@ UAI.getTeacherSessions = async function({ token, academicUnit }) {
     path: 'Asistencia/AsignaturasProfesor',
     params: {
       token: token,
-      idUnidadAcademica: academicUnit
-    }
+      idUnidadAcademica: academicUnit,
+    },
   });
   return response;
-}
+};
 
 UAI.getSessionStudents = async function({ token, sessionId }) {
   var response = await this._makeCall({
@@ -55,12 +54,12 @@ UAI.getSessionStudents = async function({ token, sessionId }) {
     path: 'Asistencia/AlumnosSeccion',
     params: {
       token: token,
-      idSeccion: sessionId
-    }
+      idSeccion: sessionId,
+    },
   });
   console.log(response);
   return response;
-}
+};
 
 UAI._makeCall = async function({ method, path, params, addToken }) {
   await sleep(100);
@@ -68,6 +67,7 @@ UAI._makeCall = async function({ method, path, params, addToken }) {
   if (addToken) {
     params.tokenApp = AppToken;
   }
+
   var query = Object.keys(params)
     .map(k => k + '=' + params[k])
     .join('&');
@@ -78,12 +78,12 @@ UAI._makeCall = async function({ method, path, params, addToken }) {
   let response = await fetch(url, {
     method: 'POST',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
-    }
+    },
   });
   let body = await response.json();
   return body;
-}
+};
 
 module.exports = UAI;

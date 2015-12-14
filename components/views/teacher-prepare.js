@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react-native');
 var UAI = require('../api/base');
 var Button = require('react-native-button');
@@ -12,7 +10,7 @@ var {
   StyleSheet,
   Text,
   View,
-  AlertIOS
+  AlertIOS,
 } = React;
 
 var TeacherPrepareView = React.createClass({
@@ -27,15 +25,16 @@ var TeacherPrepareView = React.createClass({
         { id: 3, title: 'Laboratorio' },
         { id: 4, title: 'Prueba' },
         { id: 5, title: 'Control' },
-        { id: 6, title: 'Evento' }
-      ]
+        { id: 6, title: 'Evento' },
+      ],
     };
   },
+
   componentDidMount: async function() {
     try {
       var sessions = await UAI.getTeacherSessions({
         token: this.props.token,
-        academicUnit: 1
+        academicUnit: 1,
       });
 
       this.setState({ sessions, isLoading: false });
@@ -44,12 +43,15 @@ var TeacherPrepareView = React.createClass({
       this.setState({ isLoading: false });
     }
   },
+
   onChange(value) {
     this.setState({value});
   },
+
   onPress: async function() {
 
   },
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -58,6 +60,7 @@ var TeacherPrepareView = React.createClass({
         </View>
       );
     }
+
     var RowsSessions = this.state.sessions.map((session) => {
       var title = `${session.nombreAsignatura} - Sec. ${session.numeroSeccion}`;
       return (
@@ -80,7 +83,7 @@ var TeacherPrepareView = React.createClass({
         />
       );
     });
-    var buttonsDisabled = !(this.state.selectedActivity && this.state.selectedSession)
+    var buttonsDisabled = !(this.state.selectedActivity && this.state.selectedSession);
     return (
       <View style={styles.container}>
         <Text style={styles.textTopForm}>Profesor Titular</Text>
@@ -104,20 +107,20 @@ var TeacherPrepareView = React.createClass({
             passProps: {
               token: this.props.token,
               activityId: this.state.selectedActivity,
-              sessionId: this.state.selectedSession
-            }
+              sessionId: this.state.selectedSession,
+            },
           });
         }}>Marcar Asistencia (Profesor)</Button>
         <Button onPress={this.onPress} disabled={true}>Marcar Asistencia (Alumnos)</Button>
       </View>
     );
-  }
+  },
 });
 
 var styles = StyleSheet.create({
   tableViewContainer: {
     marginTop: 20,
-    marginBottom: 20
+    marginBottom: 20,
   },
   loadingContainer: {
     flex: 1,
@@ -133,12 +136,11 @@ var styles = StyleSheet.create({
     marginLeft: 200,
   },
   button: {
-    marginTop: 100
+    marginTop: 100,
   },
   textTopForm: {
     fontSize: 20,
-  }
+  },
 });
-
 
 module.exports = TeacherPrepareView;
