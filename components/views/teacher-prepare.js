@@ -1,8 +1,8 @@
 var React = require('react-native');
 var UAI = require('../api/base');
 var Button = require('react-native-button');
-var Progress = require('react-native-progress');
-var CheckAsTeacherView = require('./check-as-teacher');
+var LoadingView = require('./loading');
+var CheckAsTeacherView = require('./check-as-teacher/base');
 
 import {TableView, Section, Cell} from 'react-native-tableview-simple';
 
@@ -14,18 +14,32 @@ var {
 } = React;
 
 var TeacherPrepareView = React.createClass({
+  goNext(sessions) {
+    this.setState({ selectedSession: sessions[0].idSeccion });
+    this.setState({ selectedActivity: this.state.activities[0].id });
+    this.props.navigator.push({
+      title: 'Teacher Check',
+      component: CheckAsTeacherView,
+      passProps: {
+        token: this.props.token,
+        activityId: this.state.selectedActivity,
+        sessionId: this.state.selectedSession,
+      },
+    });
+  },
+
   getInitialState() {
     return {
       isLoading: true,
       selectedSession: null,
       sessions: [],
       activities: [
-        { id: 1, title: 'Cátedra' },
-        { id: 2, title: 'Ayudantía' },
-        { id: 3, title: 'Laboratorio' },
-        { id: 4, title: 'Prueba' },
-        { id: 5, title: 'Control' },
-        { id: 6, title: 'Evento' },
+        { id: '1', title: 'Cátedra' },
+        { id: '2', title: 'Ayudantía' },
+        { id: '3', title: 'Laboratorio' },
+        { id: '4', title: 'Prueba' },
+        { id: '5', title: 'Control' },
+        { id: '6', title: 'Evento' },
       ],
     };
   },
@@ -38,6 +52,9 @@ var TeacherPrepareView = React.createClass({
       });
 
       this.setState({ sessions, isLoading: false });
+      setTimeout(() => {
+        this.goNext(sessions);
+      }, 400);
     } catch (error) {
       AlertIOS.alert('Error', error.message);
       this.setState({ isLoading: false });
@@ -54,11 +71,7 @@ var TeacherPrepareView = React.createClass({
 
   render() {
     if (this.state.isLoading) {
-      return (
-        <View style={styles.loadingContainer}>
-          <Progress.Circle size={60} indeterminate={true} />
-        </View>
-      );
+      return <LoadingView />;
     }
 
     var RowsSessions = this.state.sessions.map((session) => {

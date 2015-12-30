@@ -45,7 +45,7 @@ UAI.getTeacherSessions = async function({ token, academicUnit }) {
       idUnidadAcademica: academicUnit,
     },
   });
-  return response;
+  return response.Asignaturas;
 };
 
 UAI.getSessionStudents = async function({ token, sessionId }) {
@@ -57,32 +57,50 @@ UAI.getSessionStudents = async function({ token, sessionId }) {
       idSeccion: sessionId,
     },
   });
-  console.log(response);
+  return response.Alumnos;
+};
+
+UAI.markStudentAssistance = async function({ token, studentId, activityId }) {
+  var response = await this._makeCall({
+    method: 'POST',
+    path: 'Asistencia/CheckAlumno',
+    params: {
+      token: token,
+      idExpediente: studentId,
+      tipoAsistencia: activityId,
+    },
+  });
   return response;
 };
 
 UAI._makeCall = async function({ method, path, params, addToken }) {
-  await sleep(100);
+  var response = await this._fetch({ method, path, params, addToken });
+  return await this._getJSON(response);
+};
+
+UAI._fetch = async function({ method, path, params, addToken }) {
+  //await sleep(1000);
 
   if (addToken) {
     params.tokenApp = AppToken;
   }
 
-  var query = Object.keys(params)
-    .map(k => k + '=' + params[k])
-    .join('&');
+  var url = `${BaseUrl}${path}`;
+  console.log(`Making request to: ${url}`, params);
 
-  var url = `${BaseUrl}${path}?${query}`;
-  console.log(`Making request to: ${url}`);
-
-  let response = await fetch(url, {
+  return await fetch(url, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify(params),
   });
+};
+
+UAI._getJSON = async function(response) {
   let body = await response.json();
+  console.log(body);
   return body;
 };
 

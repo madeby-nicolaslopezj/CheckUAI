@@ -32,6 +32,12 @@ var options = {
 };
 
 var TeacherLoginView = React.createClass({
+  componentDidMount: function() {
+    setTimeout(() => {
+      this.onPress();
+    }, 600);
+  },
+
   getInitialState() {
     return {
       isLoading: false,

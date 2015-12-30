@@ -10,7 +10,7 @@ var HomeView = require('./components/views/home');
 var {
   AppRegistry,
   NavigatorIOS,
-  StyleSheet
+  StyleSheet,
 } = React;
 
 var CheckUAI = React.createClass({
@@ -24,7 +24,7 @@ var CheckUAI = React.createClass({
         }}
       />
     );
-  }
+  },
 });
 
 var styles = StyleSheet.create({

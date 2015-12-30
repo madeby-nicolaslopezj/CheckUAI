@@ -11,6 +11,12 @@ var {
 } = React;
 
 var HomeView = React.createClass({
+  componentDidMount: async function() {
+    setTimeout(() => {
+      this.handlePress();
+    }, 200);
+  },
+
   handlePress: function(event) {
     this.props.navigator.push({
       title: 'Teacher Login',
