@@ -8,6 +8,7 @@ var React = require('react-native');
 var theme = require('./components/styles/theme');
 var TeacherLoginView = require('./components/views/teacher-login');
 var TeacherPrepareView = require('./components/views/teacher-prepare/base');
+var CheckAsTeacherView = require('./components/views/check-as-teacher/base');
 
 var {
   AppRegistry,
@@ -22,6 +23,8 @@ var CheckUAI = React.createClass({
         return <TeacherLoginView navigator={navigator} />;
       case 'teacher-prepare':
         return <TeacherPrepareView navigator={navigator} token={route.token} />;
+      case 'check-as-teacher':
+        return <CheckAsTeacherView navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
       default:
         return <Text>Error</Text>;
     }

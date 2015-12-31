@@ -11,6 +11,7 @@ var {
   View,
   AlertIOS,
   TouchableHighlight,
+  ScrollView,
 } = React;
 
 var TeacherPrepareView = React.createClass({
@@ -29,6 +30,10 @@ var TeacherPrepareView = React.createClass({
         },
       });
     }, 200);
+  },
+
+  propTypes: {
+    token: React.PropTypes.string.isRequired,
   },
 
   getInitialState() {
@@ -65,24 +70,47 @@ var TeacherPrepareView = React.createClass({
     }
   },
 
-  onChange(value) {
-    this.setState({value});
+  asTeacher() {
+    console.log(this.state);
+    this.props.navigator.push({
+      index: 1,
+      id: 'check-as-teacher',
+      token: this.props.token,
+      activityId: this.state.selectedActivity,
+      sessionId: this.state.selectedSession,
+    });
   },
 
   render() {
+    var sessionsOptions = this.state.sessions.map((session) => {
+      return { value: session.idSeccion, title: `${session.nombreAsignatura} Sec. ${session.numeroSeccion}` };
+    });
     var activitiesOptions = this.state.activities.map((activity) => {
       return { value: activity.id, title: activity.title };
     });
     return (
-      <View style={theme.base.container}>
+      <ScrollView style={theme.base.scrollView} contentContainerStyle={theme.base.scrollViewContent}>
         <View style={theme.layouts.medium}>
           <Text style={[theme.texts.subtitle, theme.texts.center]}>Selecciona una clase</Text>
+          <Select options={sessionsOptions} onSelect={(sessionId) => {
+            this.setState({ selectedSession: sessionId });
+          }} />
+          <Text style={[theme.texts.subtitle, theme.texts.center]}>Selecciona el tipo</Text>
           <Select options={activitiesOptions} onSelect={(activityId) => {
             this.setState({ selectedActivity: activityId });
           }} />
-          <Text style={[theme.texts.subtitle, theme.texts.center]}>Selecciona el tipo</Text>
+          <TouchableHighlight
+
+            onPress={this.asTeacher}
+            style={[theme.button.touch, { marginTop: 10 }]}>
+            <View style={[theme.button.base, theme.button.primary]}>
+              <Text style={[theme.button.content, theme.button.primaryContent]}>
+                Como Profe
+              </Text>
+            </View>
+          </TouchableHighlight>
         </View>
-      </View>
+      </ScrollView>
     );
   },
 });
