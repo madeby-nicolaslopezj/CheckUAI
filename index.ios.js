@@ -30,11 +30,26 @@ var CheckUAI = React.createClass({
     }
   },
 
+  configureScene(route) {
+    console.log(Navigator.SceneConfigs);
+    switch (route.id) {
+      case 'teacher-login':
+        return Navigator.SceneConfigs.FloatFromRight;
+      case 'teacher-prepare':
+        return Navigator.SceneConfigs.FloatFromRight;
+      case 'check-as-teacher':
+        return Navigator.SceneConfigs.FloatFromBottom;
+      default:
+        return Navigator.SceneConfigs.FloatFromRight;
+    }
+  },
+
   render: function() {
     return (
       <Navigator
         initialRoute={{id: 'teacher-login', index: 0}}
         renderScene={this.renderScene}
+        configureScene={this.configureScene}
         style={theme.base.background}
       />
     );

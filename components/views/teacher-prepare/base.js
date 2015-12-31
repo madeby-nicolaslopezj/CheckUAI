@@ -105,7 +105,18 @@ var TeacherPrepareView = React.createClass({
             style={[theme.button.touch, { marginTop: 10 }]}>
             <View style={[theme.button.base, theme.button.primary]}>
               <Text style={[theme.button.content, theme.button.primaryContent]}>
-                Como Profe
+                Marcar Asistencia - Profesor
+              </Text>
+            </View>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+
+            onPress={this.asTeacher}
+            style={[theme.button.touch, { marginTop: 10 }]}>
+            <View style={[theme.button.base, theme.button.primary]}>
+              <Text style={[theme.button.content, theme.button.primaryContent]}>
+                Marcar Asistencia - Alumnos
               </Text>
             </View>
           </TouchableHighlight>

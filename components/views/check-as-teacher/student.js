@@ -28,7 +28,7 @@ var Student = React.createClass({
         <StudentImage student={this.props.student} />
         <View style={styles.rightContainer}>
           <Text style={styles.nameText}>
-            {this.props.student.nombre} {this.props.student.apellidoMaterno} {this.props.student.apellidoPaterno}
+            {this.props.student.nombre} {this.props.student.apellidoPaterno} {this.props.student.apellidoMaterno}
           </Text>
           <CheckButton student={this.props.student} token={this.props.token} activityId={this.props.activityId} />
         </View>
