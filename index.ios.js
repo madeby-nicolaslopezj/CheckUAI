@@ -5,32 +5,36 @@
 'use strict';
 
 var React = require('react-native');
-var HomeView = require('./components/views/home');
+var theme = require('./components/styles/theme');
+var TeacherLoginView = require('./components/views/teacher-login');
+var TeacherPrepareView = require('./components/views/teacher-prepare/base');
 
 var {
   AppRegistry,
-  NavigatorIOS,
+  Navigator,
   StyleSheet,
 } = React;
 
 var CheckUAI = React.createClass({
+  renderScene(route, navigator) {
+    switch (route.id) {
+      case 'teacher-login':
+        return <TeacherLoginView navigator={navigator} />;
+      case 'teacher-prepare':
+        return <TeacherPrepareView navigator={navigator} token={route.token} />;
+      default:
+        return <Text>Error</Text>;
+    }
+  },
+
   render: function() {
     return (
-      <NavigatorIOS
-        style={styles.container}
-        initialRoute={{
-          title: 'Home',
-          component: HomeView,
-        }}
+      <Navigator
+        initialRoute={{id: 'teacher-login', index: 0}}
+        renderScene={this.renderScene}
+        style={theme.base.background}
       />
     );
-  },
-});
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
   },
 });
 

@@ -12,6 +12,6 @@
     "react-native-image-progress": "^0.4.0",
     "react-native-progress": "^2.2.0",
     "react-native-tableview-simple": "^0.4.0",
-    "tcomb-form-native": "^0.3.3"
+    "rn-focalpoint": "^1.0.1"
   }
 }

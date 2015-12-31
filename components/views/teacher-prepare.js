@@ -3,6 +3,7 @@ var UAI = require('../api/base');
 var Button = require('react-native-button');
 var LoadingView = require('./loading');
 var CheckAsTeacherView = require('./check-as-teacher/base');
+var Theme = require('../styles/theme');
 
 import {TableView, Section, Cell} from 'react-native-tableview-simple';
 
@@ -11,6 +12,7 @@ var {
   Text,
   View,
   AlertIOS,
+  TouchableHighlight,
 } = React;
 
 var TeacherPrepareView = React.createClass({
@@ -56,7 +58,7 @@ var TeacherPrepareView = React.createClass({
 
       this.setState({ sessions, isLoading: false });
       setTimeout(() => {
-        this.goNext(sessions);
+        //this.goNext(sessions);
       }, 400);
     } catch (error) {
       AlertIOS.alert('Error', error.message);
@@ -73,19 +75,29 @@ var TeacherPrepareView = React.createClass({
   },
 
   render() {
+    var {
+      input,
+      button,
+      vgroup,
+    } = Theme;
+    var style = Theme.login;
+
     if (this.state.isLoading) {
       return <LoadingView />;
     }
 
-    var RowsSessions = this.state.sessions.map((session) => {
-      var title = `${session.nombreAsignatura} - Sec. ${session.numeroSeccion}`;
+    var RowsSessions = this.state.sessions.map((session, index) => {
       return (
-        <Cell
-        accessory={(session.idSeccion == this.state.selectedSession) ? 'Checkmark' : null}
-        key={session.idSeccion}
-        title={title}
-        onPress={() => this.setState({ selectedSession: session.idSeccion })}
-        />
+        <TouchableHighlight
+          key={session.idSeccion}
+          onPress={() => this.setState({ selectedSession: session.idSeccion })}
+          style={[vgroup.top, vgroup.seperator]}>
+          <View>
+            <Text style={[input.text, vgroup.input]}>
+              {session.nombreAsignatura} - Sec. {session.numeroSeccion}
+            </Text>
+          </View>
+        </TouchableHighlight>
       );
     });
 
@@ -101,8 +113,17 @@ var TeacherPrepareView = React.createClass({
     });
     var buttonsDisabled = !(this.state.selectedActivity && this.state.selectedSession);
     return (
-      <View style={styles.container}>
-        <Text style={styles.textTopForm}>Profesor Titular</Text>
+      <View style={style.container}>
+        <View style={Theme.main.spaceTop} />
+        <View style={style.form}>
+          <View style={vgroup.form}>
+            {RowsSessions}
+          </View>
+        </View>
+        <View style={style.toolbox} />
+      </View>
+
+        /*<Text style={styles.textTopForm}>Profesor Titular</Text>
         <View style={styles.tableViewContainer}>
           <TableView>
             {RowsSessions}
@@ -127,35 +148,9 @@ var TeacherPrepareView = React.createClass({
             },
           });
         }}>Marcar Asistencia (Profesor)</Button>
-        <Button onPress={this.onPress} disabled={true}>Marcar Asistencia (Alumnos)</Button>
-      </View>
-    );
-  },
-});
+      <Button onPress={this.onPress} disabled={true}>Marcar Asistencia (Alumnos)</Button>*/
 
-var styles = StyleSheet.create({
-  tableViewContainer: {
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    //flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-    marginTop: 50,
-    marginRight: 200,
-    marginLeft: 200,
-  },
-  button: {
-    marginTop: 100,
-  },
-  textTopForm: {
-    fontSize: 20,
+    );
   },
 });
 

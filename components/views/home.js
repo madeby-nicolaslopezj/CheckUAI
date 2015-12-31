@@ -13,7 +13,7 @@ var {
 var HomeView = React.createClass({
   componentDidMount: async function() {
     setTimeout(() => {
-      this.handlePress();
+      //this.handlePress();
     }, 200);
   },
 

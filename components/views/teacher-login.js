@@ -1,50 +1,34 @@
 var React = require('react-native');
 var UAI = require('../api/base');
-var TeacherPrepareView = require('./teacher-prepare');
 var Progress = require('react-native-progress');
 var Button = require('react-native-button');
-var t = require('tcomb-form-native');
-var Form = t.form.Form;
+var RNFocal = require('rn-focalpoint');
+var Theme = require('../styles/theme2');
 
 var {
   StyleSheet,
   Text,
   View,
   AlertIOS,
+  TextInput,
+  TouchableHighlight,
+  ActivityIndicatorIOS,
+  Image,
+  Navigator,
 } = React;
-
-var TeacherLoginModel = t.struct({
-  email: t.String,              // a required string
-  password: t.String,  // an optional string
-});
-
-var options = {
-  fields: {
-    email: {
-      label: 'Email',
-      placeholder: 'Email',
-    },
-    password: {
-      label: 'Contraseña',
-      placeholder: 'Contraseña',
-    },
-  },
-};
 
 var TeacherLoginView = React.createClass({
   componentDidMount: function() {
     setTimeout(() => {
-      this.onPress();
+      this.onDone();
     }, 600);
   },
 
   getInitialState() {
     return {
       isLoading: false,
-      value: {
-        email: 'jorge.villalon@uai.cl',
-        password: '1234',
-      },
+      email: 'jorge.villalon@uai.cl',
+      password: '1234',
     };
   },
 
@@ -52,21 +36,19 @@ var TeacherLoginView = React.createClass({
     this.setState({value});
   },
 
-  onPress: async function() {
+  async onDone() {
     try {
       this.setState({ isLoading: true });
 
       var token = await UAI.loginTeacher({
-        email: this.state.value.email,
-        password: this.state.value.password,
+        email: this.state.email,
+        password: this.state.password,
       });
 
       this.props.navigator.push({
-        title: 'Teacher Prepare',
-        component: TeacherPrepareView,
-        passProps: {
-          token: token,
-        },
+        index: 1,
+        id: 'teacher-prepare',
+        token: token,
       });
 
       this.setState({ isLoading: false });
@@ -77,49 +59,56 @@ var TeacherLoginView = React.createClass({
   },
 
   render() {
-    var loadingOrButton;
-    if (this.state.isLoading) {
-      loadingOrButton = <View style={styles.loadingContainer}><Progress.Bar indeterminate={true} width={200} /></View>;
-    } else {
-      loadingOrButton = <Button onPress={this.onPress}>Entrar</Button>;
-    }
+    var {
+      input,
+      button,
+      vgroup,
+    } = Theme;
+    var style = Theme.login;
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.textTopForm}>Profesor Titular</Text>
-        <Form
-          ref="form"
-          type={TeacherLoginModel}
-          options={options}
-          value={this.state.value}
-          onChange={this.onChange}
-          />
-        {loadingOrButton}
+      <View style={style.container}>
+        <View style={style.logoContainer}>
+            <Image style={style.logo} resizeMode={Image.resizeMode.contain} source={require('../../assets/logo.png')} />
+        </View>
+        <View style={style.form}>
+          <View style={vgroup.form}>
+            <View style={[vgroup.top, vgroup.seperator]}>
+              <TextInput
+                style={[input.text, vgroup.input]}
+                placeholder="Email"
+                value={this.state.email}
+                onChangeText={(email) => this.setState({email})}
+              />
+            </View>
+            <View style={vgroup.bottom}>
+              <TextInput
+                style={[input.text, vgroup.input]}
+                placeholder="Contraseña"
+                secureTextEntry={true}
+                value={this.state.password}
+                onChangeText={(password) => this.setState({password})}
+              />
+            </View>
+          </View>
+          <TouchableHighlight
+            onPress={this.onDone}
+            style={[button.touch, style.loginButton]}>
+            <View style={[button.base, button.primary]}>
+              <Text style={[button.content, button.primaryContent]}>
+                Entrar
+              </Text>
+              <ActivityIndicatorIOS
+                animating={this.state.isLoading}
+                style={style.loading}
+                color="white"
+              />
+            </View>
+          </TouchableHighlight>
+        </View>
+        <View style={style.toolbox} />
       </View>
     );
-  },
-});
-
-var styles = StyleSheet.create({
-  loadingContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 5,
-  },
-  container: {
-    justifyContent: 'center',
-    padding: 20,
-    marginTop: 50,
-    marginRight: 200,
-    marginLeft: 200,
-  },
-  button: {
-    marginTop: 100,
-  },
-  textTopForm: {
-    marginBottom: 20,
-    marginTop: 20,
-    fontSize: 20,
   },
 });
 
