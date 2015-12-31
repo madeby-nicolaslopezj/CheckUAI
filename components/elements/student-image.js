@@ -20,7 +20,7 @@ var StudentImage = React.createClass({
   render: function() {
     return (
       <Image
-      source={{ uri: 'http://loremflickr.com/240/320/chihuahua' }}
+      source={{ uri: 'http://loremflickr.com/240/320/profile' }}
       indicator={Progress.CircleSnail}
       indicatorProps={{
       }}

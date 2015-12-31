@@ -17,15 +17,18 @@ var TeacherPrepareView = React.createClass({
   goNext(sessions) {
     this.setState({ selectedSession: sessions[0].idSeccion });
     this.setState({ selectedActivity: this.state.activities[0].id });
-    this.props.navigator.push({
-      title: 'Teacher Check',
-      component: CheckAsTeacherView,
-      passProps: {
-        token: this.props.token,
-        activityId: this.state.selectedActivity,
-        sessionId: this.state.selectedSession,
-      },
-    });
+
+    setTimeout(() => {
+      this.props.navigator.push({
+        title: 'Teacher Check',
+        component: CheckAsTeacherView,
+        passProps: {
+          token: this.props.token,
+          activityId: this.state.selectedActivity,
+          sessionId: this.state.selectedSession,
+        },
+      });
+    }, 200);
   },
 
   getInitialState() {

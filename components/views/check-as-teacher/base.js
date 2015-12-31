@@ -66,7 +66,7 @@ var CheckAsTeacherView = React.createClass({
 var styles = StyleSheet.create({
   listView: {
     backgroundColor: '#bbbbbb',
-    paddingTop: 100,
+    paddingTop: 64,
   },
   scrollViewContentContainer: {
 
