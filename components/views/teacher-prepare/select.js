@@ -1,6 +1,14 @@
 var React = require('react-native');
-
 var theme = require('../../styles/theme');
+const MK = require('react-native-material-kit');
+
+const {
+  MKCardStyles,
+  MKTextField,
+  MKButton,
+  MKColor,
+  MKRadioButton,
+} = MK;
 
 var {
   View,
@@ -18,36 +26,51 @@ var Select = React.createClass({
   getInitialState() {
     return {
       selected: null,
+      radioGroup: new MKRadioButton.Group(),
     };
   },
 
   renderOptions() {
     return this.props.options.map((option, index) => {
       return (
-        <SelectOption
-          onSelect={() => {
-            this.setState({ selected: option.value });
-            this.props.onSelect(option.value);
-          }}
-
-          isSelected={this.state.selected === option.value}
-          isFirst={index == 0}
-          isLast={index == this.props.options.length - 1}
-          title={option.title}
-          key={option.value}
-          />
-      );
+        <View key={option.value}>
+          <MKRadioButton
+            group={this.state.radioGroup}
+            checked={this.state.selected === option.value}
+            onPress={() => {
+              this.setState({ selected: option.value });
+              this.props.onSelect(option.value);
+            }}/>
+              <Text style={[]}>{option.title}</Text>
+          </View>
+        );
     });
   },
 
   render() {
     return (
-      <View style={theme.inputGroup.container}>
+      <View style={[]}>
         {this.renderOptions()}
       </View>
     );
   },
 });
+
+/*
+
+<<SelectOption
+  onSelect={() => {
+    this.setState({ selected: option.value });
+    this.props.onSelect(option.value);
+  }}
+
+  isSelected={this.state.selected === option.value}
+  isFirst={index == 0}
+  isLast={index == this.props.options.length - 1}
+  title={option.title}
+  key={option.value}
+  /><
+ */
 
 var SelectOption = React.createClass({
   propTypes: {

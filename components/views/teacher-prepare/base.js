@@ -70,8 +70,13 @@ var TeacherPrepareView = React.createClass({
     }
   },
 
+  goBack() {
+    this.props.navigator.pop();
+  },
+
   asTeacher() {
-    console.log(this.state);
+    if (!this.state.selectedActivity || !this.state.selectedSession) return;
+
     this.props.navigator.push({
       index: 1,
       id: 'check-as-teacher',
@@ -91,18 +96,18 @@ var TeacherPrepareView = React.createClass({
     return (
       <ScrollView style={theme.base.scrollView} contentContainerStyle={theme.base.scrollViewContent}>
         <View style={theme.layouts.medium}>
-          <Text style={[theme.texts.subtitle, theme.texts.center]}>Selecciona una clase</Text>
+          <Text style={[theme.texts.subtitle, theme.texts.center]}>{'Selecciona una clase'.toUpperCase()}</Text>
           <Select options={sessionsOptions} onSelect={(sessionId) => {
             this.setState({ selectedSession: sessionId });
           }} />
-          <Text style={[theme.texts.subtitle, theme.texts.center]}>Selecciona el tipo</Text>
+          <Text style={[theme.texts.subtitle, theme.texts.center]}>{'Selecciona el tipo'.toUpperCase()}</Text>
           <Select options={activitiesOptions} onSelect={(activityId) => {
             this.setState({ selectedActivity: activityId });
           }} />
           <TouchableHighlight
 
             onPress={this.asTeacher}
-            style={[theme.button.touch, { marginTop: 10 }]}>
+            style={[theme.button.touch, { marginTop: 20 }]}>
             <View style={[theme.button.base, theme.button.primary]}>
               <Text style={[theme.button.content, theme.button.primaryContent]}>
                 Marcar Asistencia - Profesor
@@ -111,12 +116,23 @@ var TeacherPrepareView = React.createClass({
           </TouchableHighlight>
 
           <TouchableHighlight
-
             onPress={this.asTeacher}
             style={[theme.button.touch, { marginTop: 10 }]}>
             <View style={[theme.button.base, theme.button.primary]}>
               <Text style={[theme.button.content, theme.button.primaryContent]}>
                 Marcar Asistencia - Alumnos
+              </Text>
+            </View>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            underlayColor={'transparent'}
+            activeOpacity={0.6}
+            onPress={this.goBack}
+            style={[theme.button.touchLight, { marginTop: 10 }]}>
+            <View style={[theme.button.base, theme.button.link]}>
+              <Text style={[theme.button.content, theme.button.linkContent]}>
+                Salir
               </Text>
             </View>
           </TouchableHighlight>

@@ -3,7 +3,15 @@ var UAI = require('../api/base');
 var Progress = require('react-native-progress');
 var Button = require('react-native-button');
 var RNFocal = require('rn-focalpoint');
-var Theme = require('../styles/theme2');
+var theme = require('../styles/theme');
+const MK = require('react-native-material-kit');
+
+const {
+  MKCardStyles,
+  MKTextField,
+  MKButton,
+  MKColor,
+} = MK;
 
 var {
   StyleSheet,
@@ -21,7 +29,7 @@ var TeacherLoginView = React.createClass({
   componentDidMount: function() {
     setTimeout(() => {
       this.onDone();
-    }, 600);
+    }, 100);
   },
 
   getInitialState() {
@@ -37,6 +45,7 @@ var TeacherLoginView = React.createClass({
   },
 
   async onDone() {
+    if (this.state.isLoading) return;
     try {
       this.setState({ isLoading: true });
 
@@ -59,54 +68,55 @@ var TeacherLoginView = React.createClass({
   },
 
   render() {
-    var {
-      input,
-      button,
-      vgroup,
-    } = Theme;
-    var style = Theme.login;
-
     return (
-      <View style={style.container}>
-        <View style={style.logoContainer}>
-            <Image style={style.logo} resizeMode={Image.resizeMode.contain} source={require('../../assets/logo.png')} />
-        </View>
-        <View style={style.form}>
-          <View style={vgroup.form}>
-            <View style={[vgroup.top, vgroup.seperator]}>
-              <TextInput
-                style={[input.text, vgroup.input]}
+      <View style={theme.base.container}>
+        <View style={theme.layouts.medium}>
+          <View style={[theme.base.logoContainer, { marginBottom: 70, marginTop: -200 }]}>
+              <Image style={theme.base.logo} resizeMode={Image.resizeMode.contain} source={require('../../assets/logo.png')} />
+          </View>
+          <View style={[MKCardStyles.card, { marginBottom: 100 }]}>
+            <View style={{ padding: 30 }}>
+              <MKTextField
+                style={[theme.inputs.textfield]}
+                tintColor={MKColor.BlueGrey}
                 placeholder="Email"
+                floatingLabelEnabled={true}
                 value={this.state.email}
                 onChangeText={(email) => this.setState({email})}
               />
-            </View>
-            <View style={vgroup.bottom}>
-              <TextInput
-                style={[input.text, vgroup.input]}
+              <MKTextField
+                style={[theme.inputs.textfield]}
+                tintColor={MKColor.BlueGrey}
                 placeholder="Contraseña"
+                floatingLabelEnabled={true}
                 secureTextEntry={true}
                 value={this.state.password}
                 onChangeText={(password) => this.setState({password})}
               />
+              <MKButton
+                backgroundColor={MKColor.BlueGrey}
+                shadowRadius={2}
+                shadowOpacity={.5}
+                shadowColor="black"
+                onPress={this.onDone}
+                style={[theme.button.base]}
+                >
+                {
+                  this.state.isLoading ?
+                  <ActivityIndicatorIOS
+                    animating={this.state.isLoading}
+                    style={[]}
+                    color="white"
+                  />
+                  :
+                  <Text pointerEvents="none" style={[theme.button.text]}>
+                    ENTRAR
+                  </Text>
+                }
+              </MKButton>
             </View>
           </View>
-          <TouchableHighlight
-            onPress={this.onDone}
-            style={[button.touch, style.loginButton]}>
-            <View style={[button.base, button.primary]}>
-              <Text style={[button.content, button.primaryContent]}>
-                Entrar
-              </Text>
-              <ActivityIndicatorIOS
-                animating={this.state.isLoading}
-                style={style.loading}
-                color="white"
-              />
-            </View>
-          </TouchableHighlight>
         </View>
-        <View style={style.toolbox} />
       </View>
     );
   },

@@ -10,6 +10,7 @@
     "react-native": "^0.16.0",
     "react-native-button": "latest",
     "react-native-image-progress": "^0.4.0",
+    "react-native-material-kit": "^0.2.4",
     "react-native-progress": "^2.2.0",
     "react-native-tableview-simple": "^0.4.0",
     "rn-focalpoint": "^1.0.1"

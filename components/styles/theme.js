@@ -7,7 +7,7 @@ var {
 const STANDARD_PADDING = 20;
 const SMALL_CONTAINER_WIDTH = 300;
 const MEDIUM_CONTAINER_WIDTH = 450;
-const BACKGROUND_COLOR = '#eee';
+const BACKGROUND_COLOR = '#f9f9f9';
 const PRIMARY_COLOUR = '#000000';
 const INPUT_RADIUS = 4;
 const INPUT_BACKGROUND_COLOUR = 'white';
@@ -25,7 +25,7 @@ var theme = {
     container: {
       flex: 1,
       backgroundColor: BACKGROUND_COLOR,
-      flexDirection: 'row',
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -38,8 +38,21 @@ var theme = {
       alignItems: 'center',
       justifyContent: 'center',
     },
+    logoContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    logo: {
+      height: 100,
+      width: SMALL_CONTAINER_WIDTH - 10,
+    },
   }),
   layouts: StyleSheet.create({
+    small: {
+      width: SMALL_CONTAINER_WIDTH,
+
+      //backgroundColor: '#ddd',
+    },
     medium: {
       width: MEDIUM_CONTAINER_WIDTH,
 
@@ -54,6 +67,7 @@ var theme = {
       fontSize: 20,
       marginTop: 15,
       marginBottom: 15,
+      fontFamily: 'Roboto-Regular',
     },
   }),
   inputGroup: StyleSheet.create({
@@ -62,6 +76,7 @@ var theme = {
       borderWidth: INPUT_BORDER_WIDTH,
       borderColor: INPUT_BORDER_COLOUR,
       backgroundColor: INPUT_BACKGROUND_COLOUR,
+      marginBottom: 15,
     },
     top: {
       borderTopLeftRadius: INPUT_RADIUS,
@@ -86,27 +101,24 @@ var theme = {
     },
   }),
   button: StyleSheet.create({
-    touch: {
-      borderRadius: INPUT_RADIUS,
-    },
     base: {
       height: 42,
       padding: INPUT_PADDING,
-      borderRadius: INPUT_RADIUS,
-      borderWidth: INPUT_BORDER_WIDTH,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
     },
-    content: {
-      fontSize: INPUT_FONT_SIZE,
-    },
-    primary: {
-      backgroundColor: PRIMARY_COLOUR,
-      borderColor: PRIMARY_COLOUR,
-    },
-    primaryContent: {
+    text: {
       color: 'white',
+      fontFamily: 'Roboto-Bold',
+      fontSize: 16,
+    },
+  }),
+  inputs: StyleSheet.create({
+    textfield: {
+      height: 42,
+      marginTop: 0,
+      marginBottom: 30,
     },
   }),
 };
