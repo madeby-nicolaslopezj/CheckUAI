@@ -70,7 +70,7 @@ var TeacherLoginView = React.createClass({
   render() {
     return (
       <View style={theme.base.container}>
-        <View style={theme.layouts.medium}>
+        <View style={theme.layouts.small}>
           <View style={[theme.base.logoContainer, { marginBottom: 70, marginTop: -200 }]}>
               <Image style={theme.base.logo} resizeMode={Image.resizeMode.contain} source={require('../../assets/logo.png')} />
           </View>

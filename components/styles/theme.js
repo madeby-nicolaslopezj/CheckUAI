@@ -5,8 +5,8 @@ var {
 } = React;
 
 const STANDARD_PADDING = 20;
-const SMALL_CONTAINER_WIDTH = 300;
-const MEDIUM_CONTAINER_WIDTH = 450;
+const SMALL_CONTAINER_WIDTH = 450;
+const MEDIUM_CONTAINER_WIDTH = 550;
 const BACKGROUND_COLOR = '#f9f9f9';
 const PRIMARY_COLOUR = '#000000';
 const INPUT_RADIUS = 4;
@@ -44,7 +44,7 @@ var theme = {
     },
     logo: {
       height: 100,
-      width: SMALL_CONTAINER_WIDTH - 10,
+      width: 300 - 10,
     },
   }),
   layouts: StyleSheet.create({
@@ -58,6 +58,14 @@ var theme = {
 
       //backgroundColor: '#ddd',
     },
+    row: {
+      flexDirection: 'row',
+    },
+
+    col: {
+      flex: 1,
+    },
+
   }),
   texts: StyleSheet.create({
     center: {
@@ -65,9 +73,9 @@ var theme = {
     },
     subtitle: {
       fontSize: 20,
-      marginTop: 15,
       marginBottom: 15,
-      fontFamily: 'Roboto-Regular',
+      fontFamily: 'Roboto',
+      fontWeight: 'bold',
     },
   }),
   inputGroup: StyleSheet.create({
@@ -97,7 +105,12 @@ var theme = {
       backgroundColor: SELECTED_BACKGROUND_COLOR,
     },
     selectText: {
-      fontSize: INPUT_FONT_SIZE,
+      fontFamily: 'Roboto',
+      fontSize: 18,
+      flex: 1,
+      paddingTop: 7,
+      paddingBottom: 7,
+      marginBottom: 10,
     },
   }),
   button: StyleSheet.create({

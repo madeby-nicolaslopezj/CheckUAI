@@ -1,9 +1,17 @@
 var React = require('react-native');
 var UAI = require('../../api/base');
 var LoadingView = require('../loading');
-var CheckAsTeacherView = require('../check-as-teacher/base');
+var CheckAsTeacherTinderView = require('../check-as-teacher/tinder');
 var Select = require('./select');
 var theme = require('../../styles/theme');
+var MK = require('react-native-material-kit');
+
+var {
+  MKCardStyles,
+  MKTextField,
+  MKButton,
+  MKColor,
+} = MK;
 
 var {
   StyleSheet,
@@ -20,15 +28,7 @@ var TeacherPrepareView = React.createClass({
     this.setState({ selectedActivity: this.state.activities[0].id });
 
     setTimeout(() => {
-      this.props.navigator.push({
-        title: 'Teacher Check',
-        component: CheckAsTeacherView,
-        passProps: {
-          token: this.props.token,
-          activityId: this.state.selectedActivity,
-          sessionId: this.state.selectedSession,
-        },
-      });
+      this.asTeacher();
     }, 200);
   },
 
@@ -62,7 +62,7 @@ var TeacherPrepareView = React.createClass({
 
       this.setState({ sessions, isLoading: false });
       setTimeout(() => {
-        //this.goNext(sessions);
+        this.goNext(sessions);
       }, 400);
     } catch (error) {
       AlertIOS.alert('Error', error.message);
@@ -79,7 +79,7 @@ var TeacherPrepareView = React.createClass({
 
     this.props.navigator.push({
       index: 1,
-      id: 'check-as-teacher',
+      id: 'check-as-teacher-tinder',
       token: this.props.token,
       activityId: this.state.selectedActivity,
       sessionId: this.state.selectedSession,
@@ -95,35 +95,55 @@ var TeacherPrepareView = React.createClass({
     });
     return (
       <ScrollView style={theme.base.scrollView} contentContainerStyle={theme.base.scrollViewContent}>
-        <View style={theme.layouts.medium}>
-          <Text style={[theme.texts.subtitle, theme.texts.center]}>{'Selecciona una clase'.toUpperCase()}</Text>
-          <Select options={sessionsOptions} onSelect={(sessionId) => {
-            this.setState({ selectedSession: sessionId });
-          }} />
-          <Text style={[theme.texts.subtitle, theme.texts.center]}>{'Selecciona el tipo'.toUpperCase()}</Text>
-          <Select options={activitiesOptions} onSelect={(activityId) => {
-            this.setState({ selectedActivity: activityId });
-          }} />
-          <TouchableHighlight
+        <View style={[theme.layouts.medium, { marginTop: 60, marginBottom: 60 }]}>
+          <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>
+            <Text style={[theme.texts.subtitle, { marginLeft: 10 }]}>{'Selecciona una clase'}</Text>
+            <Select options={sessionsOptions} onSelect={(sessionId) => {
+              this.setState({ selectedSession: sessionId });
+            }} />
+          </View>
 
-            onPress={this.asTeacher}
-            style={[theme.button.touch, { marginTop: 20 }]}>
-            <View style={[theme.button.base, theme.button.primary]}>
-              <Text style={[theme.button.content, theme.button.primaryContent]}>
-                Marcar Asistencia - Profesor
-              </Text>
-            </View>
-          </TouchableHighlight>
+          <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>
+            <Text style={[theme.texts.subtitle, { marginLeft: 10 }]}>{'Selecciona el tipo'}</Text>
+            <Select options={activitiesOptions} onSelect={(activityId) => {
+              this.setState({ selectedActivity: activityId });
+            }} />
+          </View>
 
-          <TouchableHighlight
-            onPress={this.asTeacher}
-            style={[theme.button.touch, { marginTop: 10 }]}>
-            <View style={[theme.button.base, theme.button.primary]}>
-              <Text style={[theme.button.content, theme.button.primaryContent]}>
-                Marcar Asistencia - Alumnos
-              </Text>
+
+          <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>
+            <Text style={[theme.texts.subtitle]}>{'Marcar asistencia como'}</Text>
+
+            <View style={theme.layouts.row}>
+              <MKButton
+
+                backgroundColor={MKColor.BlueGrey}
+                shadowRadius={2}
+                shadowOpacity={.5}
+                shadowColor="black"
+                onPress={this.asTeacher}
+                style={[theme.button.base, theme.layouts.col, { marginRight: 10 }]}
+                >
+                <Text pointerEvents="none" style={[theme.button.text]}>
+                  PROFESOR
+                </Text>
+              </MKButton>
+
+              <MKButton
+
+                backgroundColor={MKColor.BlueGrey}
+                shadowRadius={2}
+                shadowOpacity={.5}
+                shadowColor="black"
+                onPress={this.asTeacher}
+                style={[theme.button.base, theme.layouts.col, { marginLeft: 10 }]}
+                >
+                <Text pointerEvents="none" style={[theme.button.text]}>
+                  ALUMNOS
+                </Text>
+              </MKButton>
             </View>
-          </TouchableHighlight>
+          </View>
 
           <TouchableHighlight
             underlayColor={'transparent'}

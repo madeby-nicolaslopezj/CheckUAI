@@ -25,8 +25,8 @@ var StudentImage = React.createClass({
       indicatorProps={{
       }}
       style={{
-        width: 120,
-        height: 160,
+        width: 300,
+        height: 300,
         marginRight: 16,
       }}/>
     );

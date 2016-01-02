@@ -33,7 +33,7 @@ var Select = React.createClass({
   renderOptions() {
     return this.props.options.map((option, index) => {
       return (
-        <View key={option.value}>
+        <View key={option.value} style={[theme.layouts.row]}>
           <MKRadioButton
             group={this.state.radioGroup}
             checked={this.state.selected === option.value}
@@ -41,7 +41,12 @@ var Select = React.createClass({
               this.setState({ selected: option.value });
               this.props.onSelect(option.value);
             }}/>
-              <Text style={[]}>{option.title}</Text>
+            <TouchableWithoutFeedback onPress={() => {
+              this.setState({ selected: option.value });
+              this.props.onSelect(option.value);
+            }}>
+              <Text style={theme.inputGroup.selectText}>{option.title}</Text>
+            </TouchableWithoutFeedback>
           </View>
         );
     });
