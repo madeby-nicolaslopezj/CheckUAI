@@ -8,8 +8,11 @@
   "dependencies": {
     "clamp": "^1.0.1",
     "fbemitter": "^2.0.0",
+    "react-apple-easing": "0.0.2",
     "react-native": "^0.16.0",
+    "react-native-blur": "^0.7.8",
     "react-native-button": "latest",
+    "react-native-camera": "^0.3.8",
     "react-native-image-progress": "^0.4.0",
     "react-native-material-kit": "^0.2.4",
     "react-native-progress": "^2.2.0",

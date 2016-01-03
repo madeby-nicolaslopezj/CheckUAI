@@ -66,6 +66,15 @@ var theme = {
       flex: 1,
     },
 
+    bottomIndicator: {
+      position: 'absolute',
+      right: 0,
+      left: 0,
+      bottom: 20,
+      padding: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   }),
   texts: StyleSheet.create({
     center: {
@@ -136,6 +145,12 @@ var theme = {
       height: 42,
       marginTop: 0,
       marginBottom: 30,
+    },
+  }),
+  camera: StyleSheet.create({
+    container: {
+      width: SMALL_CONTAINER_WIDTH,
+      height: SMALL_CONTAINER_WIDTH * 1.3,
     },
   }),
 };

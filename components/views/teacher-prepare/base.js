@@ -28,7 +28,7 @@ var TeacherPrepareView = React.createClass({
     this.setState({ selectedActivity: this.state.activities[0].id });
 
     setTimeout(() => {
-      this.asTeacher();
+      this.asStudent();
     }, 200);
   },
 
@@ -86,6 +86,18 @@ var TeacherPrepareView = React.createClass({
     });
   },
 
+  asStudent() {
+    if (!this.state.selectedActivity || !this.state.selectedSession) return;
+
+    this.props.navigator.push({
+      index: 1,
+      id: 'check-as-student',
+      token: this.props.token,
+      activityId: this.state.selectedActivity,
+      sessionId: this.state.selectedSession,
+    });
+  },
+
   render() {
     var sessionsOptions = this.state.sessions.map((session) => {
       return { value: session.idSeccion, title: `${session.nombreAsignatura} Sec. ${session.numeroSeccion}` };
@@ -135,7 +147,7 @@ var TeacherPrepareView = React.createClass({
                 shadowRadius={2}
                 shadowOpacity={.5}
                 shadowColor="black"
-                onPress={this.asTeacher}
+                onPress={this.asStudent}
                 style={[theme.button.base, theme.layouts.col, { marginLeft: 10 }]}
                 >
                 <Text pointerEvents="none" style={[theme.button.text]}>

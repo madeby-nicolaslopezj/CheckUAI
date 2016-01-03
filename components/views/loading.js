@@ -1,5 +1,6 @@
 var Progress = require('react-native-progress');
 var React = require('react-native');
+var theme = require('../styles/theme');
 
 var {
   View,
@@ -9,7 +10,7 @@ var {
 var LoadingView = React.createClass({
   render() {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={theme.base.container}>
         <Progress.Circle size={60} indeterminate={true} />
       </View>
     );

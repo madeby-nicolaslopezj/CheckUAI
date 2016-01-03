@@ -10,6 +10,7 @@ var TeacherLoginView = require('./components/views/teacher-login');
 var TeacherPrepareView = require('./components/views/teacher-prepare/base');
 var CheckAsTeacherView = require('./components/views/check-as-teacher/base');
 var CheckAsTeacherTinderView = require('./components/views/check-as-teacher/tinder');
+var CheckAsStudentView = require('./components/views/check-as-student/base');
 
 var {
   AppRegistry,
@@ -28,6 +29,8 @@ var CheckUAI = React.createClass({
         return <CheckAsTeacherView navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
       case 'check-as-teacher-tinder':
         return <CheckAsTeacherTinderView navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
+      case 'check-as-student':
+        return <CheckAsStudentView navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
       default:
         return <Text>Error</Text>;
     }
@@ -37,6 +40,8 @@ var CheckUAI = React.createClass({
     console.log(Navigator.SceneConfigs);
     switch (route.id) {
       case 'check-as-teacher-tinder':
+        return Navigator.SceneConfigs.FloatFromBottom;
+      case 'check-as-student':
         return Navigator.SceneConfigs.FloatFromBottom;
       default:
         return Navigator.SceneConfigs.FloatFromRight;
