@@ -36,7 +36,7 @@ var CheckUAI = React.createClass({
   configureScene(route) {
     console.log(Navigator.SceneConfigs);
     switch (route.id) {
-      case 'check-as-teacher':
+      case 'check-as-teacher-tinder':
         return Navigator.SceneConfigs.FloatFromBottom;
       default:
         return Navigator.SceneConfigs.FloatFromRight;

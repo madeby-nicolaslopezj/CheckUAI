@@ -20,12 +20,12 @@ var {
 var Select = React.createClass({
   propTypes: {
     options: React.PropTypes.array.isRequired,
+    selected: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
     onSelect: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
     return {
-      selected: null,
       radioGroup: new MKRadioButton.Group(),
     };
   },
@@ -36,13 +36,11 @@ var Select = React.createClass({
         <View key={option.value} style={[theme.layouts.row]}>
           <MKRadioButton
             group={this.state.radioGroup}
-            checked={this.state.selected === option.value}
+            checked={this.props.selected === option.value}
             onPress={() => {
-              this.setState({ selected: option.value });
               this.props.onSelect(option.value);
             }}/>
             <TouchableWithoutFeedback onPress={() => {
-              this.setState({ selected: option.value });
               this.props.onSelect(option.value);
             }}>
               <Text style={theme.inputGroup.selectText}>{option.title}</Text>

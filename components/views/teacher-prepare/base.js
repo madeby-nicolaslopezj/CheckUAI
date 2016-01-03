@@ -24,7 +24,7 @@ var {
 
 var TeacherPrepareView = React.createClass({
   goNext(sessions) {
-    this.setState({ selectedSession: sessions[0].idSeccion });
+    this.setState({ selectedSession: sessions[1].idSeccion });
     this.setState({ selectedActivity: this.state.activities[0].id });
 
     setTimeout(() => {
@@ -98,14 +98,14 @@ var TeacherPrepareView = React.createClass({
         <View style={[theme.layouts.medium, { marginTop: 60, marginBottom: 60 }]}>
           <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>
             <Text style={[theme.texts.subtitle, { marginLeft: 10 }]}>{'Selecciona una clase'}</Text>
-            <Select options={sessionsOptions} onSelect={(sessionId) => {
+            <Select options={sessionsOptions} selected={this.state.selectedSession} onSelect={(sessionId) => {
               this.setState({ selectedSession: sessionId });
             }} />
           </View>
 
           <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>
             <Text style={[theme.texts.subtitle, { marginLeft: 10 }]}>{'Selecciona el tipo'}</Text>
-            <Select options={activitiesOptions} onSelect={(activityId) => {
+            <Select options={activitiesOptions} selected={this.state.selectedActivity} onSelect={(activityId) => {
               this.setState({ selectedActivity: activityId });
             }} />
           </View>

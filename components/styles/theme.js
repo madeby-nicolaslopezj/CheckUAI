@@ -77,6 +77,10 @@ var theme = {
       fontFamily: 'Roboto',
       fontWeight: 'bold',
     },
+    normal: {
+      fontSize: 16,
+      fontFamily: 'Roboto',
+    },
   }),
   inputGroup: StyleSheet.create({
     container: {
