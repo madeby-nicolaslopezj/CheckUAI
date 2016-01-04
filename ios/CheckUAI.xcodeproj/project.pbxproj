@@ -398,6 +398,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8CC7C3BF1C3B3C280059AAAC /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
 		8CFF58C21C36D3BB00B5850E /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,6 +416,7 @@
 		8CFF58D31C36D40500B5850E /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				8CC7C3BF1C3B3C280059AAAC /* Icons */,
 				8CFF58D41C36D47900B5850E /* Roboto */,
 			);
 			name = Fonts;

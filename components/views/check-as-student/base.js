@@ -97,45 +97,54 @@ var CheckAsTeacherStudentView = React.createClass({
     }
 
     return (
-      <Camera type={Camera.constants.Type.front} style={[theme.base.container]}>
-        <Animated.View style={[theme.layouts.bottomIndicator, { bottom: this.state.keyboardHeight, marginTop: 20 }]} >
-          <BlurView blurType="xlight">
-            <View style={theme.layouts.small}>
-              <MKTextField
-                style={[theme.inputs.textfield]}
-                tintColor={MKColor.BlueGrey}
-                placeholder="Email"
-                floatingLabelEnabled={true}
-                value={this.state.email}
-                onChangeText={(email) => this.setState({email})}
-              />
-              <MKTextField
-                style={[theme.inputs.textfield]}
-                tintColor={MKColor.BlueGrey}
-                placeholder="Contraseña"
-                floatingLabelEnabled={true}
-                secureTextEntry={true}
-                value={this.state.password}
-                onChangeText={(password) => this.setState({password})}
-              />
-            </View>
-            <TouchableHighlight
-              underlayColor={'transparent'}
-              activeOpacity={0.6}
-              onPress={() => {
-                this.props.navigator.pop();
-              }}
-
-              style={[theme.button.touchLight, { marginTop: 10 }]}>
-              <View style={[theme.button.base, theme.button.link]}>
-                <Text style={[theme.button.content, theme.button.linkContent]}>
-                  Salir
-                </Text>
+      <View style={[theme.base.container, { backgroundColor: 'transparent' }]}>
+        <Camera type={Camera.constants.Type.front} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
+          <Text></Text>
+        </Camera>
+        <View style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
+          <Animated.View style={[theme.layouts.bottomIndicator, { bottom: this.state.keyboardHeight }]}>
+            <BlurView blurType="xlight" style={[theme.layouts.bottomIndicator, { bottom: 0 }]}>
+              <View style={theme.layouts.row}>
+                <View style={[theme.layouts.col, { backgroundColor: 'red' }]}>
+                  <TouchableHighlight
+                    underlayColor={'transparent'}
+                    activeOpacity={0.6}
+                    onPress={() => this.props.navigator.pop()}
+                    style={[theme.button.touchLight, { marginTop: 10 }]}>
+                    <View style={[theme.button.base, theme.button.link]}>
+                      <Text style={[theme.button.content, theme.button.linkContent]}>
+                        Salir
+                      </Text>
+                    </View>
+                  </TouchableHighlight>
+                </View>
+                <View style={theme.layouts.small}>
+                  <MKTextField
+                    style={[theme.inputs.textfield]}
+                    tintColor={MKColor.BlueGrey}
+                    placeholder="Email"
+                    floatingLabelEnabled={true}
+                    value={this.state.email}
+                    onChangeText={(email) => this.setState({email})}
+                  />
+                  <MKTextField
+                    style={[theme.inputs.textfield]}
+                    tintColor={MKColor.BlueGrey}
+                    placeholder="Contraseña"
+                    floatingLabelEnabled={true}
+                    secureTextEntry={true}
+                    value={this.state.password}
+                    onChangeText={(password) => this.setState({password})}
+                  />
+                </View>
+                <View style={[theme.layouts.col, { backgroundColor: 'red' }]}>
+                  <Text>Hola</Text>
+                </View>
               </View>
-            </TouchableHighlight>
-          </BlurView>
-        </Animated.View>
-      </Camera>
+            </BlurView>
+          </Animated.View>
+        </View>
+      </View>
     );
   },
 });
