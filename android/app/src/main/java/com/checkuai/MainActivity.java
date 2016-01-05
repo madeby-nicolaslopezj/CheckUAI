@@ -1,6 +1,11 @@
 package com.checkuai;
 
 import android.app.Activity;
+import com.github.yamill.orientation.OrientationPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.github.xinthink.rnmk.ReactMaterialKitPackage;
+import com.smixx.reactnativeicons.ReactNativeIcons;
+import com.lwansbrough.ReactCamera.ReactCamera;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
@@ -26,6 +31,11 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModuleName("index.android")
                 .addPackage(new MainReactPackage())
+                .addPackage(new OrientationPackage())
+                .addPackage(new VectorIconsPackage())
+                .addPackage(new ReactMaterialKitPackage())
+                .addPackage(new ReactNativeIcons())
+                .addPackage(new ReactCamera())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();

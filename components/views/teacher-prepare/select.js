@@ -14,7 +14,7 @@ var {
   View,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
+  TouchableHighlight,
 } = React;
 
 var Select = React.createClass({
@@ -40,11 +40,14 @@ var Select = React.createClass({
             onPress={() => {
               this.props.onSelect(option.value);
             }}/>
-            <TouchableWithoutFeedback onPress={() => {
-              this.props.onSelect(option.value);
-            }}>
-              <Text style={theme.inputGroup.selectText}>{option.title}</Text>
-            </TouchableWithoutFeedback>
+          <TouchableHighlight
+
+            underlayColor={'transparent'}
+            activeOpacity={0.6}
+            onPress={() => this.props.onSelect(option.value)}
+            style={[theme.button.touchLight, { marginTop: 10 }]}>
+            <Text style={theme.inputGroup.selectText}>{option.title}</Text>
+          </TouchableHighlight>
           </View>
         );
     });
@@ -55,58 +58,6 @@ var Select = React.createClass({
       <View style={[]}>
         {this.renderOptions()}
       </View>
-    );
-  },
-});
-
-/*
-
-<<SelectOption
-  onSelect={() => {
-    this.setState({ selected: option.value });
-    this.props.onSelect(option.value);
-  }}
-
-  isSelected={this.state.selected === option.value}
-  isFirst={index == 0}
-  isLast={index == this.props.options.length - 1}
-  title={option.title}
-  key={option.value}
-  /><
- */
-
-var SelectOption = React.createClass({
-  propTypes: {
-    title: React.PropTypes.string.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-    isSelected: React.PropTypes.bool.isRequired,
-    isFirst: React.PropTypes.bool.isRequired,
-    isLast: React.PropTypes.bool.isRequired,
-  },
-  render: function() {
-    var styles = [theme.inputGroup.select];
-    if (this.props.isFirst) {
-      styles.push(theme.inputGroup.top);
-    }
-
-    if (this.props.isLast) {
-      styles.push(theme.inputGroup.bottom);
-    }
-
-    if (!this.props.isLast) {
-      styles.push(theme.inputGroup.seperator);
-    }
-
-    if (this.props.isSelected) {
-      styles.push(theme.inputGroup.selectSelected);
-    }
-
-    return (
-      <TouchableWithoutFeedback onPress={this.props.onSelect}>
-        <View style={styles}>
-          <Text style={theme.inputGroup.selectText}>{this.props.title}</Text>
-        </View>
-      </TouchableWithoutFeedback>
     );
   },
 });

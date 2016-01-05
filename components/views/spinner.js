@@ -7,11 +7,11 @@ var {
   StyleSheet,
 } = React;
 
-var LoadingView = React.createClass({
+var Spinner = React.createClass({
   render() {
     return (
-      <View style={theme.base.container}>
-        <Progress.CircleSnail size={60} indeterminate={true} />
+      <View style={styles.loadingContainer}>
+        <Progress.CircleSnail size={30} indeterminate={true} />
       </View>
     );
   },
@@ -22,7 +22,9 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10,
   },
 });
 
-module.exports = LoadingView;
+module.exports = Spinner;

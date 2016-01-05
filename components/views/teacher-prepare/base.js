@@ -1,6 +1,7 @@
 var React = require('react-native');
 var UAI = require('../../api/base');
 var LoadingView = require('../loading');
+var Spinner = require('../spinner');
 var CheckAsTeacherTinderView = require('../check-as-teacher/tinder');
 var Select = require('./select');
 var theme = require('../../styles/theme');
@@ -28,12 +29,15 @@ var TeacherPrepareView = React.createClass({
     this.setState({ selectedActivity: this.state.activities[0].id });
 
     setTimeout(() => {
-      this.asStudent();
+      //this.asStudent();
     }, 200);
   },
 
   propTypes: {
+    isTeacher: React.PropTypes.bool.isRequired,
     token: React.PropTypes.string.isRequired,
+    password: React.PropTypes.string,
+    rut: React.PropTypes.string,
   },
 
   getInitialState() {
@@ -55,10 +59,19 @@ var TeacherPrepareView = React.createClass({
 
   componentDidMount: async function() {
     try {
-      var sessions = await UAI.getTeacherSessions({
-        token: this.props.token,
-        academicUnit: 1,
-      });
+      var sessions = [];
+
+      if (this.props.isTeacher) {
+        sessions = await UAI.getTeacherSessions({
+          token: this.props.token,
+          academicUnit: 1,
+        });
+      } else {
+        sessions = await UAI.getColaboratorSessions({
+          token: this.props.token,
+          rut: this.props.rut,
+        });
+      }
 
       this.setState({ sessions, isLoading: false });
       setTimeout(() => {
@@ -95,6 +108,9 @@ var TeacherPrepareView = React.createClass({
       token: this.props.token,
       activityId: this.state.selectedActivity,
       sessionId: this.state.selectedSession,
+      password: this.props.password,
+      rut: this.props.rut,
+      isTeacher: this.props.isTeacher,
     });
   },
 
@@ -110,9 +126,13 @@ var TeacherPrepareView = React.createClass({
         <View style={[theme.layouts.medium, { marginTop: 60, marginBottom: 60 }]}>
           <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>
             <Text style={[theme.texts.subtitle, { marginLeft: 10 }]}>{'Selecciona una clase'}</Text>
-            <Select options={sessionsOptions} selected={this.state.selectedSession} onSelect={(sessionId) => {
-              this.setState({ selectedSession: sessionId });
-            }} />
+            {
+              this.state.isLoading ?
+              <Spinner /> :
+              <Select options={sessionsOptions} selected={this.state.selectedSession} onSelect={(sessionId) => {
+                this.setState({ selectedSession: sessionId });
+              }} />
+            }
           </View>
 
           <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>

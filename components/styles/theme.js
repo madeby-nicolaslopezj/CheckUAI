@@ -59,11 +59,18 @@ var theme = {
       //backgroundColor: '#ddd',
     },
     row: {
+      flex: 1,
       flexDirection: 'row',
+      alignItems: 'center',
     },
 
     col: {
       flex: 1,
+    },
+
+    center: {
+      alignItems: 'center',
+      justifyContent: 'center',
     },
 
     bottomIndicator: {
@@ -74,6 +81,7 @@ var theme = {
       padding: 20,
       justifyContent: 'center',
       alignItems: 'center',
+      flexDirection: 'row',
     },
   }),
   texts: StyleSheet.create({

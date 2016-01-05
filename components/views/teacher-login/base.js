@@ -1,9 +1,10 @@
 var React = require('react-native');
-var UAI = require('../api/base');
+var UAI = require('../../api/base');
 var Progress = require('react-native-progress');
 var Button = require('react-native-button');
 var RNFocal = require('rn-focalpoint');
-var theme = require('../styles/theme');
+var theme = require('../../styles/theme');
+var Checkbox = require('./checkbox');
 const MK = require('react-native-material-kit');
 
 const {
@@ -28,7 +29,7 @@ var {
 var TeacherLoginView = React.createClass({
   componentDidMount: function() {
     setTimeout(() => {
-      this.onDone();
+      //this.onDone();
     }, 100);
   },
 
@@ -37,6 +38,7 @@ var TeacherLoginView = React.createClass({
       isLoading: false,
       email: 'jorge.villalon@uai.cl',
       password: '1234',
+      isTeacher: true,
     };
   },
 
@@ -49,15 +51,26 @@ var TeacherLoginView = React.createClass({
     try {
       this.setState({ isLoading: true });
 
-      var token = await UAI.loginTeacher({
-        email: this.state.email,
-        password: this.state.password,
-      });
+      var token;
+
+      if (this.state.isTeacher) {
+        token = await UAI.loginTeacher({
+          email: this.state.email,
+          password: this.state.password,
+        });
+      } else {
+        token = await UAI.loginColaborator({
+          rut: this.state.rut,
+        });
+      }
 
       this.props.navigator.push({
         index: 1,
         id: 'teacher-prepare',
         token: token,
+        password: this.state.password,
+        rut: this.state.rut,
+        isTeacher: this.state.isTeacher,
       });
 
       this.setState({ isLoading: false });
@@ -67,31 +80,58 @@ var TeacherLoginView = React.createClass({
     }
   },
 
+  renderInputs() {
+    if (!this.state.isTeacher) {
+      return (
+        <MKTextField
+          style={[theme.inputs.textfield]}
+          tintColor={MKColor.BlueGrey}
+          placeholder="Rut"
+          floatingLabelEnabled={true}
+          value={this.state.rut}
+          onChangeText={(rut) => this.setState({rut})}
+        />
+      );
+    }
+
+    return (
+      <View>
+        <MKTextField
+          style={[theme.inputs.textfield]}
+          tintColor={MKColor.BlueGrey}
+          placeholder="Email"
+          floatingLabelEnabled={true}
+          value={this.state.email}
+          onChangeText={(email) => this.setState({email})}
+        />
+        <MKTextField
+          style={[theme.inputs.textfield]}
+          tintColor={MKColor.BlueGrey}
+          placeholder="Contraseña"
+          floatingLabelEnabled={true}
+          secureTextEntry={true}
+          value={this.state.password}
+          onChangeText={(password) => this.setState({password})}
+        />
+      </View>
+    );
+  },
+
   render() {
     return (
       <View style={theme.base.container}>
         <View style={theme.layouts.small}>
           <View style={[theme.base.logoContainer, { marginBottom: 70, marginTop: -200 }]}>
-              <Image style={theme.base.logo} resizeMode={Image.resizeMode.contain} source={require('../../assets/logo.png')} />
+              <Image style={theme.base.logo} resizeMode={Image.resizeMode.contain} source={require('../../../assets/logo.png')} />
           </View>
           <View style={[MKCardStyles.card, { marginBottom: 100 }]}>
             <View style={{ padding: 30 }}>
-              <MKTextField
-                style={[theme.inputs.textfield]}
-                tintColor={MKColor.BlueGrey}
-                placeholder="Email"
-                floatingLabelEnabled={true}
-                value={this.state.email}
-                onChangeText={(email) => this.setState({email})}
-              />
-              <MKTextField
-                style={[theme.inputs.textfield]}
-                tintColor={MKColor.BlueGrey}
-                placeholder="Contraseña"
-                floatingLabelEnabled={true}
-                secureTextEntry={true}
-                value={this.state.password}
-                onChangeText={(password) => this.setState({password})}
+              {this.renderInputs()}
+              <Checkbox
+                checked={this.state.isTeacher}
+                onChange={(value) => this.setState({ isTeacher: value })}
+                style={{ marginTop: -10, marginBottom: 10 }}
+                title="Profesor"
               />
               <MKButton
                 backgroundColor={MKColor.BlueGrey}

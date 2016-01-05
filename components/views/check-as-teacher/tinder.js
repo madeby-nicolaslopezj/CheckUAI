@@ -171,6 +171,7 @@ var CheckAsTeacherTinderView = React.createClass({
         studentId: this.state.student.idExpediente,
         token: this.props.token,
         activityId: this.props.activityId,
+        sessionId: this.props.sessionId,
       });
     } else {
       this.setState({ noStudents: this.state.noStudents.concat([this.state.student]) });

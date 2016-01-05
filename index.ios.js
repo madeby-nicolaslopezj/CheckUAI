@@ -6,11 +6,12 @@
 
 var React = require('react-native');
 var theme = require('./components/styles/theme');
-var TeacherLoginView = require('./components/views/teacher-login');
+var TeacherLoginView = require('./components/views/teacher-login/base');
 var TeacherPrepareView = require('./components/views/teacher-prepare/base');
 var CheckAsTeacherView = require('./components/views/check-as-teacher/base');
 var CheckAsTeacherTinderView = require('./components/views/check-as-teacher/tinder');
 var CheckAsStudentView = require('./components/views/check-as-student/base');
+var Orientation = require('react-native-orientation');
 
 var {
   AppRegistry,
@@ -19,18 +20,23 @@ var {
 } = React;
 
 var CheckUAI = React.createClass({
+
+  componentDidMount() {
+    Orientation.lockToPortrait();
+  },
+
   renderScene(route, navigator) {
     switch (route.id) {
       case 'teacher-login':
         return <TeacherLoginView navigator={navigator} />;
       case 'teacher-prepare':
-        return <TeacherPrepareView navigator={navigator} token={route.token} />;
+        return <TeacherPrepareView navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} />;
       case 'check-as-teacher':
         return <CheckAsTeacherView navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
       case 'check-as-teacher-tinder':
         return <CheckAsTeacherTinderView navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
       case 'check-as-student':
-        return <CheckAsStudentView navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
+        return <CheckAsStudentView navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} activityId={route.activityId} sessionId={route.sessionId}/>;
       default:
         return <Text>Error</Text>;
     }

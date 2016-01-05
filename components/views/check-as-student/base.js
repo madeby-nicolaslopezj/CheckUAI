@@ -6,6 +6,9 @@ var theme = require('../../styles/theme');
 var Camera = require('react-native-camera');
 var RNBlur = require('react-native-blur');
 var AppleEasing = require('react-apple-easing');
+var Icon = require('react-native-vector-icons/MaterialIcons');
+var Orientation = require('react-native-orientation');
+var Spinner = require('../spinner');
 
 var {
   BlurView,
@@ -32,6 +35,7 @@ var {
   DeviceEventEmitter,
   TouchableHighlight,
   Easing,
+  Image,
 } = React;
 
 function sleep(ms = 0) {
@@ -43,6 +47,9 @@ var CheckAsTeacherStudentView = React.createClass({
     sessionId: React.PropTypes.number.isRequired,
     token: React.PropTypes.string.isRequired,
     activityId: React.PropTypes.string.isRequired,
+    password: React.PropTypes.string.isRequired,
+    isTeacher: React.PropTypes.bool.isRequired,
+    rut: React.PropTypes.string,
   },
 
   getInitialState() {
@@ -50,6 +57,7 @@ var CheckAsTeacherStudentView = React.createClass({
       isLoading: true,
       students: [],
       keyboardHeight: new Animated.Value(0),
+      photo: null,
     };
   },
 
@@ -60,7 +68,7 @@ var CheckAsTeacherStudentView = React.createClass({
 
   keyboardWillShow(e) {
     Animated.timing(this.state.keyboardHeight, {
-      toValue: e.endCoordinates.height - 60,
+      toValue: e.endCoordinates.height - 5,
       duration: 250,
       easing: AppleEasing.easeOut,
     }).start();
@@ -91,39 +99,71 @@ var CheckAsTeacherStudentView = React.createClass({
     }
   },
 
-  render() {
-    if (this.state.isLoading) {
-      return <LoadingView/>;
-    }
+  goBack() {
+    AlertIOS.prompt('Introduce la contraseña', null, [
+      { text: 'Cancelar' },
+      { text: 'Submit', onPress: (text) => {
+        if (text == this.props.password) {
+          this.props.navigator.pop();
+        }
+      }, },
+    ]);
+  },
 
+  async check() {
+    var data = this.refs.camera.capture({rotation: 270}, async (error, data) => {
+      if (!error) {
+        this.setState({ photo: data, isLoading: true });
+
+        var response = await UAI.getSessionStudents({
+          token: this.props.token,
+          sessionId: this.props.sessionId,
+        });
+
+        await sleep(500);
+
+        this.setState({ photo: null, isLoading: false });
+      }
+    });
+  },
+
+  renderPhoto() {
+    if (!this.state.photo) return null;
+
+    return <Image source={{uri: this.state.photo}} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]} />;
+  },
+
+  render() {
     return (
       <View style={[theme.base.container, { backgroundColor: 'transparent' }]}>
-        <Camera type={Camera.constants.Type.front} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
+        <Camera ref="camera" captureTarget={Camera.constants.CaptureTarget.disk} type={Camera.constants.Type.front} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
           <Text></Text>
         </Camera>
+        {this.renderPhoto()}
         <View style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
-          <Animated.View style={[theme.layouts.bottomIndicator, { bottom: this.state.keyboardHeight }]}>
-            <BlurView blurType="xlight" style={[theme.layouts.bottomIndicator, { bottom: 0 }]}>
-              <View style={theme.layouts.row}>
-                <View style={[theme.layouts.col, { backgroundColor: 'red' }]}>
+          <Animated.View style={[theme.layouts.bottomIndicator, { bottom: this.state.keyboardHeight, padding: 0 }]}>
+            <BlurView blurType="xlight" style={[theme.layouts.bottomIndicator, { bottom: 0, paddingLeft: 0, paddingRight: 0 }]}>
+              <View style={[theme.layouts.row]}>
+                <View style={[theme.layouts.col, theme.layouts.center]}>
                   <TouchableHighlight
                     underlayColor={'transparent'}
                     activeOpacity={0.6}
-                    onPress={() => this.props.navigator.pop()}
+                    onPress={this.goBack}
                     style={[theme.button.touchLight, { marginTop: 10 }]}>
                     <View style={[theme.button.base, theme.button.link]}>
-                      <Text style={[theme.button.content, theme.button.linkContent]}>
-                        Salir
-                      </Text>
+                      <Icon style={[theme.button.content, theme.button.linkContent]} name="close" size={30} color="#333" />
                     </View>
                   </TouchableHighlight>
                 </View>
-                <View style={theme.layouts.small}>
+                <View style={[theme.layouts.small]}>
                   <MKTextField
                     style={[theme.inputs.textfield]}
                     tintColor={MKColor.BlueGrey}
                     placeholder="Email"
                     floatingLabelEnabled={true}
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    autoCorrect={false}
                     value={this.state.email}
                     onChangeText={(email) => this.setState({email})}
                   />
@@ -137,8 +177,20 @@ var CheckAsTeacherStudentView = React.createClass({
                     onChangeText={(password) => this.setState({password})}
                   />
                 </View>
-                <View style={[theme.layouts.col, { backgroundColor: 'red' }]}>
-                  <Text>Hola</Text>
+                <View style={[theme.layouts.col, theme.layouts.center]}>
+                  {
+                    (this.state.isLoading) ?
+                    <Spinner /> :
+                    <TouchableHighlight
+                      underlayColor={'transparent'}
+                      activeOpacity={0.6}
+                      onPress={this.check}
+                      style={[theme.button.touchLight, { marginTop: 10 }]}>
+                      <View style={[theme.button.base, theme.button.link]}>
+                        <Icon style={[theme.button.content, theme.button.linkContent]} name="check" size={30} color="#333" />
+                      </View>
+                    </TouchableHighlight>
+                  }
                 </View>
               </View>
             </BlurView>

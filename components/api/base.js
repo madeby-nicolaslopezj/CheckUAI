@@ -36,6 +36,27 @@ UAI.loginTeacher = async function({ email, password }) {
   }
 };
 
+UAI.loginColaborator = async function({ rut }) {
+  var response = await this._makeCall({
+    method: 'POST',
+    path: 'Asistencia/LoginColaborador',
+    params: {
+      rut: rut,
+    },
+    addToken: true,
+  });
+  if (response.token) {
+    return response.token;
+  } else {
+    var message = 'Error desconocido';
+    if (response.respuesta) {
+      message = response.respuesta;
+    }
+
+    throw new Error(message);
+  }
+};
+
 UAI.getTeacherSessions = async function({ token, academicUnit }) {
   var response = await this._makeCall({
     method: 'POST',
@@ -43,6 +64,18 @@ UAI.getTeacherSessions = async function({ token, academicUnit }) {
     params: {
       token: token,
       idUnidadAcademica: academicUnit,
+    },
+  });
+  return response.Asignaturas;
+};
+
+UAI.getColaboratorSessions = async function({ token, rut }) {
+  var response = await this._makeCall({
+    method: 'POST',
+    path: 'Asistencia/AsignaturasColaborador',
+    params: {
+      token: token,
+      rut: rut,
     },
   });
   return response.Asignaturas;
@@ -60,7 +93,7 @@ UAI.getSessionStudents = async function({ token, sessionId }) {
   return response.Alumnos;
 };
 
-UAI.markStudentAssistance = async function({ token, studentId, activityId }) {
+UAI.markStudentAssistance = async function({ token, studentId, activityId, sessionId }) {
   var response = await this._makeCall({
     method: 'POST',
     path: 'Asistencia/CheckAlumno',
@@ -68,6 +101,7 @@ UAI.markStudentAssistance = async function({ token, studentId, activityId }) {
       token: token,
       idExpediente: studentId,
       tipoAsistencia: activityId,
+      seccionId: sessionId,
     },
   });
   return response;
