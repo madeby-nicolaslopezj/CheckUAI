@@ -34,7 +34,7 @@ var Checkbox = React.createClass({
         onPress={() => this.props.onChange(!this.props.checked)}
         style={[theme.button.touchLight, this.props.style]}>
         <View style={[theme.layouts.row]}>
-          <Icon style={{ marginLeft: -3 }} name={iconName} size={25} color={MKColor.BlueGrey} />
+          <Icon style={{ marginLeft: -3 }} name={iconName} size={25} color={MKColor.Indigo} />
           <Text style={[theme.inputGroup.selectText, { marginTop: 10, marginLeft: 10 }]}>{this.props.title}</Text>
         </View>
       </TouchableHighlight>

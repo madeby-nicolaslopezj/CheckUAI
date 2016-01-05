@@ -114,6 +114,10 @@ var TeacherPrepareView = React.createClass({
     });
   },
 
+  viewAssistants() {
+
+  },
+
   render() {
     var sessionsOptions = this.state.sessions.map((session) => {
       return { value: session.idSeccion, title: `${session.nombreAsignatura} Sec. ${session.numeroSeccion}` };
@@ -121,9 +125,10 @@ var TeacherPrepareView = React.createClass({
     var activitiesOptions = this.state.activities.map((activity) => {
       return { value: activity.id, title: activity.title };
     });
+
     return (
       <ScrollView style={theme.base.scrollView} contentContainerStyle={theme.base.scrollViewContent}>
-        <View style={[theme.layouts.medium, { marginTop: 60, marginBottom: 60 }]}>
+        <View style={[theme.layouts.medium, { marginTop: 30, marginBottom: 30 }]}>
           <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>
             <Text style={[theme.texts.subtitle, { marginLeft: 10 }]}>{'Selecciona una clase'}</Text>
             {
@@ -168,10 +173,24 @@ var TeacherPrepareView = React.createClass({
                 shadowOpacity={.5}
                 shadowColor="black"
                 onPress={this.asStudent}
-                style={[theme.button.base, theme.layouts.col, { marginLeft: 10 }]}
+                style={[theme.button.base, theme.layouts.col, { marginLeft: 10, marginRight: 10}]}
                 >
                 <Text pointerEvents="none" style={[theme.button.text]}>
                   ALUMNOS
+                </Text>
+              </MKButton>
+
+              <MKButton
+
+                backgroundColor={MKColor.Indigo}
+                shadowRadius={2}
+                shadowOpacity={.5}
+                shadowColor="black"
+                onPress={this.viewAssistants}
+                style={[theme.button.base, theme.layouts.col, { marginLeft: 10 }]}
+                >
+                <Text pointerEvents="none" style={[theme.button.text]}>
+                  VER ASISTENTES
                 </Text>
               </MKButton>
             </View>

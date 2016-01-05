@@ -29,7 +29,7 @@ var {
 var TeacherLoginView = React.createClass({
   componentDidMount: function() {
     setTimeout(() => {
-      //this.onDone();
+      this.onDone();
     }, 100);
   },
 

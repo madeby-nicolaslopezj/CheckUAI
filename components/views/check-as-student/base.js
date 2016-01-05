@@ -54,8 +54,7 @@ var CheckAsTeacherStudentView = React.createClass({
 
   getInitialState() {
     return {
-      isLoading: true,
-      students: [],
+      isLoading: false,
       keyboardHeight: new Animated.Value(0),
       photo: null,
     };
@@ -82,27 +81,10 @@ var CheckAsTeacherStudentView = React.createClass({
     }).start();
   },
 
-  async componentDidMount() {
-    try {
-      var students = await UAI.getSessionStudents({
-        token: this.props.token,
-        sessionId: this.props.sessionId,
-      });
-
-      this.setState({
-        students: students,
-        isLoading: false,
-      });
-    } catch (error) {
-      AlertIOS.alert('Error', error.message);
-      this.setState({ isLoading: false });
-    }
-  },
-
   goBack() {
     AlertIOS.prompt('Introduce la contraseña', null, [
       { text: 'Cancelar' },
-      { text: 'Submit', onPress: (text) => {
+      { text: 'Salir', onPress: (text) => {
         if (text == this.props.password) {
           this.props.navigator.pop();
         }
