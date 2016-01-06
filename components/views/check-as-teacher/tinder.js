@@ -170,7 +170,7 @@ var CheckAsTeacherTinderView = React.createClass({
     } else {
       this.setState({ noStudents: this.state.noStudents.concat([this.state.student]) });
     }
-    
+
     var response = await UAI.markStudentAssistance({
       assist: assist,
       studentId: this.state.student.idExpediente,
