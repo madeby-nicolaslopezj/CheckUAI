@@ -38,12 +38,13 @@ var TeacherLoginView = React.createClass({
       isLoading: false,
       email: 'jorge.villalon@uai.cl',
       password: '1234',
-      isTeacher: true,
+      rut: '5669371-8',
+      isTeacher: false,
     };
   },
 
   onChange(value) {
-    this.setState({value});
+    this.setState({ value });
   },
 
   async onDone() {
@@ -89,7 +90,7 @@ var TeacherLoginView = React.createClass({
           placeholder="Rut"
           floatingLabelEnabled={true}
           value={this.state.rut}
-          onChangeText={(rut) => this.setState({rut})}
+          onChangeText={(rut) => this.setState({ rut })}
         />
       );
     }
@@ -102,7 +103,7 @@ var TeacherLoginView = React.createClass({
           placeholder="Email"
           floatingLabelEnabled={true}
           value={this.state.email}
-          onChangeText={(email) => this.setState({email})}
+          onChangeText={(email) => this.setState({ email })}
         />
         <MKTextField
           style={[theme.inputs.textfield]}
@@ -111,7 +112,7 @@ var TeacherLoginView = React.createClass({
           floatingLabelEnabled={true}
           secureTextEntry={true}
           value={this.state.password}
-          onChangeText={(password) => this.setState({password})}
+          onChangeText={(password) => this.setState({ password })}
         />
       </View>
     );

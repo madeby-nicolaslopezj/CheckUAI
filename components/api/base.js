@@ -8,7 +8,10 @@ var {
   View,
 } = React;
 
-var UAI = {};
+var UAI = {
+  AppToken: AppToken,
+  BaseUrl: BaseUrl,
+};
 
 function sleep(ms = 0) {
   return new Promise(r => setTimeout(r, ms));
@@ -93,14 +96,14 @@ UAI.getSessionStudents = async function({ token, sessionId }) {
   return response.Alumnos;
 };
 
-UAI.markStudentAssistance = async function({ token, studentId, activityId, sessionId }) {
+UAI.markStudentAssistance = async function({ assist, token, studentId, activityId, sessionId }) {
   var response = await this._makeCall({
     method: 'POST',
     path: 'Asistencia/CheckAlumno',
     params: {
       token: token,
       idExpediente: studentId,
-      tipoAsistencia: activityId,
+      tipoAsistencia: assist ? 1 : 2,
       seccionId: sessionId,
     },
   });

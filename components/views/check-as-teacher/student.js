@@ -25,7 +25,7 @@ var Student = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <StudentImage student={this.props.student} />
+        <StudentImage student={this.props.student} token={this.props.token} />
         <View style={styles.rightContainer}>
           <Text style={styles.nameText}>
             {this.props.student.nombre} {this.props.student.apellidoPaterno} {this.props.student.apellidoMaterno}

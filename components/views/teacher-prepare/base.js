@@ -25,7 +25,7 @@ var {
 
 var TeacherPrepareView = React.createClass({
   goNext(sessions) {
-    this.setState({ selectedSession: sessions[1].idSeccion });
+    this.setState({ selectedSession: sessions[0].idSeccion });
     this.setState({ selectedActivity: this.state.activities[0].id });
 
     setTimeout(() => {
@@ -173,7 +173,7 @@ var TeacherPrepareView = React.createClass({
                 shadowOpacity={.5}
                 shadowColor="black"
                 onPress={this.asStudent}
-                style={[theme.button.base, theme.layouts.col, { marginLeft: 10, marginRight: 10}]}
+                style={[theme.button.base, theme.layouts.col, { marginLeft: 10, marginRight: 10 }]}
                 >
                 <Text pointerEvents="none" style={[theme.button.text]}>
                   ALUMNOS

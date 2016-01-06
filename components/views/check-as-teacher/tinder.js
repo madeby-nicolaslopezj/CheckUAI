@@ -71,15 +71,15 @@ var CheckAsTeacherTinderView = React.createClass({
         onMoveShouldSetPanResponderCapture: () => true,
 
         onPanResponderGrant: (e, gestureState) => {
-          this.state.pan.setOffset({x: this.state.pan.x._value, y: this.state.pan.y._value});
-          this.state.pan.setValue({x: 0, y: 0});
+          this.state.pan.setOffset({ x: this.state.pan.x._value, y: this.state.pan.y._value });
+          this.state.pan.setValue({ x: 0, y: 0 });
         },
 
         onPanResponderMove: Animated.event([
-          null, {dx: this.state.pan.x, dy: this.state.pan.y},
+          null, { dx: this.state.pan.x, dy: this.state.pan.y },
         ]),
 
-        onPanResponderRelease: (e, {vx, vy}) => {
+        onPanResponderRelease: (e, { vx, vy }) => {
           this.state.pan.flattenOffset();
           var velocity;
 
@@ -91,13 +91,13 @@ var CheckAsTeacherTinderView = React.createClass({
 
           if (Math.abs(this.state.pan.x._value) > SWIPE_THRESHOLD) {
             Animated.decay(this.state.pan, {
-              velocity: {x: velocity, y: vy},
+              velocity: { x: velocity, y: vy },
               deceleration: 0.98,
             }).start(this.resetState);
             this.markAssistance(this.state.pan.x._value > 0);
           } else {
             Animated.spring(this.state.pan, {
-              toValue: {x: 0, y: 0},
+              toValue: { x: 0, y: 0 },
               friction: 4,
             }).start();
           }
@@ -115,7 +115,7 @@ var CheckAsTeacherTinderView = React.createClass({
 
   resetState() {
     this.goNextStudent();
-    this.state.pan.setValue({x: 0, y: 0});
+    this.state.pan.setValue({ x: 0, y: 0 });
     this.state.enter.setValue(0);
     this.animateEntrance();
   },
@@ -144,7 +144,7 @@ var CheckAsTeacherTinderView = React.createClass({
 
   async pressNo() {
     Animated.spring(this.state.pan, {
-      toValue: {x: -400, y: 0},
+      toValue: { x: -400, y: 0 },
       velocity: 1,
       friction: 4,
     }).start();
@@ -155,7 +155,7 @@ var CheckAsTeacherTinderView = React.createClass({
 
   async pressYes() {
     Animated.spring(this.state.pan, {
-      toValue: {x: 400, y: 0},
+      toValue: { x: 400, y: 0 },
       velocity: 1,
       friction: 4,
     }).start();
@@ -167,15 +167,17 @@ var CheckAsTeacherTinderView = React.createClass({
   async markAssistance(assist) {
     if (assist) {
       this.setState({ yesStudents: this.state.yesStudents.concat([this.state.student]) });
-      var response = await UAI.markStudentAssistance({
-        studentId: this.state.student.idExpediente,
-        token: this.props.token,
-        activityId: this.props.activityId,
-        sessionId: this.props.sessionId,
-      });
     } else {
       this.setState({ noStudents: this.state.noStudents.concat([this.state.student]) });
     }
+    
+    var response = await UAI.markStudentAssistance({
+      assist: assist,
+      studentId: this.state.student.idExpediente,
+      token: this.props.token,
+      activityId: this.props.activityId,
+      sessionId: this.props.sessionId,
+    });
   },
 
   renderCount(num, word) {
@@ -216,22 +218,22 @@ var CheckAsTeacherTinderView = React.createClass({
 
     let [translateX, translateY] = [pan.x, pan.y];
 
-    let rotate = pan.x.interpolate({inputRange: [-200, 0, 200], outputRange: ['-30deg', '0deg', '30deg']});
-    let opacity = pan.x.interpolate({inputRange: [-200, 0, 200], outputRange: [0.5, 1, 0.5]});
+    let rotate = pan.x.interpolate({ inputRange: [-200, 0, 200], outputRange: ['-30deg', '0deg', '30deg'] });
+    let opacity = pan.x.interpolate({ inputRange: [-200, 0, 200], outputRange: [0.5, 1, 0.5] });
     let scale = enter;
 
-    let animatedCardStyles = {transform: [{translateX}, {translateY}, {rotate}, {scale}], opacity};
+    let animatedCardStyles = { transform: [{ translateX }, { translateY }, { rotate }, { scale }], opacity };
 
-    var {height, width} = Dimensions.get('window');
+    var { height, width } = Dimensions.get('window');
     let offsetTop = height / 2;
 
-    let yupOpacity = pan.x.interpolate({inputRange: [0, 150], outputRange: [1, 1]});
-    let yupScale = pan.x.interpolate({inputRange: [0, 150], outputRange: [1, 1.2], extrapolate: 'clamp'});
-    let animatedYupStyles = {transform: [{scale: yupScale}], opacity: yupOpacity, top: offsetTop};
+    let yupOpacity = pan.x.interpolate({ inputRange: [0, 150], outputRange: [1, 1] });
+    let yupScale = pan.x.interpolate({ inputRange: [0, 150], outputRange: [1, 1.2], extrapolate: 'clamp' });
+    let animatedYupStyles = { transform: [{ scale: yupScale }], opacity: yupOpacity, top: offsetTop };
 
-    let nopeOpacity = pan.x.interpolate({inputRange: [-150, 0], outputRange: [1, 1]});
-    let nopeScale = pan.x.interpolate({inputRange: [-150, 0], outputRange: [1.2, 1], extrapolate: 'clamp'});
-    let animatedNopeStyles = {transform: [{scale: nopeScale}], opacity: nopeOpacity, top: offsetTop};
+    let nopeOpacity = pan.x.interpolate({ inputRange: [-150, 0], outputRange: [1, 1] });
+    let nopeScale = pan.x.interpolate({ inputRange: [-150, 0], outputRange: [1.2, 1], extrapolate: 'clamp' });
+    let animatedNopeStyles = { transform: [{ scale: nopeScale }], opacity: nopeOpacity, top: offsetTop };
 
     return (
       <View style={theme.base.container}>

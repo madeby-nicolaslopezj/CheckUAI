@@ -34,7 +34,7 @@ var StudentTinder = React.createClass({
   render: function() {
     return (
       <View style={[MKCardStyles.card]}>
-        <StudentImage student={this.props.student} />
+        <StudentImage student={this.props.student} token={this.props.token} />
         <View style={{ padding: 30 }}>
           <Text style={[theme.texts.subtitle, { marginBottom: 0 }]}>
             {this.props.student.nombre} {this.props.student.apellidoPaterno} {this.props.student.apellidoMaterno}

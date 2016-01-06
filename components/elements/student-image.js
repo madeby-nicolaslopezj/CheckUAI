@@ -1,6 +1,7 @@
 var React = require('react-native');
 var Image = require('react-native-image-progress');
 var Progress = require('react-native-progress');
+var UAI = require('../api/base');
 
 var {
   View,
@@ -10,6 +11,7 @@ var {
 
 var StudentImage = React.createClass({
   propTypes: {
+    token: React.PropTypes.string.isRequired,
     student: React.PropTypes.object.isRequired,
   },
 
@@ -18,9 +20,12 @@ var StudentImage = React.createClass({
   },
 
   render: function() {
+    var token = encodeURIComponent(this.props.token);
+    var source = `${UAI.BaseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`;
+    console.log('Fetch student image', source);
     return (
       <Image
-      source={{ uri: 'http://loremflickr.com/240/320/profile' }}
+      source={{ uri: source }}
       indicator={Progress.CircleSnail}
       indicatorProps={{
       }}
