@@ -84,15 +84,15 @@ var CheckAsTeacherStudentView = React.createClass({
   goBack() {
     var text = this.props.isTeacher ? 'Introduce la contraseña' : 'Introduce el Rut';
     AlertIOS.prompt(text, null, [
-      { text: 'Cancelar' },
-      { text: 'Salir', onPress: (text) => {
+      { text: 'Cancelar', style: 'cancel' },
+      { text: 'Salir', type: 'secure-text', onPress: (text) => {
         if (this.props.isTeacher && text == this.props.password) {
           this.props.navigator.pop();
         } else if (!this.props.isTeacher && text == this.props.rut) {
           this.props.navigator.pop();
         } else {
           var text = this.props.isTeacher ? 'Contraseña incorrecta' : 'Rut incorrecto';
-          AlertIOS.alert(text, null, [{ text: 'Ok' }], 'secure-text');
+          AlertIOS.alert(text, null, [{ text: 'Ok', style: 'cancel' }]);
         }
       }, },
     ]);
@@ -103,12 +103,15 @@ var CheckAsTeacherStudentView = React.createClass({
       if (!error) {
         this.setState({ photo: data, isLoading: true });
 
-        var response = await UAI.getSessionStudents({
+        var response = await UAI.markManualStudentAssistance({
+          assist: true,
           token: this.props.token,
+          activityId: this.props.activityId,
           sessionId: this.props.sessionId,
+          email: this.state.email,
+          password: this.state.password,
+          picture: 'asdf',
         });
-
-        await sleep(500);
 
         this.setState({ photo: null, isLoading: false });
       }
