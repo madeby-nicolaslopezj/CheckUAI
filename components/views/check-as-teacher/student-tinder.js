@@ -37,7 +37,10 @@ var StudentTinder = React.createClass({
         <StudentImage student={this.props.student} token={this.props.token} />
         <View style={{ padding: 30 }}>
           <Text style={[theme.texts.subtitle, { marginBottom: 0 }]}>
-            {this.props.student.nombre} {this.props.student.apellidoPaterno} {this.props.student.apellidoMaterno}
+            {this.props.student.apellidoPaterno} {this.props.student.apellidoMaterno}
+          </Text>
+          <Text style={[theme.texts.subtitle, { marginBottom: 0, marginTop: 10, fontWeight: 'normal' }]}>
+            {this.props.student.nombre}
           </Text>
         </View>
       </View>

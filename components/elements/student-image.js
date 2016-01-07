@@ -15,20 +15,19 @@ var StudentImage = React.createClass({
     student: React.PropTypes.object.isRequired,
   },
 
-  getInitialState() {
-    return {};
+  componentWillReceiveProps: function(nextProps) {
+    this.forceUpdate();
   },
 
-  render: function() {
+  render() {
     var token = encodeURIComponent(this.props.token);
     var source = `${UAI.BaseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`;
     console.log('Fetch student image', source);
     return (
       <Image
+      key={this.props.student.idExpediente}
       source={{ uri: source }}
       indicator={Progress.CircleSnail}
-      indicatorProps={{
-      }}
       style={{
         width: 300,
         height: 300,

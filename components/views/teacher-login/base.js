@@ -29,7 +29,7 @@ var {
 var TeacherLoginView = React.createClass({
   componentDidMount: function() {
     setTimeout(() => {
-      this.onDone();
+      //this.onDone();
     }, 100);
   },
 
@@ -39,7 +39,7 @@ var TeacherLoginView = React.createClass({
       email: 'jorge.villalon@uai.cl',
       password: '1234',
       rut: '5669371-8',
-      isTeacher: false,
+      isTeacher: true,
     };
   },
 

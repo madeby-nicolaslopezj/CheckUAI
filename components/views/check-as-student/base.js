@@ -82,18 +82,24 @@ var CheckAsTeacherStudentView = React.createClass({
   },
 
   goBack() {
-    AlertIOS.prompt('Introduce la contraseña', null, [
+    var text = this.props.isTeacher ? 'Introduce la contraseña' : 'Introduce el Rut';
+    AlertIOS.prompt(text, null, [
       { text: 'Cancelar' },
       { text: 'Salir', onPress: (text) => {
-        if (text == this.props.password) {
+        if (this.props.isTeacher && text == this.props.password) {
           this.props.navigator.pop();
+        } else if (!this.props.isTeacher && text == this.props.rut) {
+          this.props.navigator.pop();
+        } else {
+          var text = this.props.isTeacher ? 'Contraseña incorrecta' : 'Rut incorrecto';
+          AlertIOS.alert(text, null, [{ text: 'Ok' }], 'secure-text');
         }
       }, },
     ]);
   },
 
   async check() {
-    var data = this.refs.camera.capture({rotation: 270}, async (error, data) => {
+    var data = this.refs.camera.capture({ rotation: 270 }, async (error, data) => {
       if (!error) {
         this.setState({ photo: data, isLoading: true });
 
@@ -112,7 +118,7 @@ var CheckAsTeacherStudentView = React.createClass({
   renderPhoto() {
     if (!this.state.photo) return null;
 
-    return <Image source={{uri: this.state.photo}} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]} />;
+    return <Image source={{ uri: this.state.photo }} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]} />;
   },
 
   render() {
@@ -147,7 +153,7 @@ var CheckAsTeacherStudentView = React.createClass({
                     keyboardType="email-address"
                     autoCorrect={false}
                     value={this.state.email}
-                    onChangeText={(email) => this.setState({email})}
+                    onChangeText={(email) => this.setState({ email })}
                   />
                   <MKTextField
                     style={[theme.inputs.textfield]}
@@ -156,7 +162,7 @@ var CheckAsTeacherStudentView = React.createClass({
                     floatingLabelEnabled={true}
                     secureTextEntry={true}
                     value={this.state.password}
-                    onChangeText={(password) => this.setState({password})}
+                    onChangeText={(password) => this.setState({ password })}
                   />
                 </View>
                 <View style={[theme.layouts.col, theme.layouts.center]}>
