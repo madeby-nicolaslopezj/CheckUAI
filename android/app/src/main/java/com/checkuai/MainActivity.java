@@ -1,6 +1,7 @@
 package com.checkuai;
 
 import android.app.Activity;
+import com.rnfs.RNFSPackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.github.xinthink.rnmk.ReactMaterialKitPackage;
@@ -31,6 +32,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModuleName("index.android")
                 .addPackage(new MainReactPackage())
+                .addPackage(new RNFSPackage())
                 .addPackage(new OrientationPackage())
                 .addPackage(new VectorIconsPackage())
                 .addPackage(new ReactMaterialKitPackage())

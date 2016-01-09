@@ -4,7 +4,7 @@ var Progress = require('react-native-progress');
 var Button = require('react-native-button');
 var RNFocal = require('rn-focalpoint');
 var theme = require('../../styles/theme');
-var Checkbox = require('./checkbox');
+var Switch = require('./switch');
 const MK = require('react-native-material-kit');
 
 const {
@@ -128,11 +128,12 @@ var TeacherLoginView = React.createClass({
           <View style={[MKCardStyles.card, { marginBottom: 100 }]}>
             <View style={{ padding: 30 }}>
               {this.renderInputs()}
-              <Checkbox
-                checked={this.state.isTeacher}
+              <Switch
+                isTrue={this.state.isTeacher}
                 onChange={(value) => this.setState({ isTeacher: value })}
-                style={{ marginTop: -10, marginBottom: 10 }}
-                title="Profesor"
+                style={{ marginTop: -10, marginBottom: 20 }}
+                trueLabel="Profesor"
+                falseLabel="Reemplazante"
               />
               <MKButton
                 backgroundColor={MKColor.BlueGrey}

@@ -110,7 +110,7 @@ UAI.markStudentAssistance = async function({ assist, token, studentId, activityI
   return response;
 };
 
-UAI.markManualStudentAssistance = async function({ assist, token, activityId, sessionId, email, password, picture }) {
+UAI.markManualStudentAssistance = async function({ assist, token, activityId, sessionId, email, password, photo }) {
   var response = await this._makeCall({
     method: 'POST',
     path: 'Asistencia/CheckAlumno',
@@ -120,7 +120,7 @@ UAI.markManualStudentAssistance = async function({ assist, token, activityId, se
       seccionId: sessionId,
       email: email,
       password: password,
-      foto: picture || 1234,
+      foto: photo,
     },
   });
   return response;

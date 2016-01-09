@@ -35,6 +35,7 @@ var {
   DeviceEventEmitter,
   TouchableHighlight,
   Easing,
+  NativeModules,
   Image,
 } = React;
 
@@ -99,21 +100,25 @@ var CheckAsTeacherStudentView = React.createClass({
   },
 
   async check() {
-    var data = this.refs.camera.capture({ rotation: 270 }, async (error, data) => {
+    var data = this.refs.camera.capture({ rotation: 270 }, async (error, base64) => {
       if (!error) {
-        this.setState({ photo: data, isLoading: true });
+        this.setState({ photo: base64, isLoading: true });
 
-        var response = await UAI.markManualStudentAssistance({
+        var success = await UAI.markManualStudentAssistance({
           assist: true,
           token: this.props.token,
           activityId: this.props.activityId,
           sessionId: this.props.sessionId,
           email: this.state.email,
           password: this.state.password,
-          picture: 'asdf',
+          photo: base64,
         });
 
-        this.setState({ photo: null, isLoading: false });
+        if (success) {
+          this.setState({ photo: null, isLoading: false, email: '', password: '' });
+        } else {
+          this.setState({ photo: null, isLoading: false });
+        }
       }
     });
   },
@@ -121,13 +126,13 @@ var CheckAsTeacherStudentView = React.createClass({
   renderPhoto() {
     if (!this.state.photo) return null;
 
-    return <Image source={{ uri: this.state.photo }} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]} />;
+    return <Image source={{ isStatic: true, uri: `data:image/jpeg;base64,${this.state.photo}` }} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]} />;
   },
 
   render() {
     return (
       <View style={[theme.base.container, { backgroundColor: 'transparent' }]}>
-        <Camera ref="camera" captureTarget={Camera.constants.CaptureTarget.disk} type={Camera.constants.Type.front} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
+        <Camera ref="camera" captureTarget={Camera.constants.CaptureTarget.memory} type={Camera.constants.Type.front} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
           <Text></Text>
         </Camera>
         {this.renderPhoto()}
