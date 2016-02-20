@@ -1,17 +1,13 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-'use strict';
-
-var React = require('react-native');
+import React from 'react-native';
 var theme = require('./components/styles/theme');
 var TeacherLoginView = require('./components/views/teacher-login/base');
 var TeacherPrepareView = require('./components/views/teacher-prepare/base');
 var CheckAsTeacherView = require('./components/views/check-as-teacher/base');
 var CheckAsTeacherTinderView = require('./components/views/check-as-teacher/tinder');
 var CheckAsStudentView = require('./components/views/check-as-student/base');
-var Orientation = require('react-native-orientation');
+import Orientation from 'react-native-orientation';
+
+console.log(Orientation);
 
 var {
   AppRegistry,
@@ -22,10 +18,11 @@ var {
 var CheckUAI = React.createClass({
 
   componentDidMount() {
-    Orientation.lockToPortrait();
+    //Orientation.lockToPortrait();
   },
 
   renderScene(route, navigator) {
+    console.log('rendering', route.id);
     switch (route.id) {
       case 'teacher-login':
         return <TeacherLoginView navigator={navigator} />;
@@ -53,10 +50,10 @@ var CheckUAI = React.createClass({
     }
   },
 
-  render: function() {
+  render: function () {
     return (
       <Navigator
-        initialRoute={{id: 'teacher-login', index: 0}}
+        initialRoute={{ id: 'teacher-login', index: 0 }}
         renderScene={this.renderScene}
         configureScene={this.configureScene}
         style={theme.base.background}

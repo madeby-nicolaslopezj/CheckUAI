@@ -8,11 +8,12 @@ var theme = require('../../styles/theme');
 var MK = require('react-native-material-kit');
 
 var {
-  MKCardStyles,
   MKTextField,
   MKButton,
   MKColor,
 } = MK;
+
+import cardStyles from '../../styles/card';
 
 var {
   StyleSheet,
@@ -25,6 +26,7 @@ var {
 
 var TeacherPrepareView = React.createClass({
   goNext(sessions) {
+    if (!sessions[0] || !this.state.activities[0]) return;
     this.setState({ selectedSession: sessions[0].idSeccion });
     this.setState({ selectedActivity: this.state.activities[0].id });
 
@@ -57,7 +59,7 @@ var TeacherPrepareView = React.createClass({
     };
   },
 
-  componentDidMount: async function() {
+  componentDidMount: async function () {
     try {
       var sessions = [];
 
@@ -129,7 +131,7 @@ var TeacherPrepareView = React.createClass({
     return (
       <ScrollView style={theme.base.scrollView} contentContainerStyle={theme.base.scrollViewContent}>
         <View style={[theme.layouts.medium, { marginTop: 30, marginBottom: 30 }]}>
-          <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>
+          <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
             <Text style={[theme.texts.subtitle, { marginLeft: 10 }]}>{'Selecciona una clase'}</Text>
             {
               this.state.isLoading ?
@@ -140,7 +142,7 @@ var TeacherPrepareView = React.createClass({
             }
           </View>
 
-          <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>
+          <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
             <Text style={[theme.texts.subtitle, { marginLeft: 10 }]}>{'Selecciona el tipo'}</Text>
             <Select options={activitiesOptions} selected={this.state.selectedActivity} onSelect={(activityId) => {
               this.setState({ selectedActivity: activityId });
@@ -148,7 +150,7 @@ var TeacherPrepareView = React.createClass({
           </View>
 
 
-          <View style={[MKCardStyles.card, { marginTop: 20, padding: 30 }]}>
+          <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
             <Text style={[theme.texts.subtitle]}>{'Marcar asistencia como'}</Text>
 
             <View style={theme.layouts.row}>

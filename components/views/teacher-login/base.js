@@ -5,14 +5,14 @@ var Button = require('react-native-button');
 var RNFocal = require('rn-focalpoint');
 var theme = require('../../styles/theme');
 var Switch = require('./switch');
-const MK = require('react-native-material-kit');
 
-const {
-  MKCardStyles,
+import {
   MKTextField,
   MKButton,
   MKColor,
-} = MK;
+} from 'react-native-material-kit';
+
+import cardStyles from '../../styles/card';
 
 var {
   StyleSheet,
@@ -27,7 +27,7 @@ var {
 } = React;
 
 var TeacherLoginView = React.createClass({
-  componentDidMount: function() {
+  componentDidMount: function () {
     setTimeout(() => {
       //this.onDone();
     }, 100);
@@ -125,7 +125,7 @@ var TeacherLoginView = React.createClass({
           <View style={[theme.base.logoContainer, { marginBottom: 70, marginTop: -200 }]}>
               <Image style={theme.base.logo} resizeMode={Image.resizeMode.contain} source={require('../../../assets/logo.png')} />
           </View>
-          <View style={[MKCardStyles.card, { marginBottom: 100 }]}>
+          <View style={[cardStyles, { marginBottom: 100 }]}>
             <View style={{ padding: 30 }}>
               {this.renderInputs()}
               <Switch

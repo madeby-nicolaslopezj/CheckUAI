@@ -3,15 +3,17 @@ var React = require('react-native');
 var theme = require('../styles/theme');
 
 var {
+  Text,
   View,
   StyleSheet,
 } = React;
 
 var Spinner = React.createClass({
   render() {
+    //<Progress.CircleSnail size={30} indeterminate={true} />
     return (
       <View style={styles.loadingContainer}>
-        <Progress.CircleSnail size={30} indeterminate={true} />
+        <Text>Loading..</Text>
       </View>
     );
   },
