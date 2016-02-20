@@ -25,6 +25,7 @@ var {
 
 var TeacherPrepareView = React.createClass({
   goNext(sessions) {
+    if (!sessions[0]) return;
     this.setState({ selectedSession: sessions[0].idSeccion });
     this.setState({ selectedActivity: this.state.activities[0].id });
 
@@ -57,7 +58,7 @@ var TeacherPrepareView = React.createClass({
     };
   },
 
-  componentDidMount: async function() {
+  componentDidMount: async function () {
     try {
       var sessions = [];
 
