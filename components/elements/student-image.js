@@ -23,7 +23,7 @@ var StudentImage = React.createClass({
     var token = encodeURIComponent(this.props.token);
     var source = `${UAI.BaseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`;
 
-    //console.log('Fetch student image', source);
+    console.log('Fetch student image', source);
     return (
       <Image
       key={this.props.student.idExpediente}

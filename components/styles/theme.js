@@ -51,12 +51,12 @@ var theme = {
     small: {
       width: SMALL_CONTAINER_WIDTH,
 
-      //backgroundColor: '#ddd',
+      //BackgroundColor: '#ddd',
     },
     medium: {
       width: MEDIUM_CONTAINER_WIDTH,
 
-      //backgroundColor: '#ddd',
+      //BackgroundColor: '#ddd',
     },
     row: {
       flex: 1,
@@ -159,6 +159,19 @@ var theme = {
     container: {
       width: SMALL_CONTAINER_WIDTH,
       height: SMALL_CONTAINER_WIDTH * 1.3,
+    },
+  }),
+  card: StyleSheet.create({
+    layout: {
+      backgroundColor: 'white',
+      borderRadius: 2,
+      shadowColor: 'rgba(0,0,0,.12)',
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 2,
+      },
     },
   }),
 };
