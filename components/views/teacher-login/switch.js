@@ -36,7 +36,7 @@ module.exports = React.createClass({
         <SegmentedControlIOS
           values={[this.props.falseLabel, this.props.trueLabel]}
           selectedIndex={this.props.isTrue ? 1 : 0}
-          tintColor={MKColor.Indigo}
+          tintColor={MKColor.BlueGrey}
           onChange={(index) => this.props.onChange(!this.props.isTrue)}
           />
       </View>

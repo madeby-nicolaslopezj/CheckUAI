@@ -5,6 +5,7 @@ import Button from 'react-native-button';
 import RNFocal from 'rn-focalpoint';
 import layouts from '../../styles/layouts';
 import inputs from '../../styles/inputs';
+import buttons from '../../styles/buttons';
 import images from '../../styles/images';
 import Switch from './switch';
 
@@ -82,8 +83,10 @@ export default class Login extends React.Component {
   renderRutInput() {
     if (this.state.isTeacher) return;
     return (
-      <TextInput
+      <MKTextField
         style={inputs.textfield}
+        floatingLabelEnabled={true}
+        highlightColor={MKColor.Grey}
         placeholder='Rut'
         value={this.state.rut}
         onChangeText={(rut) => this.setState({ rut })}
@@ -95,14 +98,18 @@ export default class Login extends React.Component {
     if (!this.state.isTeacher) return;
     return (
       <View style={{ height: 200 }}>
-        <TextInput
+        <MKTextField
           style={inputs.textfield}
+          floatingLabelEnabled={true}
+          tintColor={MKColor.Grey}
           placeholder='Email'
           onChangeText={(email) => this.setState({ email })}
           value={this.state.email}
         />
-        <TextInput
+        <MKTextField
           style={inputs.textfield}
+          floatingLabelEnabled={true}
+          highlightColor={MKColor.Grey}
           placeholder='Contraseña'
           secureTextEntry={true}
           onChangeText={(password) => this.setState({ password })}
@@ -121,7 +128,7 @@ export default class Login extends React.Component {
   }
 
   renderButton() {
-    var content = <Text>ENTRAR</Text>;
+    var content = <Text style={buttons.text}>ENTRAR</Text>;
     if (this.state.isLoading) {
       content = (
         <ActivityIndicatorIOS
@@ -132,16 +139,13 @@ export default class Login extends React.Component {
       );
     }
     return (
-      <Text>Button</Text>
-    )
-    return (
       <MKButton
         backgroundColor={MKColor.BlueGrey}
         shadowRadius={2}
         shadowOpacity={.5}
         shadowColor='black'
         onPress={this.onDone}
-        style={[theme.button.base]}>
+        style={buttons.base}>
         {content}
       </MKButton>
     )
