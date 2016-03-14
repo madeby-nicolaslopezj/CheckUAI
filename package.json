@@ -14,6 +14,7 @@
     "react-native-blur": "^0.7.8",
     "react-native-button": "latest",
     "react-native-camera": "^0.3.8",
+    "react-native-flexbox-grid": "0.0.11",
     "react-native-icons": "^0.7.0",
     "react-native-image-progress": "^0.4.0",
     "react-native-material-kit": "^0.3.0",

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  base: {
+  login: {
     height: 42,
     padding: 12,
     flexDirection: 'row',

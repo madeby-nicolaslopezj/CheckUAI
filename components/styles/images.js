@@ -2,13 +2,12 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   logoContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 70,
-    marginTop: -200,
+    flexDirection: 'row',
+    marginBottom: 50,
+    marginTop: 50,
   },
   logo: {
+    flex: 1,
     height: 100,
-    width: 300 - 10,
   },
 })

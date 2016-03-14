@@ -3,6 +3,7 @@ import UAI from '../../api/base';
 import Progress from 'react-native-progress';
 import Button from 'react-native-button';
 import RNFocal from 'rn-focalpoint';
+import { Column as Col, Row } from 'react-native-flexbox-grid';
 import layouts from '../../styles/layouts';
 import inputs from '../../styles/inputs';
 import buttons from '../../styles/buttons';
@@ -85,8 +86,7 @@ export default class Login extends React.Component {
     return (
       <MKTextField
         style={inputs.textfield}
-        floatingLabelEnabled={true}
-        highlightColor={MKColor.Grey}
+        highlightColor={MKColor.BlueGrey}
         placeholder='Rut'
         value={this.state.rut}
         onChangeText={(rut) => this.setState({ rut })}
@@ -97,20 +97,18 @@ export default class Login extends React.Component {
   renderTeacherInputs() {
     if (!this.state.isTeacher) return;
     return (
-      <View style={{ height: 200 }}>
+      <View>
         <MKTextField
           style={inputs.textfield}
-          floatingLabelEnabled={true}
-          tintColor={MKColor.Grey}
+          highlightColor={MKColor.BlueGrey}
           placeholder='Email'
           onChangeText={(email) => this.setState({ email })}
           value={this.state.email}
         />
         <MKTextField
           style={inputs.textfield}
-          floatingLabelEnabled={true}
-          highlightColor={MKColor.Grey}
           placeholder='Contraseña'
+          highlightColor={MKColor.BlueGrey}
           secureTextEntry={true}
           onChangeText={(password) => this.setState({ password })}
           value={this.state.password}
@@ -121,9 +119,13 @@ export default class Login extends React.Component {
 
   renderLogo() {
     return (
-      <View style={images.logoContainer}>
-        <Image style={images.logo} resizeMode={Image.resizeMode.contain} source={require('../../../assets/logo.png')} />
-      </View>
+      <Row>
+        <Col smOffset={1} sm={10} mdOffset={1} md={10} lgOffset={0} lg={12}>
+          <View style={images.logoContainer}>
+            <Image style={images.logo} resizeMode={Image.resizeMode.contain} source={require('../../../assets/logo.png')} />
+          </View>
+        </Col>
+      </Row>
     );
   }
 
@@ -144,8 +146,8 @@ export default class Login extends React.Component {
         shadowRadius={2}
         shadowOpacity={.5}
         shadowColor='black'
-        onPress={this.onDone}
-        style={buttons.base}>
+        onPress={this.onDone.bind(this)}
+        style={buttons.login}>
         {content}
       </MKButton>
     )
@@ -154,29 +156,31 @@ export default class Login extends React.Component {
   renderForm() {
     return (
       <View>
-        <View style={{ padding: 30 }}>
+        <View style={{ height: 150 }}>
           {this.renderTeacherInputs()}
           {this.renderRutInput()}
-          <Switch
-            isTrue={this.state.isTeacher}
-            onChange={(value) => this.setState({ isTeacher: value })}
-            style={{ marginTop: -10, marginBottom: 20 }}
-            trueLabel='Profesor'
-            falseLabel='Colaborador'
-          />
         </View>
+        <Switch
+          isTrue={this.state.isTeacher}
+          onChange={(value) => this.setState({ isTeacher: value })}
+          style={{ marginBottom: 30 }}
+          trueLabel='Profesor'
+          falseLabel='Colaborador'
+        />
       </View>
     );
   }
 
   render() {
     return (
-      <View style={layouts.container}>
-        <View style={layouts.small}>
-          {this.renderLogo()}
-          {this.renderForm()}
-          {this.renderButton()}
-        </View>
+      <View style={layouts.centerContainer}>
+        <Row>
+          <Col smOffset={1} sm={10} mdOffset={3} md={6} lgOffset={4} lg={4}>
+            {this.renderLogo()}
+            {this.renderForm()}
+            {this.renderButton()}
+          </Col>
+        </Row>
       </View>
     );
   }
