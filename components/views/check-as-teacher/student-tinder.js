@@ -2,8 +2,6 @@ var React = require('react-native');
 var Image = require('react-native-image-progress');
 var Progress = require('react-native-progress');
 import StudentImage from '../../elements/student-image';
-var CheckButton = require('./student-button');
-var theme = require('../../styles/theme');
 var MK = require('react-native-material-kit');
 import layouts from '../../styles/layouts';
 import inputs from '../../styles/inputs';
@@ -12,7 +10,6 @@ import images from '../../styles/images';
 import texts from '../../styles/texts';
 
 var {
-  MKCardStyles,
   MKTextField,
   MKButton,
   MKColor,

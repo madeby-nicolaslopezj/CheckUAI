@@ -97,6 +97,18 @@ UAI.getSessionStudents = async function({ token, sessionId }) {
   return response.Alumnos;
 };
 
+UAI.getSessionAssistance = async function({ token, sessionId }) {
+  var response = await this._makeCall({
+    method: 'POST',
+    path: 'Asistencia/ListaAsistentes',
+    params: {
+      token: token,
+      idSeccion: sessionId,
+    },
+  });
+  return response;
+};
+
 UAI.startSession = async function({ token, sessionId }) {
   var response = await this._makeCall({
     method: 'POST',
