@@ -66,7 +66,7 @@ export default class TeacherPrepareView extends React.Component {
     this.setState({ selectedActivity: this.state.activities[0].id });
 
     setTimeout(() => {
-      //This.asStudent();
+      this.asTeacher();
     }, 200);
   }
 
@@ -141,7 +141,7 @@ export default class TeacherPrepareView extends React.Component {
             shadowRadius={2}
             shadowOpacity={.5}
             shadowColor='black'
-            onPress={this.asTeacher}
+            onPress={this.asTeacher.bind(this)}
             style={[buttons.base, layouts.col, { marginRight: 10 }]}
             >
             <Text pointerEvents='none' style={texts.button}>
@@ -153,7 +153,7 @@ export default class TeacherPrepareView extends React.Component {
             shadowRadius={2}
             shadowOpacity={.5}
             shadowColor='black'
-            onPress={this.asStudent}
+            onPress={this.asStudent.bind(this)}
             style={[buttons.base, layouts.col, { marginLeft: 10 }]}
             >
             <Text pointerEvents='none' style={texts.button}>
@@ -168,7 +168,7 @@ export default class TeacherPrepareView extends React.Component {
             shadowOpacity={.5}
             shadowColor='black'
             disabled={true}
-            onPress={this.viewAssistants}
+            onPress={this.viewAssistants.bind(this)}
             style={[buttons.base, layouts.col]}
             >
             <Text pointerEvents='none' style={texts.button}>
@@ -186,7 +186,6 @@ export default class TeacherPrepareView extends React.Component {
         underlayColor={'transparent'}
         activeOpacity={0.6}
         onPress={this.goBack.bind(this)}
-        style={{justifyContent: 'center', backgroundColor: 'blue'}}
         style={{ marginTop: 10 }}>
         <Text style={texts.buttonClean}>
           Salir

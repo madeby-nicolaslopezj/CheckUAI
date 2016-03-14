@@ -43,7 +43,7 @@ export default class Login extends React.Component {
     };
 
     setTimeout(() => {
-      this.onDone();
+      //This.onDone();
     }, 100);
   }
 

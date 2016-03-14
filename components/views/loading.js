@@ -1,17 +1,22 @@
 var Progress = require('react-native-progress');
 var React = require('react-native');
-var theme = require('../styles/theme');
+import layouts from '../styles/layouts';
 
 var {
   View,
   StyleSheet,
+  ActivityIndicatorIOS,
 } = React;
 
 var LoadingView = React.createClass({
   render() {
     return (
-      <View style={theme.base.container}>
-        <Progress.CircleSnail size={60} indeterminate={true} />
+      <View style={layouts.centerContainer}>
+        <ActivityIndicatorIOS
+          animating={true}
+          style={[]}
+          color='white'
+        />
       </View>
     );
   },

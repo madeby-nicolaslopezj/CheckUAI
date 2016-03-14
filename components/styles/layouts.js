@@ -4,7 +4,8 @@ const backgroundColor = '#eee';
 
 export default StyleSheet.create({
   centerContainer: {
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'flex-start',
     backgroundColor,
   },
   small: {

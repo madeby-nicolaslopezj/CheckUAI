@@ -20,7 +20,7 @@
     "react-native-material-kit": "^0.3.0",
     "react-native-material-switch": "0.0.4",
     "react-native-orientation": "^1.14.0",
-    "react-native-progress": "^2.2.0",
+    "react-native-progress": "^2.2.1",
     "react-native-tableview-simple": "^0.4.0",
     "react-native-vector-icons": "^1.0.4",
     "rn-focalpoint": "^1.0.1"

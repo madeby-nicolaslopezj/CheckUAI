@@ -3,7 +3,7 @@ import theme from './components/styles/theme';
 import TeacherLoginView from './components/views/teacher-login/base';
 import TeacherPrepareView from './components/views/teacher-prepare/base';
 var CheckAsTeacherView = require('./components/views/check-as-teacher/base');
-var CheckAsTeacherTinderView = require('./components/views/check-as-teacher/tinder');
+import CheckAsTeacherTinderView from './components/views/check-as-teacher/tinder';
 var CheckAsStudentView = require('./components/views/check-as-student/base');
 import Orientation from 'react-native-orientation';
 
