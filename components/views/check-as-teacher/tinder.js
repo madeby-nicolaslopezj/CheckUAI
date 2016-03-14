@@ -59,6 +59,20 @@ export default class CheckAsTeacherTinderView extends React.Component {
     };
   }
 
+  async componentDidMount() {
+    var response = await UAI.startSession({
+      token: this.props.token,
+      sessionId: this.props.sessionId,
+    });
+  }
+
+  async componentWillUnmount() {
+    var response = await UAI.endSession({
+      token: this.props.token,
+      sessionId: this.props.sessionId,
+    });
+  }
+
   getSwipeThreshold() {
     const { height, width } = Dimensions.get('window');
     return width / 4;

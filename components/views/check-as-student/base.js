@@ -55,7 +55,6 @@ const propTypes = {
   token: React.PropTypes.string.isRequired,
   activityId: React.PropTypes.string.isRequired,
   password: React.PropTypes.string.isRequired,
-  isTeacher: React.PropTypes.bool.isRequired,
   rut: React.PropTypes.string,
 };
 
@@ -75,6 +74,20 @@ export default class CheckAsTeacherStudentView extends React.Component {
     DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
   }
 
+  async componentDidMount() {
+    var response = await UAI.startSession({
+      token: this.props.token,
+      sessionId: this.props.sessionId,
+    });
+  }
+
+  async componentWillUnmount() {
+    var response = await UAI.endSession({
+      token: this.props.token,
+      sessionId: this.props.sessionId,
+    });
+  }
+
   keyboardWillShow(e) {
     Animated.timing(this.state.keyboardHeight, {
       toValue: e.endCoordinates.height - 5,
@@ -92,17 +105,13 @@ export default class CheckAsTeacherStudentView extends React.Component {
   }
 
   goBack() {
-    var text = this.props.isTeacher ? 'Introduce la contraseña' : 'Introduce el Rut';
-    AlertIOS.prompt(text, null, [
+    AlertIOS.prompt('Introduce la contraseña', null, [
       { text: 'Cancelar', style: 'cancel' },
       { text: 'Salir', type: 'secure-text', onPress: (text) => {
-        if (this.props.isTeacher && text == this.props.password) {
-          this.props.navigator.pop();
-        } else if (!this.props.isTeacher && text == this.props.rut) {
+        if (text == this.props.password) {
           this.props.navigator.pop();
         } else {
-          var text = this.props.isTeacher ? 'Contraseña incorrecta' : 'Rut incorrecto';
-          AlertIOS.alert(text, null, [{ text: 'Ok', style: 'cancel' }]);
+          AlertIOS.alert('Contraseña incorrecta', null, [{ text: 'Ok', style: 'cancel' }]);
         }
       }, },
     ], 'secure-text');

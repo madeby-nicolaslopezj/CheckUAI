@@ -7,7 +7,7 @@ import CheckAsTeacherTinderView from './components/views/check-as-teacher/tinder
 import CheckAsStudentView from './components/views/check-as-student/base';
 import Orientation from 'react-native-orientation';
 
-const debug = false;
+const debug = true;
 
 var {
   AppRegistry,

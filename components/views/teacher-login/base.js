@@ -44,7 +44,7 @@ export default class Login extends React.Component {
 
     setTimeout(() => {
       if (this.props.debug) {
-        this.onDone();
+        //This.onDone();
       }
     }, 100);
   }
@@ -68,6 +68,7 @@ export default class Login extends React.Component {
       } else {
         token = await UAI.loginColaborator({
           rut: this.state.rut,
+          password: this.state.password,
         });
       }
 
@@ -90,13 +91,23 @@ export default class Login extends React.Component {
   renderRutInput() {
     if (this.state.isTeacher) return;
     return (
-      <MKTextField
-        style={inputs.textfield}
-        highlightColor={MKColor.BlueGrey}
-        placeholder='Rut'
-        value={this.state.rut}
-        onChangeText={(rut) => this.setState({ rut })}
-      />
+      <View>
+        <MKTextField
+          style={inputs.textfield}
+          highlightColor={MKColor.BlueGrey}
+          placeholder='Rut'
+          value={this.state.rut}
+          onChangeText={(rut) => this.setState({ rut })}
+        />
+        <MKTextField
+          style={inputs.textfield}
+          placeholder='Contraseña'
+          highlightColor={MKColor.BlueGrey}
+          secureTextEntry={true}
+          onChangeText={(password) => this.setState({ password })}
+          value={this.state.password}
+        />
+      </View>
     );
   }
 
