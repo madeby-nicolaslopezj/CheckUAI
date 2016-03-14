@@ -9,6 +9,13 @@ var AppleEasing = require('react-apple-easing');
 var Icon = require('react-native-vector-icons/MaterialIcons');
 var Orientation = require('react-native-orientation');
 var Spinner = require('../spinner');
+import Toast from '@remobile/react-native-toast';
+import { Column as Col, Row } from 'react-native-flexbox-grid';
+import layouts from '../../styles/layouts';
+import inputs from '../../styles/inputs';
+import buttons from '../../styles/buttons';
+import images from '../../styles/images';
+import texts from '../../styles/texts';
 
 var {
   BlurView,
@@ -43,28 +50,30 @@ function sleep(ms = 0) {
   return new Promise(r => setTimeout(r, ms));
 }
 
-var CheckAsTeacherStudentView = React.createClass({
-  propTypes: {
-    sessionId: React.PropTypes.number.isRequired,
-    token: React.PropTypes.string.isRequired,
-    activityId: React.PropTypes.string.isRequired,
-    password: React.PropTypes.string.isRequired,
-    isTeacher: React.PropTypes.bool.isRequired,
-    rut: React.PropTypes.string,
-  },
+const propTypes = {
+  sessionId: React.PropTypes.number.isRequired,
+  token: React.PropTypes.string.isRequired,
+  activityId: React.PropTypes.string.isRequired,
+  password: React.PropTypes.string.isRequired,
+  isTeacher: React.PropTypes.bool.isRequired,
+  rut: React.PropTypes.string,
+};
 
-  getInitialState() {
-    return {
+export default class CheckAsTeacherStudentView extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
       isLoading: false,
       keyboardHeight: new Animated.Value(0),
       photo: null,
     };
-  },
+  }
 
   componentWillMount() {
-    DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow);
-    DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide);
-  },
+    DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
+    DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
+  }
 
   keyboardWillShow(e) {
     Animated.timing(this.state.keyboardHeight, {
@@ -72,7 +81,7 @@ var CheckAsTeacherStudentView = React.createClass({
       duration: 250,
       easing: AppleEasing.easeOut,
     }).start();
-  },
+  }
 
   keyboardWillHide(e) {
     Animated.timing(this.state.keyboardHeight, {
@@ -80,7 +89,7 @@ var CheckAsTeacherStudentView = React.createClass({
       duration: 250,
       easing: AppleEasing.easeOut,
     }).start();
-  },
+  }
 
   goBack() {
     var text = this.props.isTeacher ? 'Introduce la contraseña' : 'Introduce el Rut';
@@ -96,96 +105,133 @@ var CheckAsTeacherStudentView = React.createClass({
           AlertIOS.alert(text, null, [{ text: 'Ok', style: 'cancel' }]);
         }
       }, },
-    ]);
-  },
+    ], 'secure-text');
+  }
 
   async check() {
+    this.setState({ isLoading: true });
+    var response = await UAI.markManualStudentAssistance({
+      assist: true,
+      token: this.props.token,
+      activityId: this.props.activityId,
+      sessionId: this.props.sessionId,
+      email: this.state.email,
+      password: this.state.password,
+      photo: this.state.photo,
+    });
+
+    if (response.respuesta == 'OK') {
+      this.setState({ photo: null, isLoading: false, email: '', password: '' });
+      Toast.showShortCenter('Asistencia marcada');
+    } else {
+      this.setState({ photo: null, isLoading: false });
+      Toast.showShortCenter(`Error: ${response.respuesta}`);
+    }
+  }
+
+  async photo() {
     var data = this.refs.camera.capture({ rotation: 270 }, async (error, base64) => {
       if (!error) {
-        this.setState({ photo: base64, isLoading: true });
-
-        var success = await UAI.markManualStudentAssistance({
-          assist: true,
-          token: this.props.token,
-          activityId: this.props.activityId,
-          sessionId: this.props.sessionId,
-          email: this.state.email,
-          password: this.state.password,
-          photo: base64,
-        });
-
-        if (success) {
-          this.setState({ photo: null, isLoading: false, email: '', password: '' });
-        } else {
-          this.setState({ photo: null, isLoading: false });
-        }
+        this.setState({ photo: base64 });
       }
     });
-  },
+  }
+
+  cancelPhoto() {
+    this.setState({ photo: null });
+  }
 
   renderPhoto() {
     if (!this.state.photo) return null;
+    return <Image source={{ isStatic: true, uri: `data:image/jpeg;base64,${this.state.photo}` }} style={[layouts.centerContainer, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]} />;
+  }
 
-    return <Image source={{ isStatic: true, uri: `data:image/jpeg;base64,${this.state.photo}` }} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]} />;
-  },
+  renderActionButton() {
+    if (this.state.photo) {
+      return (
+        <View>
+          <TouchableHighlight
+            underlayColor={'transparent'}
+            activeOpacity={0.6}
+            onPress={this.cancelPhoto.bind(this)}
+            style={{ marginBottom: 10 }}>
+            <View>
+              <Icon name='replay' size={30} color='#333' />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor={'transparent'}
+            activeOpacity={0.6}
+            onPress={this.check.bind(this)}
+            style={{ marginTop: 10 }}>
+            <View>
+              <Icon name='check' size={30} color='#333' />
+            </View>
+          </TouchableHighlight>
+        </View>
+      )
+    }
+
+    return (
+      <TouchableHighlight
+        underlayColor={'transparent'}
+        activeOpacity={0.6}
+        onPress={this.photo.bind(this)}
+        style={{ marginTop: 10 }}>
+        <View>
+          <Icon name='photo-camera' size={30} color='#333' />
+        </View>
+      </TouchableHighlight>
+    );
+  }
 
   render() {
     return (
-      <View style={[theme.base.container, { backgroundColor: 'transparent' }]}>
-        <Camera ref="camera" captureTarget={Camera.constants.CaptureTarget.memory} type={Camera.constants.Type.front} style={[theme.base.container, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
+      <View style={[layouts.centerContainer, { backgroundColor: 'transparent' }]}>
+        <Camera ref='camera' captureTarget={Camera.constants.CaptureTarget.memory} type={Camera.constants.Type.front} style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
           <Text></Text>
         </Camera>
         {this.renderPhoto()}
         <View style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
-          <Animated.View style={[theme.layouts.bottomIndicator, { bottom: this.state.keyboardHeight, padding: 0 }]}>
-            <BlurView blurType="xlight" style={[theme.layouts.bottomIndicator, { bottom: 0, paddingLeft: 0, paddingRight: 0 }]}>
-              <View style={[theme.layouts.row]}>
-                <View style={[theme.layouts.col, theme.layouts.center]}>
+          <Animated.View style={[layouts.bottomIndicator, { bottom: this.state.keyboardHeight, padding: 0 }]}>
+            <BlurView blurType='xlight' style={[layouts.bottomIndicator, { bottom: 0, paddingLeft: 0, paddingRight: 0 }]}>
+              <View style={[layouts.row]}>
+                <View style={[{ flex: 0.2 }, layouts.center]}>
                   <TouchableHighlight
                     underlayColor={'transparent'}
                     activeOpacity={0.6}
-                    onPress={this.goBack}
-                    style={[theme.button.touchLight, { marginTop: 10 }]}>
-                    <View style={[theme.button.base, theme.button.link]}>
-                      <Icon style={[theme.button.content, theme.button.linkContent]} name="close" size={30} color="#333" />
+                    onPress={this.goBack.bind(this)}
+                    style={{ marginTop: 10 }}>
+                    <View>
+                      <Icon name='close' size={30} color='#333' />
                     </View>
                   </TouchableHighlight>
                 </View>
-                <View style={[theme.layouts.small]}>
+                <View style={{ flex: 0.6 }}>
                   <MKTextField
-                    style={[theme.inputs.textfield]}
+                    style={inputs.textfield}
                     tintColor={MKColor.BlueGrey}
-                    placeholder="Email"
-                    floatingLabelEnabled={true}
-                    autoCapitalize="none"
-                    keyboardType="email-address"
+                    placeholder='Email'
+                    autoCapitalize='none'
+                    keyboardType='email-address'
                     autoCorrect={false}
                     value={this.state.email}
                     onChangeText={(email) => this.setState({ email })}
                   />
                   <MKTextField
-                    style={[theme.inputs.textfield]}
+                    style={inputs.textfield}
                     tintColor={MKColor.BlueGrey}
-                    placeholder="Contraseña"
-                    floatingLabelEnabled={true}
+                    placeholder='Contraseña'
                     secureTextEntry={true}
                     value={this.state.password}
                     onChangeText={(password) => this.setState({ password })}
                   />
                 </View>
-                <View style={[theme.layouts.col, theme.layouts.center]}>
+                <View style={[{ flex: 0.2 }, layouts.center]}>
                   {
                     (this.state.isLoading) ?
                     <Spinner /> :
-                    <TouchableHighlight
-                      underlayColor={'transparent'}
-                      activeOpacity={0.6}
-                      onPress={this.check}
-                      style={[theme.button.touchLight, { marginTop: 10 }]}>
-                      <View style={[theme.button.base, theme.button.link]}>
-                        <Icon style={[theme.button.content, theme.button.linkContent]} name="check" size={30} color="#333" />
-                      </View>
-                    </TouchableHighlight>
+                    this.renderActionButton()
                   }
                 </View>
               </View>
@@ -194,7 +240,5 @@ var CheckAsTeacherStudentView = React.createClass({
         </View>
       </View>
     );
-  },
-});
-
-module.exports = CheckAsTeacherStudentView;
+  }
+};

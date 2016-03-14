@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const backgroundColor = '#eee';
 
@@ -26,5 +26,19 @@ export default StyleSheet.create({
     paddingVertical: 30,
     justifyContent: 'center',
     backgroundColor,
+  },
+  bottomIndicator: {
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    bottom: 20,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })

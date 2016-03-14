@@ -301,7 +301,7 @@ export default class CheckAsTeacherTinderView extends React.Component {
       return <LoadingView/>;
     }
 
-    if (this.state.ready || true) {
+    if (this.state.ready) {
       return this.renderReady();
     }
 

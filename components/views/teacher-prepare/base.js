@@ -66,7 +66,7 @@ export default class TeacherPrepareView extends React.Component {
     this.setState({ selectedActivity: this.state.activities[0].id });
 
     setTimeout(() => {
-      this.asTeacher();
+      this.asStudent();
     }, 200);
   }
 
@@ -88,7 +88,9 @@ export default class TeacherPrepareView extends React.Component {
 
       this.setState({ sessions, isLoading: false });
       setTimeout(() => {
-        this.goNext(sessions);
+        if (this.props.debug) {
+          this.goNext(sessions);
+        }
       }, 400);
     } catch (error) {
       AlertIOS.alert('Error', error.message);

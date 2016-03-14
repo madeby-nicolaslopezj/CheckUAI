@@ -4,8 +4,10 @@ import TeacherLoginView from './components/views/teacher-login/base';
 import TeacherPrepareView from './components/views/teacher-prepare/base';
 var CheckAsTeacherView = require('./components/views/check-as-teacher/base');
 import CheckAsTeacherTinderView from './components/views/check-as-teacher/tinder';
-var CheckAsStudentView = require('./components/views/check-as-student/base');
+import CheckAsStudentView from './components/views/check-as-student/base';
 import Orientation from 'react-native-orientation';
+
+const debug = false;
 
 var {
   AppRegistry,
@@ -23,17 +25,17 @@ var CheckUAI = React.createClass({
     console.log('rendering', route.id);
     switch (route.id) {
       case 'teacher-login':
-        return <TeacherLoginView navigator={navigator} />;
+        return <TeacherLoginView debug={debug} navigator={navigator} />;
       case 'teacher-prepare':
-        return <TeacherPrepareView navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} />;
+        return <TeacherPrepareView debug={debug} navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} />;
       case 'check-as-teacher':
-        return <CheckAsTeacherView navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
+        return <CheckAsTeacherView debug={debug} navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
       case 'check-as-teacher-tinder':
-        return <CheckAsTeacherTinderView navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
+        return <CheckAsTeacherTinderView debug={debug} navigator={navigator} token={route.token} activityId={route.activityId} sessionId={route.sessionId}/>;
       case 'check-as-student':
-        return <CheckAsStudentView navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} activityId={route.activityId} sessionId={route.sessionId}/>;
+        return <CheckAsStudentView debug={debug} navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} activityId={route.activityId} sessionId={route.sessionId}/>;
       default:
-        return <Text>Error</Text>;
+        return <Text>View not found</Text>;
     }
   },
 

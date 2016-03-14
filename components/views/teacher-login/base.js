@@ -36,14 +36,16 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
       isLoading: false,
-      email: 'jorge.villalon@uai.cl',
-      password: '1234',
-      rut: '5669371-8',
+      email: this.props.debug ? 'jorge.villalon@uai.cl' : '',
+      password: this.props.debug ? '1234' : '',
+      rut: this.props.debug ? '5669371-8' : '',
       isTeacher: true,
     };
 
     setTimeout(() => {
-      //This.onDone();
+      if (this.props.debug) {
+        this.onDone();
+      }
     }, 100);
   }
 
@@ -106,6 +108,9 @@ export default class Login extends React.Component {
           style={inputs.textfield}
           highlightColor={MKColor.BlueGrey}
           placeholder='Email'
+          autoCapitalize='none'
+          keyboardType='email-address'
+          autoCorrect={false}
           onChangeText={(email) => this.setState({ email })}
           value={this.state.email}
         />

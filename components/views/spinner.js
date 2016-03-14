@@ -6,14 +6,18 @@ var {
   Text,
   View,
   StyleSheet,
+  ActivityIndicatorIOS,
 } = React;
 
 var Spinner = React.createClass({
   render() {
-    //<Progress.CircleSnail size={30} indeterminate={true} />
     return (
       <View style={styles.loadingContainer}>
-        <Text>Loading..</Text>
+        <ActivityIndicatorIOS
+          animating={true}
+          style={[]}
+          color='black'
+        />
       </View>
     );
   },
