@@ -1,13 +1,11 @@
 import React from 'react-native';
-var theme = require('./components/styles/theme');
-var TeacherLoginView = require('./components/views/teacher-login/base');
+import theme from './components/styles/theme';
+import TeacherLoginView from './components/views/teacher-login/base';
 var TeacherPrepareView = require('./components/views/teacher-prepare/base');
 var CheckAsTeacherView = require('./components/views/check-as-teacher/base');
 var CheckAsTeacherTinderView = require('./components/views/check-as-teacher/tinder');
 var CheckAsStudentView = require('./components/views/check-as-student/base');
 import Orientation from 'react-native-orientation';
-
-console.log(Orientation);
 
 var {
   AppRegistry,
@@ -50,13 +48,13 @@ var CheckUAI = React.createClass({
     }
   },
 
-  render: function () {
+  render: function() {
     return (
       <Navigator
         initialRoute={{ id: 'teacher-login', index: 0 }}
         renderScene={this.renderScene}
         configureScene={this.configureScene}
-        style={theme.base.background}
+        style={theme.main.background}
       />
     );
   },

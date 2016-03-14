@@ -1,111 +1,79 @@
-var React = require('react-native');
+'use strict';
 
-var {
+import React from 'react-native';
+const {
   StyleSheet,
 } = React;
 
-const STANDARD_PADDING = 20;
-const SMALL_CONTAINER_WIDTH = 450;
-const MEDIUM_CONTAINER_WIDTH = 550;
-const BACKGROUND_COLOR = '#f9f9f9';
-const PRIMARY_COLOUR = '#000000';
+const STANDARD_PADDING = 16;
+const HALF_STANDARD_PADDING = STANDARD_PADDING / 2;
+const FORM_WIDTH = 300;
+const STANDARD_SPACE_TOP = 60;
+const INPUT_PADDING = 12;
+const INPUT_FONT_SIZE = 16;
 const INPUT_RADIUS = 4;
-const INPUT_BACKGROUND_COLOUR = 'white';
+const INPUT_BACKGROUND_COLOUR = 'grey';
 const INPUT_BORDER_WIDTH = 1;
 const INPUT_BORDER_COLOUR = 'rgba(0, 0, 0, .18)';
-const SELECTED_BACKGROUND_COLOR = 'rgba(0, 0, 0, .1)';
-const INPUT_FONT_SIZE = 16;
-const INPUT_PADDING = 12;
+const BACKGROUND_COLOR = '#eee';
+const PRIMARY_COLOUR = '#000000';
+const SECONDARY_COLOUR = '#000000';
 
-var theme = {
-  base: StyleSheet.create({
+export default {
+  main: StyleSheet.create({
     background: {
       backgroundColor: BACKGROUND_COLOR,
     },
-    container: {
-      flex: 1,
-      backgroundColor: BACKGROUND_COLOR,
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    scrollView: {
-      flex: 1,
-      backgroundColor: BACKGROUND_COLOR,
-    },
-    scrollViewContent: {
-      paddingVertical: 30,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    logoContainer: {
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    logo: {
-      height: 100,
-      width: 300 - 10,
+    spaceTop: {
+      marginTop: STANDARD_SPACE_TOP,
     },
   }),
-  layouts: StyleSheet.create({
-    small: {
-      width: SMALL_CONTAINER_WIDTH,
-
-      //backgroundColor: '#ddd',
+  input: StyleSheet.create({
+    text: {
+      height: 45,
+      padding: INPUT_PADDING,
+      fontSize: INPUT_FONT_SIZE,
+      backgroundColor: INPUT_BACKGROUND_COLOUR,
+      borderRadius: INPUT_RADIUS,
+      borderColor: INPUT_BORDER_COLOUR,
+      borderWidth: INPUT_BORDER_WIDTH,
     },
-    medium: {
-      width: MEDIUM_CONTAINER_WIDTH,
-
-      //backgroundColor: '#ddd',
+  }),
+  button: StyleSheet.create({
+    touch: {
+      borderRadius: INPUT_RADIUS,
     },
-    row: {
-      flex: 1,
+    base: {
+      height: 42,
+      padding: INPUT_PADDING,
+      borderRadius: INPUT_RADIUS,
+      borderWidth: INPUT_BORDER_WIDTH,
       flexDirection: 'row',
       alignItems: 'center',
-    },
-
-    col: {
-      flex: 1,
-    },
-
-    center: {
-      alignItems: 'center',
       justifyContent: 'center',
     },
-
-    bottomIndicator: {
-      position: 'absolute',
-      right: 0,
-      left: 0,
-      bottom: 20,
-      padding: 20,
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'row',
+    content: {
+      fontSize: INPUT_FONT_SIZE,
+    },
+    primary: {
+      backgroundColor: PRIMARY_COLOUR,
+      borderColor: PRIMARY_COLOUR,
+    },
+    primaryContent: {
+      color: 'white',
+    },
+    secondary: {
+      backgroundColor: SECONDARY_COLOUR,
+      borderColor: SECONDARY_COLOUR,
     },
   }),
-  texts: StyleSheet.create({
-    center: {
-      textAlign: 'center',
-    },
-    subtitle: {
-      fontSize: 20,
-      marginBottom: 15,
-      fontFamily: 'Roboto',
-      fontWeight: 'bold',
-    },
-    normal: {
-      fontSize: 16,
-      fontFamily: 'Roboto',
-    },
-  }),
-  inputGroup: StyleSheet.create({
-    container: {
+  vgroup: StyleSheet.create({
+    form: {
       borderRadius: INPUT_RADIUS,
       borderWidth: INPUT_BORDER_WIDTH,
       borderColor: INPUT_BORDER_COLOUR,
       backgroundColor: INPUT_BACKGROUND_COLOUR,
-      marginBottom: 15,
+      width: FORM_WIDTH,
     },
     top: {
       borderTopLeftRadius: INPUT_RADIUS,
@@ -119,48 +87,58 @@ var theme = {
       borderBottomWidth: INPUT_BORDER_WIDTH,
       borderBottomColor: '#E5E5E5',
     },
-    select: {
-      padding: 15,
-    },
-    selectSelected: {
-      backgroundColor: SELECTED_BACKGROUND_COLOR,
-    },
-    selectText: {
-      fontFamily: 'Roboto',
-      fontSize: 18,
-      flex: 1,
-      paddingTop: 7,
-      paddingBottom: 7,
-      marginBottom: 10,
+    input: {
+      borderWidth: 0,
     },
   }),
-  button: StyleSheet.create({
-    base: {
-      height: 42,
-      padding: INPUT_PADDING,
+  login: StyleSheet.create({
+    container: {
+      flex: 1,
+      flexDirection: 'column',
+      padding: STANDARD_PADDING,
+      backgroundColor: BACKGROUND_COLOR,
+    },
+    logoContainer: {
+      flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
     },
+    logo: {
+      width: FORM_WIDTH - 10,
+    },
     text: {
-      color: 'white',
-      fontFamily: 'Roboto-Bold',
-      fontSize: 16,
+      color: 'black',
     },
-  }),
-  inputs: StyleSheet.create({
-    textfield: {
-      height: 42,
-      marginTop: 0,
-      marginBottom: 30,
+    strong: {
+      fontWeight: 'bold',
     },
-  }),
-  camera: StyleSheet.create({
-    container: {
-      width: SMALL_CONTAINER_WIDTH,
-      height: SMALL_CONTAINER_WIDTH * 1.3,
+    form: {
+      alignItems: 'center',
+    },
+    loginButton: {
+      marginTop: HALF_STANDARD_PADDING,
+      width: FORM_WIDTH,
+    },
+    loading: {
+      height: 40,
+      top: 1,
+      right: STANDARD_PADDING,
+      position: 'absolute',
+    },
+    toolbox: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+    },
+    options: {
+      flex: 1,
+      flexDirection: 'column',
+    },
+    option: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      marginBottom: 16,
     },
   }),
 };
-
-module.exports = theme;
