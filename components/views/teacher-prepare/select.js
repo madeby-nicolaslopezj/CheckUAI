@@ -1,6 +1,12 @@
 var React = require('react-native');
 var theme = require('../../styles/theme');
 const MK = require('react-native-material-kit');
+import { Column as Col, Row } from 'react-native-flexbox-grid';
+import layouts from '../../styles/layouts';
+import inputs from '../../styles/inputs';
+import buttons from '../../styles/buttons';
+import images from '../../styles/images';
+import texts from '../../styles/texts';
 
 const {
   MKCardStyles,
@@ -33,7 +39,7 @@ var Select = React.createClass({
   renderOptions() {
     return this.props.options.map((option, index) => {
       return (
-        <View key={option.value} style={[theme.layouts.row]}>
+        <View key={option.value} style={layouts.row}>
           <MKRadioButton
             group={this.state.radioGroup}
             checked={this.props.selected === option.value}
@@ -45,8 +51,8 @@ var Select = React.createClass({
             underlayColor={'transparent'}
             activeOpacity={0.6}
             onPress={() => this.props.onSelect(option.value)}
-            style={[theme.button.touchLight, { marginTop: 10 }]}>
-            <Text style={theme.inputGroup.selectText}>{option.title}</Text>
+            style={[buttons.touchLight, { marginTop: 10 }]}>
+            <Text style={texts.select}>{option.title}</Text>
           </TouchableHighlight>
           </View>
         );

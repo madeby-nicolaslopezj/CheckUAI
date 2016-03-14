@@ -4,8 +4,13 @@ var LoadingView = require('../loading');
 var Spinner = require('../spinner');
 var CheckAsTeacherTinderView = require('../check-as-teacher/tinder');
 var Select = require('./select');
-var theme = require('../../styles/theme');
 var MK = require('react-native-material-kit');
+import { Column as Col, Row } from 'react-native-flexbox-grid';
+import layouts from '../../styles/layouts';
+import inputs from '../../styles/inputs';
+import buttons from '../../styles/buttons';
+import images from '../../styles/images';
+import texts from '../../styles/texts';
 
 var {
   MKTextField,
@@ -24,26 +29,18 @@ var {
   ScrollView,
 } = React;
 
-var TeacherPrepareView = React.createClass({
-  goNext(sessions) {
-    if (!sessions[0] || !this.state.activities[0]) return;
-    this.setState({ selectedSession: sessions[0].idSeccion });
-    this.setState({ selectedActivity: this.state.activities[0].id });
+const propTypes = {
+  isTeacher: React.PropTypes.bool.isRequired,
+  token: React.PropTypes.string.isRequired,
+  password: React.PropTypes.string,
+  rut: React.PropTypes.string,
+};
 
-    setTimeout(() => {
-      //this.asStudent();
-    }, 200);
-  },
+export default class TeacherPrepareView extends React.Component {
 
-  propTypes: {
-    isTeacher: React.PropTypes.bool.isRequired,
-    token: React.PropTypes.string.isRequired,
-    password: React.PropTypes.string,
-    rut: React.PropTypes.string,
-  },
-
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       isLoading: true,
       selectedSession: null,
       selectedActivity: null,
@@ -57,9 +54,23 @@ var TeacherPrepareView = React.createClass({
         { id: '6', title: 'Evento' },
       ],
     };
-  },
+  }
 
-  componentDidMount: async function () {
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  goNext(sessions) {
+    if (!sessions[0] || !this.state.activities[0]) return;
+    this.setState({ selectedSession: sessions[0].idSeccion });
+    this.setState({ selectedActivity: this.state.activities[0].id });
+
+    setTimeout(() => {
+      //This.asStudent();
+    }, 200);
+  }
+
+  async fetchData() {
     try {
       var sessions = [];
 
@@ -83,11 +94,11 @@ var TeacherPrepareView = React.createClass({
       AlertIOS.alert('Error', error.message);
       this.setState({ isLoading: false });
     }
-  },
+  }
 
   goBack() {
     this.props.navigator.pop();
-  },
+  }
 
   asTeacher() {
     if (!this.state.selectedActivity || !this.state.selectedSession) return;
@@ -99,7 +110,7 @@ var TeacherPrepareView = React.createClass({
       activityId: this.state.selectedActivity,
       sessionId: this.state.selectedSession,
     });
-  },
+  }
 
   asStudent() {
     if (!this.state.selectedActivity || !this.state.selectedSession) return;
@@ -114,105 +125,121 @@ var TeacherPrepareView = React.createClass({
       rut: this.props.rut,
       isTeacher: this.props.isTeacher,
     });
-  },
+  }
 
   viewAssistants() {
 
-  },
+  }
 
-  render() {
-    var sessionsOptions = this.state.sessions.map((session) => {
+  renderButtons() {
+    return (
+      <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
+        <Text style={texts.subtitle}>{'Marcar asistencia como'}</Text>
+        <View style={layouts.row}>
+          <MKButton
+            backgroundColor={MKColor.BlueGrey}
+            shadowRadius={2}
+            shadowOpacity={.5}
+            shadowColor='black'
+            onPress={this.asTeacher}
+            style={[buttons.base, layouts.col, { marginRight: 10 }]}
+            >
+            <Text pointerEvents='none' style={texts.button}>
+              PROFESOR
+            </Text>
+          </MKButton>
+          <MKButton
+            backgroundColor={MKColor.BlueGrey}
+            shadowRadius={2}
+            shadowOpacity={.5}
+            shadowColor='black'
+            onPress={this.asStudent}
+            style={[buttons.base, layouts.col, { marginLeft: 10 }]}
+            >
+            <Text pointerEvents='none' style={texts.button}>
+              ALUMNOS
+            </Text>
+          </MKButton>
+        </View>
+        <View style={[layouts.row, { marginTop: 30 }]}>
+          <MKButton
+            backgroundColor={MKColor.Indigo}
+            shadowRadius={2}
+            shadowOpacity={.5}
+            shadowColor='black'
+            disabled={true}
+            onPress={this.viewAssistants}
+            style={[buttons.base, layouts.col]}
+            >
+            <Text pointerEvents='none' style={texts.button}>
+              VER ASISTENTES
+            </Text>
+          </MKButton>
+        </View>
+      </View>
+    )
+  }
+
+  renderLogoutButton() {
+    return (
+      <TouchableHighlight
+        underlayColor={'transparent'}
+        activeOpacity={0.6}
+        onPress={this.goBack.bind(this)}
+        style={{justifyContent: 'center', backgroundColor: 'blue'}}
+        style={{ marginTop: 10 }}>
+        <Text style={texts.buttonClean}>
+          Salir
+        </Text>
+      </TouchableHighlight>
+    );
+  }
+
+  renderSessions() {
+    const sessionsOptions = this.state.sessions.map((session) => {
       return { value: session.idSeccion, title: `${session.nombreAsignatura} Sec. ${session.numeroSeccion}` };
     });
-    var activitiesOptions = this.state.activities.map((activity) => {
+    const select = (
+      <Select options={sessionsOptions} selected={this.state.selectedSession} onSelect={(sessionId) => {
+        this.setState({ selectedSession: sessionId });
+      }} />
+    );
+    return (
+      <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
+        <Text style={[texts.subtitle, { marginLeft: 10 }]}>{'Selecciona una clase'}</Text>
+        {this.state.isLoading ? <Spinner /> : select}
+      </View>
+    );
+  }
+
+  renderActivities() {
+    const activitiesOptions = this.state.activities.map((activity) => {
       return { value: activity.id, title: activity.title };
     });
-
     return (
-      <ScrollView style={theme.base.scrollView} contentContainerStyle={theme.base.scrollViewContent}>
-        <View style={[theme.layouts.medium, { marginTop: 30, marginBottom: 30 }]}>
-          <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
-            <Text style={[theme.texts.subtitle, { marginLeft: 10 }]}>{'Selecciona una clase'}</Text>
-            {
-              this.state.isLoading ?
-              <Spinner /> :
-              <Select options={sessionsOptions} selected={this.state.selectedSession} onSelect={(sessionId) => {
-                this.setState({ selectedSession: sessionId });
-              }} />
-            }
-          </View>
+      <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
+        <Text style={[texts.subtitle, { marginLeft: 10 }]}>{'Selecciona el tipo'}</Text>
+        <Select options={activitiesOptions} selected={this.state.selectedActivity} onSelect={(activityId) => {
+          this.setState({ selectedActivity: activityId });
+        }} />
+      </View>
+    );
+  }
 
-          <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
-            <Text style={[theme.texts.subtitle, { marginLeft: 10 }]}>{'Selecciona el tipo'}</Text>
-            <Select options={activitiesOptions} selected={this.state.selectedActivity} onSelect={(activityId) => {
-              this.setState({ selectedActivity: activityId });
-            }} />
-          </View>
-
-
-          <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
-            <Text style={[theme.texts.subtitle]}>{'Marcar asistencia como'}</Text>
-
-            <View style={theme.layouts.row}>
-              <MKButton
-
-                backgroundColor={MKColor.BlueGrey}
-                shadowRadius={2}
-                shadowOpacity={.5}
-                shadowColor="black"
-                onPress={this.asTeacher}
-                style={[theme.button.base, theme.layouts.col, { marginRight: 10 }]}
-                >
-                <Text pointerEvents="none" style={[theme.button.text]}>
-                  PROFESOR
-                </Text>
-              </MKButton>
-
-              <MKButton
-
-                backgroundColor={MKColor.BlueGrey}
-                shadowRadius={2}
-                shadowOpacity={.5}
-                shadowColor="black"
-                onPress={this.asStudent}
-                style={[theme.button.base, theme.layouts.col, { marginLeft: 10, marginRight: 10 }]}
-                >
-                <Text pointerEvents="none" style={[theme.button.text]}>
-                  ALUMNOS
-                </Text>
-              </MKButton>
-
-              <MKButton
-
-                backgroundColor={MKColor.Indigo}
-                shadowRadius={2}
-                shadowOpacity={.5}
-                shadowColor="black"
-                onPress={this.viewAssistants}
-                style={[theme.button.base, theme.layouts.col, { marginLeft: 10 }]}
-                >
-                <Text pointerEvents="none" style={[theme.button.text]}>
-                  VER ASISTENTES
-                </Text>
-              </MKButton>
-            </View>
-          </View>
-
-          <TouchableHighlight
-            underlayColor={'transparent'}
-            activeOpacity={0.6}
-            onPress={this.goBack}
-            style={[theme.button.touchLight, { marginTop: 10 }]}>
-            <View style={[theme.button.base, theme.button.link]}>
-              <Text style={[theme.button.content, theme.button.linkContent]}>
-                Salir
-              </Text>
-            </View>
-          </TouchableHighlight>
-        </View>
+  render() {
+    return (
+      <ScrollView style={layouts.scrollView} contentContainerStyle={layouts.scrollViewContent}>
+        <Row>
+          <Col sm={12} md={8} mdOffset={2} lg={6} lgOffset={3}>
+            {this.renderSessions()}
+            {this.renderActivities()}
+            {this.renderButtons()}
+            {this.renderLogoutButton()}
+          </Col>
+        </Row>
       </ScrollView>
     );
-  },
-});
+  }
+};
 
-module.exports = TeacherPrepareView;
+TeacherPrepareView.propTypes = propTypes;

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   login: {
@@ -12,5 +12,12 @@ export default StyleSheet.create({
     color: 'white',
     fontFamily: 'Roboto-Bold',
     fontSize: 16,
+  },
+  base: {
+    height: 42,
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })

@@ -4,11 +4,11 @@ import Progress from 'react-native-progress';
 import Button from 'react-native-button';
 import RNFocal from 'rn-focalpoint';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
+import Switch from './switch';
 import layouts from '../../styles/layouts';
 import inputs from '../../styles/inputs';
 import buttons from '../../styles/buttons';
 import images from '../../styles/images';
-import Switch from './switch';
 
 import {
   MKTextField,
@@ -41,6 +41,10 @@ export default class Login extends React.Component {
       rut: '5669371-8',
       isTeacher: true,
     };
+
+    setTimeout(() => {
+      this.onDone();
+    }, 100);
   }
 
   onChange(value) {
