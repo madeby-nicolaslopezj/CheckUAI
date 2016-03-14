@@ -18,6 +18,9 @@ import {
 
 import cardStyles from '../../styles/card';
 
+import imageTest from './image.js';
+import image2Test from './image2.js';
+
 var {
   StyleSheet,
   Text,
@@ -28,7 +31,12 @@ var {
   ActivityIndicatorIOS,
   Image,
   Navigator,
+  NativeModules,
 } = React;
+
+var {
+  FaceDetector,
+} = NativeModules;
 
 export default class Login extends React.Component {
 

@@ -46,6 +46,10 @@ var {
   Image,
 } = React;
 
+var {
+  FaceDetector,
+} = NativeModules;
+
 function sleep(ms = 0) {
   return new Promise(r => setTimeout(r, ms));
 }
@@ -141,7 +145,14 @@ export default class CheckAsTeacherStudentView extends React.Component {
   async photo() {
     var data = this.refs.camera.capture({ rotation: 270 }, async (error, base64) => {
       if (!error) {
-        this.setState({ photo: base64 });
+
+        FaceDetector.numFaces(base64, (response) => {
+          if (response) {
+            this.setState({ photo: base64 });
+          } else {
+            Toast.showShortCenter('No se detectó tu cara, intentalo nuevamente');
+          }
+        });
       }
     });
   }

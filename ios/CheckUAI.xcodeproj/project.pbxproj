@@ -41,6 +41,7 @@
 		8C5D08F81C78199300879D82 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D08EC1C78199300879D82 /* Roboto-Regular.ttf */; };
 		8C5D08F91C78199300879D82 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D08ED1C78199300879D82 /* Roboto-Thin.ttf */; };
 		8C5D08FA1C78199300879D82 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D08EE1C78199300879D82 /* Roboto-ThinItalic.ttf */; };
+		8C991A1B1C97684100227CCE /* FaceDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C991A1A1C97684100227CCE /* FaceDetector.m */; };
 		C25312FDE86D493CBF3ED286 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E96D988CD04C249748321F /* libRNVectorIcons.a */; };
 		D110E2C8ED5C497FB075A1C1 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD855AB1B64C45109C197496 /* EvilIcons.ttf */; };
 		DACF25DCC6E949A29E999411 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DE1840D72244BF093C0A696 /* libRCTActionSheet.a */; };
@@ -232,6 +233,8 @@
 		8C5D08EC1C78199300879D82 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		8C5D08ED1C78199300879D82 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		8C5D08EE1C78199300879D82 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
+		8C991A191C97684100227CCE /* FaceDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FaceDetector.h; path = CheckUAI/FaceDetector.h; sourceTree = "<group>"; };
+		8C991A1A1C97684100227CCE /* FaceDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FaceDetector.m; path = CheckUAI/FaceDetector.m; sourceTree = "<group>"; };
 		9604CD45A8AE42679DA30A14 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		9B97D5FE582A40379BE9F5B0 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		BCDA2C69EB7440838955839B /* libRCTMaterialKit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTMaterialKit.a; sourceTree = "<group>"; };
@@ -363,6 +366,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				8C991A191C97684100227CCE /* FaceDetector.h */,
+				8C991A1A1C97684100227CCE /* FaceDetector.m */,
 			);
 			name = CheckUAI;
 			sourceTree = "<group>";
@@ -874,6 +879,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C991A1B1C97684100227CCE /* FaceDetector.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
