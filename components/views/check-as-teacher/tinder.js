@@ -39,7 +39,7 @@ function sleep(ms = 0) {
 const propTypes = {
   sessionId: React.PropTypes.number.isRequired,
   token: React.PropTypes.string.isRequired,
-  activityId: React.PropTypes.string.isRequired,
+  activityType: React.PropTypes.string.isRequired,
 };
 
 export default class CheckAsTeacherTinderView extends React.Component {
@@ -200,7 +200,7 @@ export default class CheckAsTeacherTinderView extends React.Component {
       assist: assist,
       studentId: this.state.student.idExpediente,
       token: this.props.token,
-      activityId: this.props.activityId,
+      activityType: this.props.activityType,
       sessionId: this.props.sessionId,
     });
   }
@@ -276,7 +276,7 @@ export default class CheckAsTeacherTinderView extends React.Component {
     return (
       <View style={[styles.container2]}>
         <Animated.View style={[styles.card, animatedCardStyles]} {...this.panResponder.panHandlers}>
-          <Student student={this.state.student} token={this.props.token} activityId={this.props.activityId} />
+          <Student student={this.state.student} token={this.props.token} activityType={this.props.activityType} />
         </Animated.View>
         <Animated.View style={[styles.nope, animatedNopeStyles]}>
           <MKButton

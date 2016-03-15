@@ -14,7 +14,8 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(numFaces:(NSString *)base64 response:(RCTResponseSenderBlock)callback)
 {
-  NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:base64]];
+  NSString *data64URLString = [NSString stringWithFormat:@"data:image/jpeg;base64,%@", base64];
+  NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:data64URLString]];
   UIImage *image = [UIImage imageWithData:data];
   CIImage *ciImage = [CIImage imageWithCGImage:image.CGImage];
   

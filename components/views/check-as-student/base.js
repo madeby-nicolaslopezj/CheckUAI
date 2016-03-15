@@ -17,6 +17,8 @@ import buttons from '../../styles/buttons';
 import images from '../../styles/images';
 import texts from '../../styles/texts';
 
+import imageGood from '../teacher-login/image.js';
+
 var {
   BlurView,
   VibrancyView,
@@ -57,7 +59,7 @@ function sleep(ms = 0) {
 const propTypes = {
   sessionId: React.PropTypes.number.isRequired,
   token: React.PropTypes.string.isRequired,
-  activityId: React.PropTypes.string.isRequired,
+  activityType: React.PropTypes.string.isRequired,
   password: React.PropTypes.string.isRequired,
   rut: React.PropTypes.string,
 };
@@ -126,7 +128,7 @@ export default class CheckAsTeacherStudentView extends React.Component {
     var response = await UAI.markManualStudentAssistance({
       assist: true,
       token: this.props.token,
-      activityId: this.props.activityId,
+      activityType: this.props.activityType,
       sessionId: this.props.sessionId,
       email: this.state.email,
       password: this.state.password,
@@ -138,16 +140,22 @@ export default class CheckAsTeacherStudentView extends React.Component {
       Toast.showShortCenter('Asistencia marcada');
     } else {
       this.setState({ photo: null, isLoading: false });
-      Toast.showShortCenter(`Error: ${response.respuesta}`);
+      if (response.respuesta) {
+        Toast.showShortCenter(`Error: ${response.respuesta}`);
+      } else {
+        Toast.showShortCenter(`Error al marcar asistencia`);
+      }
     }
   }
 
   async photo() {
     var data = this.refs.camera.capture({ rotation: 270 }, async (error, base64) => {
       if (!error) {
-
         FaceDetector.numFaces(base64, (response) => {
           if (response) {
+            this.setState({ photo: base64 });
+          } else if (this.props.debug) {
+            Toast.showShortCenter('No se detectó tu cara, pero estamos en pruebas');
             this.setState({ photo: base64 });
           } else {
             Toast.showShortCenter('No se detectó tu cara, intentalo nuevamente');

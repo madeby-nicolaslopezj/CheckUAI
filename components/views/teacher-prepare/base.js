@@ -46,12 +46,12 @@ export default class TeacherPrepareView extends React.Component {
       selectedActivity: null,
       sessions: [],
       activities: [
-        { id: '1', title: 'Cátedra' },
-        { id: '2', title: 'Ayudantía' },
-        { id: '3', title: 'Laboratorio' },
-        { id: '4', title: 'Prueba' },
-        { id: '5', title: 'Control' },
-        { id: '6', title: 'Evento' },
+        { id: 'Cátedra', title: 'Cátedra' },
+        { id: 'Ayudantía', title: 'Ayudantía' },
+        { id: 'Laboratorio', title: 'Laboratorio' },
+        { id: 'Prueba', title: 'Prueba' },
+        { id: 'Control', title: 'Control' },
+        { id: 'Evento', title: 'Evento' },
       ],
     };
   }
@@ -109,7 +109,7 @@ export default class TeacherPrepareView extends React.Component {
       index: 1,
       id: 'check-as-teacher-tinder',
       token: this.props.token,
-      activityId: this.state.selectedActivity,
+      activityType: this.state.selectedActivity,
       sessionId: this.state.selectedSession,
     });
   }
@@ -121,7 +121,7 @@ export default class TeacherPrepareView extends React.Component {
       index: 1,
       id: 'check-as-student',
       token: this.props.token,
-      activityId: this.state.selectedActivity,
+      activityType: this.state.selectedActivity,
       sessionId: this.state.selectedSession,
       password: this.props.password,
       rut: this.props.rut,
@@ -131,6 +131,27 @@ export default class TeacherPrepareView extends React.Component {
 
   viewAssistants() {
 
+  }
+
+  renderViewAsistantsButton() {
+    return;
+    return (
+      <View style={[layouts.row, { marginTop: 30 }]}>
+        <MKButton
+          backgroundColor={MKColor.Indigo}
+          shadowRadius={2}
+          shadowOpacity={.5}
+          shadowColor='black'
+          disabled={true}
+          onPress={this.viewAssistants.bind(this)}
+          style={[buttons.base, layouts.col]}
+          >
+          <Text pointerEvents='none' style={texts.button}>
+            VER ASISTENTES
+          </Text>
+        </MKButton>
+      </View>
+    );
   }
 
   renderButtons() {
@@ -163,21 +184,7 @@ export default class TeacherPrepareView extends React.Component {
             </Text>
           </MKButton>
         </View>
-        <View style={[layouts.row, { marginTop: 30 }]}>
-          <MKButton
-            backgroundColor={MKColor.Indigo}
-            shadowRadius={2}
-            shadowOpacity={.5}
-            shadowColor='black'
-            disabled={true}
-            onPress={this.viewAssistants.bind(this)}
-            style={[buttons.base, layouts.col]}
-            >
-            <Text pointerEvents='none' style={texts.button}>
-              VER ASISTENTES
-            </Text>
-          </MKButton>
-        </View>
+        {this.renderViewAsistantsButton()}
       </View>
     )
   }
@@ -220,8 +227,8 @@ export default class TeacherPrepareView extends React.Component {
     return (
       <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
         <Text style={[texts.subtitle, { marginLeft: 10 }]}>{'Selecciona el tipo'}</Text>
-        <Select options={activitiesOptions} selected={this.state.selectedActivity} onSelect={(activityId) => {
-          this.setState({ selectedActivity: activityId });
+        <Select options={activitiesOptions} selected={this.state.selectedActivity} onSelect={(activityType) => {
+          this.setState({ selectedActivity: activityType });
         }} />
       </View>
     );

@@ -133,28 +133,30 @@ UAI.endSession = async function({ token, sessionId }) {
   return response;
 };
 
-UAI.markStudentAssistance = async function({ assist, token, studentId, activityId, sessionId }) {
+UAI.markStudentAssistance = async function({ assist, token, studentId, activityType, sessionId }) {
   var response = await this._makeCall({
     method: 'POST',
     path: 'Asistencia/CheckAlumno',
     params: {
       token: token,
-      idExpediente: studentId,
-      tipoAsistencia: assist ? 1 : 2,
-      seccionId: sessionId,
+      idExpediente: String(studentId),
+      tipoAsistencia: activityType,
+      asistencia: assist,
+      seccionId: String(sessionId),
     },
   });
   return response;
 };
 
-UAI.markManualStudentAssistance = async function({ assist, token, activityId, sessionId, email, password, photo }) {
+UAI.markManualStudentAssistance = async function({ assist, token, activityType, sessionId, email, password, photo }) {
   var response = await this._makeCall({
     method: 'POST',
     path: 'Asistencia/CheckAlumno',
     params: {
       token: token,
-      tipoAsistencia: assist ? 1 : 2,
-      seccionId: sessionId,
+      tipoAsistencia: activityType,
+      asistencia: assist,
+      seccionId: String(sessionId),
       email: email,
       password: password,
       foto: photo,

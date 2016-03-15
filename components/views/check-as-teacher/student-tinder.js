@@ -25,7 +25,7 @@ var {
 const propTypes = {
   student: React.PropTypes.object.isRequired,
   token: React.PropTypes.string.isRequired,
-  activityId: React.PropTypes.string.isRequired,
+  activityType: React.PropTypes.string.isRequired,
 };
 
 export default class StudentTinder extends React.Component {
