@@ -77,7 +77,6 @@ export default class TeacherPrepareView extends React.Component {
       if (this.props.isTeacher) {
         sessions = await UAI.getTeacherSessions({
           token: this.props.token,
-          academicUnit: 1,
         });
       } else {
         sessions = await UAI.getColaboratorSessions({

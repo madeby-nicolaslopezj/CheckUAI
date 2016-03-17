@@ -31,7 +31,8 @@ export default class Settings extends React.Component {
     this.setState({
       token: await getSetting('token'),
       apiUrl: await getSetting('apiUrl'),
-      masterPassword: await getSetting('masterPassword')
+      masterPassword: await getSetting('masterPassword'),
+      academicUnit: await getSetting('academicUnit'),
     });
   }
 
@@ -39,6 +40,7 @@ export default class Settings extends React.Component {
     setSetting('token', this.state.token);
     setSetting('apiUrl', this.state.apiUrl);
     setSetting('masterPassword', this.state.masterPassword);
+    setSetting('academicUnit', this.state.academicUnit);
     this.props.navigator.pop();
   }
 
@@ -87,6 +89,18 @@ export default class Settings extends React.Component {
               value={this.state.masterPassword}
               onChangeText={(masterPassword) => this.setState({ masterPassword })}
             />
+
+          <Text style={{ color: '#BFBFBF' }}>Unidad Academica</Text>
+              <MKTextField
+                style={inputs.textfield}
+                highlightColor={MKColor.Silver}
+                textInputStyle={{color: MKColor.Silver}}
+                placeholder='Password'
+                autoCapitalize='none'
+                autoCorrect={false}
+                value={this.state.academicUnit}
+                onChangeText={(academicUnit) => this.setState({ academicUnit })}
+              />
 
             <Row>
               <Col sm={6}>

@@ -170,6 +170,12 @@ export default class CheckAsTeacherStudentView extends React.Component {
     });
   }
 
+  checkEmailUAI() {
+    if (this.state.email && !this.state.email.includes('@')) {
+      this.setState({ email: this.state.email + '@alumnos.uai.cl' });
+    }
+  }
+
   cancelPhoto() {
     this.setState({ photo: null });
   }
@@ -249,6 +255,7 @@ export default class CheckAsTeacherStudentView extends React.Component {
                     autoCapitalize='none'
                     keyboardType='email-address'
                     autoCorrect={false}
+                    onBlur={this.checkEmailUAI.bind(this)}
                     value={this.state.email}
                     onChangeText={(email) => this.setState({ email })}
                   />

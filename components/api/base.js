@@ -57,7 +57,8 @@ UAI.loginColaborator = async function({ rut, password }) {
   }
 };
 
-UAI.getTeacherSessions = async function({ token, academicUnit }) {
+UAI.getTeacherSessions = async function({ token }) {
+  const academicUnit = await getSetting('academicUnit');
   var response = await this._makeCall({
     method: 'POST',
     path: 'Asistencia/AsignaturasProfesor',
