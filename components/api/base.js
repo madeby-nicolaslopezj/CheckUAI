@@ -1,6 +1,5 @@
-var React = require('react-native');
-var AppToken = '1234';
-var BaseUrl = 'http://webapitest.uai.cl/';
+import React from 'react-native';
+import { getSetting } from './settings';
 
 var {
   StyleSheet,
@@ -8,10 +7,7 @@ var {
   View,
 } = React;
 
-var UAI = {
-  AppToken: AppToken,
-  BaseUrl: BaseUrl,
-};
+var UAI = {};
 
 function sleep(ms = 0) {
   return new Promise(r => setTimeout(r, ms));
@@ -139,10 +135,10 @@ UAI.markStudentAssistance = async function({ assist, token, studentId, activityT
     path: 'Asistencia/CheckAlumno',
     params: {
       token: token,
-      idExpediente: String(studentId),
-      tipoAsistencia: activityType,
+      idExpediente: Number(studentId),
+      tipoAsistencia: String(activityType),
       asistencia: assist,
-      seccionId: String(sessionId),
+      seccionId: Number(sessionId),
     },
   });
   return response;
@@ -154,9 +150,9 @@ UAI.markManualStudentAssistance = async function({ assist, token, activityType, 
     path: 'Asistencia/CheckAlumno',
     params: {
       token: token,
-      tipoAsistencia: activityType,
+      tipoAsistencia: String(activityType),
       asistencia: assist,
-      seccionId: String(sessionId),
+      seccionId: Number(sessionId),
       email: email,
       password: password,
       foto: photo,
@@ -172,12 +168,15 @@ UAI._makeCall = async function({ method, path, params, addToken }) {
 
 UAI._fetch = async function({ method, path, params, addToken }) {
   //Await sleep(1000);
+  //
+  const appToken = await getSetting('token');
+  const baseUrl = await getSetting('apiUrl');
 
   if (addToken) {
-    params.tokenApp = AppToken;
+    params.tokenApp = appToken;
   }
 
-  var url = `${BaseUrl}${path}`;
+  var url = `${baseUrl}${path}`;
   console.log(`Making request to: ${url}`, params);
 
   return await fetch(url, {

@@ -1,5 +1,6 @@
 var React = require('react-native');
 var UAI = require('../../api/base');
+import { getSetting } from '../../api/settings';
 var LoadingView = require('../loading');
 var MK = require('react-native-material-kit');
 var theme = require('../../styles/theme');
@@ -46,6 +47,7 @@ var {
   Easing,
   NativeModules,
   Image,
+  StatusBar,
 } = React;
 
 var {
@@ -113,8 +115,11 @@ export default class CheckAsTeacherStudentView extends React.Component {
   goBack() {
     AlertIOS.prompt('Introduce la contraseña', null, [
       { text: 'Cancelar', style: 'cancel' },
-      { text: 'Salir', type: 'secure-text', onPress: (text) => {
-        if (text == this.props.password) {
+      { text: 'Salir', type: 'secure-text', onPress: async (text) => {
+        const masterPassword = await getSetting('masterPassword');
+        if (masterPassword && text == masterPassword) {
+          this.props.navigator.pop();
+        } else if (text == this.props.password) {
           this.props.navigator.pop();
         } else {
           AlertIOS.alert('Contraseña incorrecta', null, [{ text: 'Ok', style: 'cancel' }]);
@@ -139,7 +144,7 @@ export default class CheckAsTeacherStudentView extends React.Component {
       this.setState({ photo: null, isLoading: false, email: '', password: '' });
       Toast.showShortCenter('Asistencia marcada');
     } else {
-      this.setState({ photo: null, isLoading: false });
+      this.setState({ isLoading: false });
       if (response.respuesta) {
         Toast.showShortCenter(`Error: ${response.respuesta}`);
       } else {
@@ -216,6 +221,7 @@ export default class CheckAsTeacherStudentView extends React.Component {
   render() {
     return (
       <View style={[layouts.centerContainer, { backgroundColor: 'transparent' }]}>
+        <StatusBar hidden={true} />
         <Camera ref='camera' captureTarget={Camera.constants.CaptureTarget.memory} type={Camera.constants.Type.front} style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
           <Text></Text>
         </Camera>

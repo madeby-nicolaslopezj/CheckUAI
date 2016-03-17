@@ -39,7 +39,7 @@ var Select = React.createClass({
   renderOptions() {
     return this.props.options.map((option, index) => {
       return (
-        <View key={option.value} style={layouts.row}>
+        <View key={option.value + index} style={layouts.row}>
           <MKRadioButton
             group={this.state.radioGroup}
             checked={this.props.selected === option.value}
@@ -54,8 +54,8 @@ var Select = React.createClass({
             style={[buttons.touchLight, { marginTop: 10 }]}>
             <Text style={texts.select}>{option.title}</Text>
           </TouchableHighlight>
-          </View>
-        );
+        </View>
+      );
     });
   },
 

@@ -4,6 +4,7 @@ import TeacherLoginView from './components/views/teacher-login/base';
 import TeacherPrepareView from './components/views/teacher-prepare/base';
 import CheckAsTeacherTinderView from './components/views/check-as-teacher/tinder';
 import CheckAsStudentView from './components/views/check-as-student/base';
+import Settings from './components/views/settings/index';
 import Orientation from 'react-native-orientation';
 
 const debug = true && __DEV__;
@@ -23,6 +24,8 @@ var CheckUAI = React.createClass({
   renderScene(route, navigator) {
     console.log('rendering', route.id);
     switch (route.id) {
+      case 'settings':
+        return <Settings debug={debug} navigator={navigator} />;
       case 'teacher-login':
         return <TeacherLoginView debug={debug} navigator={navigator} />;
       case 'teacher-prepare':
@@ -38,6 +41,8 @@ var CheckUAI = React.createClass({
 
   configureScene(route) {
     switch (route.id) {
+      case 'settings':
+        return Navigator.SceneConfigs.VerticalDownSwipeJump;
       case 'check-as-teacher-tinder':
         return Navigator.SceneConfigs.FloatFromBottom;
       case 'check-as-student':
@@ -47,7 +52,7 @@ var CheckUAI = React.createClass({
     }
   },
 
-  render: function() {
+  render() {
     return (
       <Navigator
         initialRoute={{ id: 'teacher-login', index: 0 }}

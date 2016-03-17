@@ -46,12 +46,12 @@ export default class TeacherPrepareView extends React.Component {
       selectedActivity: null,
       sessions: [],
       activities: [
-        { id: 'Cátedra', title: 'Cátedra' },
-        { id: 'Ayudantía', title: 'Ayudantía' },
-        { id: 'Laboratorio', title: 'Laboratorio' },
-        { id: 'Prueba', title: 'Prueba' },
-        { id: 'Control', title: 'Control' },
-        { id: 'Evento', title: 'Evento' },
+        { id: 'catedra', title: 'Cátedra' },
+        { id: 'ayudantia', title: 'Ayudantía' },
+        { id: 'laboratorio', title: 'Laboratorio' },
+        { id: 'prueba', title: 'Prueba' },
+        { id: 'control', title: 'Control' },
+        { id: 'evento', title: 'Evento' },
       ],
     };
   }
@@ -66,7 +66,7 @@ export default class TeacherPrepareView extends React.Component {
     this.setState({ selectedActivity: this.state.activities[0].id });
 
     setTimeout(() => {
-      this.asStudent();
+      //this.asStudent();
     }, 200);
   }
 

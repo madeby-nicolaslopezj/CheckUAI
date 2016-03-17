@@ -8,6 +8,18 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  settings: {
+    height: 42,
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  settingsText: {
+    color: 'black',
+    fontFamily: 'Roboto-Bold',
+    fontSize: 14,
+  },
   text: {
     color: 'white',
     fontFamily: 'Roboto-Bold',

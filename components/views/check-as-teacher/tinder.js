@@ -5,6 +5,8 @@ import Student from './student-tinder';
 var clamp = require('clamp');
 var MK = require('react-native-material-kit');
 var theme = require('../../styles/theme');
+import _ from 'underscore';
+import Toast from '@remobile/react-native-toast';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import layouts from '../../styles/layouts';
 import inputs from '../../styles/inputs';
@@ -190,6 +192,7 @@ export default class CheckAsTeacherTinderView extends React.Component {
   }
 
   async markAssistance(assist) {
+    const student = _.clone(this.state.student);
     if (assist) {
       this.setState({ yesStudents: this.state.yesStudents.concat([this.state.student]) });
     } else {
@@ -203,6 +206,24 @@ export default class CheckAsTeacherTinderView extends React.Component {
       activityType: this.props.activityType,
       sessionId: this.props.sessionId,
     });
+
+    if (!response.Resultado) {
+      this.state.pendingStudents.push(student);
+      this.setState({ pendingStudents: this.state.pendingStudents });
+      if (assist) {
+        const foundStudent = _.findWhere(this.state.yesStudents, student);
+        this.setState({ yesStudents: _.without(this.state.yesStudents, foundStudent) });
+      } else {
+        const foundStudent = _.findWhere(this.state.noStudents, student);
+        this.setState({ noStudents: _.without(this.state.noStudents, foundStudent) });
+      }
+
+      if (response.respuesta) {
+        Toast.showShortCenter(`Error al marcar asistencia la asistencia de ${student.nombre} ${student.apellidoPaterno}: ${response.respuesta}`);
+      } else {
+        Toast.showShortCenter(`Error al marcar asistencia la asistencia de ${student.nombre} ${student.apellidoPaterno}`);
+      }
+    }
   }
 
   renderCount(num, word) {

@@ -9,6 +9,8 @@ import layouts from '../../styles/layouts';
 import inputs from '../../styles/inputs';
 import buttons from '../../styles/buttons';
 import images from '../../styles/images';
+import texts from '../../styles/texts';
+
 
 import {
   MKTextField,
@@ -32,11 +34,17 @@ var {
   Image,
   Navigator,
   NativeModules,
+  Animated,
+  Easing,
 } = React;
 
 var {
   FaceDetector,
 } = NativeModules;
+
+function sleep(ms = 0) {
+  return new Promise(r => setTimeout(r, ms));
+}
 
 export default class Login extends React.Component {
 
@@ -48,6 +56,7 @@ export default class Login extends React.Component {
       password: this.props.debug ? '1234' : '',
       rut: this.props.debug ? '5669371-8' : '',
       isTeacher: true,
+      fadeAnim: new Animated.Value(0)
     };
 
     setTimeout(() => {
@@ -61,6 +70,13 @@ export default class Login extends React.Component {
     this.setState({ value });
   }
 
+  openSettings() {
+    this.props.navigator.push({
+      index: 1,
+      id: 'settings',
+    });
+  }
+
   async onDone() {
     if (this.state.isLoading) return;
     try {
@@ -68,7 +84,11 @@ export default class Login extends React.Component {
 
       var token;
 
-      if (this.state.isTeacher) {
+      if (this.state.email == 'settings' && this.state.password == 'react') {
+        this.openSettings();
+        this.setState({ isLoading: false });
+        return;
+      } else if (this.state.isTeacher) {
         token = await UAI.loginTeacher({
           email: this.state.email,
           password: this.state.password,
@@ -199,14 +219,27 @@ export default class Login extends React.Component {
     );
   }
 
+  async componentDidMount() {
+    await sleep(200);
+    Animated.timing(
+      this.state.fadeAnim,
+      {
+        toValue: 1,
+        duration: 600,
+      },
+    ).start();
+  }
+
   render() {
     return (
       <View style={layouts.centerContainer}>
         <Row>
           <Col smOffset={1} sm={10} mdOffset={3} md={6} lgOffset={4} lg={4}>
-            {this.renderLogo()}
-            {this.renderForm()}
-            {this.renderButton()}
+            <Animated.View style={{ opacity: this.state.fadeAnim }}>
+              {this.renderLogo()}
+              {this.renderForm()}
+              {this.renderButton()}
+            </Animated.View>
           </Col>
         </Row>
       </View>
