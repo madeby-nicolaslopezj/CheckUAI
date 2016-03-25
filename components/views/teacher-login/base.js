@@ -109,7 +109,21 @@ export default class Login extends React.Component {
         isTeacher: this.state.isTeacher,
       });
 
-      this.setState({ isLoading: false });
+      setTimeout(() => {
+        if (this.props.debug) {
+          this.setState({
+            isLoading: false,
+          });
+        } else {
+          this.setState({
+            isLoading: false,
+            rut: '',
+            email: '',
+            password: '',
+          });
+        }
+      }, 500);
+
     } catch (error) {
       AlertIOS.alert('Error', error.message);
       this.setState({ isLoading: false });

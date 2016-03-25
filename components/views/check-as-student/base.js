@@ -140,7 +140,7 @@ export default class CheckAsTeacherStudentView extends React.Component {
       photo: this.state.photo,
     });
 
-    if (response.respuesta == 'OK') {
+    if (response.Resultado) {
       this.setState({ photo: null, isLoading: false, email: '', password: '' });
       Toast.showShortCenter('Asistencia marcada');
     } else {

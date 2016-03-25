@@ -1,6 +1,6 @@
 import store from 'react-native-simple-store';
 
-var defaultAppToken = '';
+var defaultAppToken = 'ASksakn98865tggHBhbsn875bHAsqomg99asS';
 var defaultBaseUrl = 'http://webapi.uai.cl/';
 if (__DEV__) {
   defaultBaseUrl = 'http://webapitest.uai.cl/';
