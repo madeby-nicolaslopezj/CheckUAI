@@ -225,7 +225,7 @@ export default class TeacherPrepareView extends React.Component {
     });
     return (
       <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
-        <Text style={[texts.subtitle, { marginLeft: 10 }]}>{'Selecciona el tipo'}</Text>
+        <Text style={[texts.subtitle, { marginLeft: 10 }]}>Selecciona el tipo</Text>
         <Select options={activitiesOptions} selected={this.state.selectedActivity} onSelect={(activityType) => {
           this.setState({ selectedActivity: activityType });
         }} />

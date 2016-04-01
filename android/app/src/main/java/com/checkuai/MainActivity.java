@@ -1,6 +1,11 @@
 package com.checkuai;
 
 import com.facebook.react.ReactActivity;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.github.yamill.orientation.OrientationPackage;
+import com.github.xinthink.rnmk.ReactMaterialKitPackage;
+import com.smixx.reactnativeicons.ReactNativeIcons;
+import com.lwansbrough.ReactCamera.ReactCamera;
 import com.remobile.toast.RCTToastPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -28,15 +33,20 @@ public class MainActivity extends ReactActivity {
         return BuildConfig.DEBUG;
     }
 
-   /**
-   * A list of packages used by the app. If the app uses additional views
-   * or modules besides the default ones, add more packages here.
-   */
+    /**
+     * A list of packages used by the app. If the app uses additional views
+     * or modules besides the default ones, add more packages here.
+     */
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-        new MainReactPackage(),
+        return Arrays.<ReactPackage>asList(
+            new MainReactPackage(),
+        new VectorIconsPackage(),
+        new OrientationPackage(),
+        new ReactMaterialKitPackage(),
+        new ReactNativeIcons(),
+        new ReactCamera(),
         new RCTToastPackage()
-      );
+        );
     }
 }
