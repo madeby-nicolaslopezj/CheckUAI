@@ -19,20 +19,13 @@ export default class StudentImage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
-    this.setSource();
+    this.state = { baseUrl: 'http://webapi.uai.cl/' };
+    this.setBaseUrl();
   }
 
-  componentDidUpdate() {
-    this.setSource();
-  }
-
-  async setSource() {
-    var token = encodeURIComponent(this.props.token);
+  async setBaseUrl() {
     const baseUrl = await getSetting('apiUrl');
-    var source = `${baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`;
-    console.log('Fetching image:', source);
-    this.setState({source});
+    this.setState({baseUrl});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,11 +33,13 @@ export default class StudentImage extends React.Component {
   }
 
   render() {
-    if (!this.state.source) return <View></View>;
+    var token = encodeURIComponent(this.props.token);
+    var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`;
+    console.log('Fetching image:', source);
     return (
       <Image
       key={this.props.student.idExpediente}
-      source={{ uri: this.state.source }}
+      source={{ uri: source }}
       style={{
         width: 300,
         height: 300,
