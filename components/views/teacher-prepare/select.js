@@ -2,6 +2,7 @@ var React = require('react-native');
 var theme = require('../../styles/theme');
 const MK = require('react-native-material-kit');
 import { Column as Col, Row } from 'react-native-flexbox-grid';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import layouts from '../../styles/layouts';
 import inputs from '../../styles/inputs';
 import buttons from '../../styles/buttons';
@@ -23,41 +24,66 @@ var {
   TouchableHighlight,
 } = React;
 
-var Select = React.createClass({
-  propTypes: {
-    options: React.PropTypes.array.isRequired,
-    selected: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    onSelect: React.PropTypes.func.isRequired,
-  },
+const propTypes = {
+  options: React.PropTypes.array.isRequired,
+  selected: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+  onSelect: React.PropTypes.func.isRequired,
+};
 
-  getInitialState() {
-    return {
-      radioGroup: new MKRadioButton.Group(),
-    };
-  },
+/**
+<MKRadioButton
+  group={this.state.radioGroup}
+  checked={this.props.selected === option.value}
+  onPress={() => {
+    this.props.onSelect(option.value);
+  }}/>
+ */
+
+export default class Select extends React.Component {
+
+  isSelected(option) {
+    return this.props.selected === option.value;
+  }
+
+  renderSelectedIcon(option) {
+    return (
+      <View style={{ marginTop: 5 }}>
+        <Icon name='radio-button-checked' size={25} color={MKColor.BlueGrey} />
+      </View>
+    );
+  }
+
+  renderIcon(option) {
+    if (this.isSelected(option)) return this.renderSelectedIcon(option);
+    return (
+      <View style={{ marginTop: 5 }}>
+        <Icon name='radio-button-unchecked' size={25} color={MKColor.BlueGrey} />
+      </View>
+    );
+  }
 
   renderOptions() {
     return this.props.options.map((option, index) => {
       return (
         <View key={option.value + index} style={layouts.row}>
-          <MKRadioButton
-            group={this.state.radioGroup}
-            checked={this.props.selected === option.value}
-            onPress={() => {
-              this.props.onSelect(option.value);
-            }}/>
           <TouchableHighlight
-
             underlayColor={'transparent'}
             activeOpacity={0.6}
             onPress={() => this.props.onSelect(option.value)}
             style={[buttons.touchLight, { marginTop: 10 }]}>
-            <Text style={texts.select}>{option.title}</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ width: 40 }}>
+                {this.renderIcon(option)}
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={texts.select}>{option.title}</Text>
+              </View>
+            </View>
           </TouchableHighlight>
         </View>
       );
     });
-  },
+  }
 
   render() {
     return (
@@ -65,7 +91,7 @@ var Select = React.createClass({
         {this.renderOptions()}
       </View>
     );
-  },
-});
+  }
+};
 
-module.exports = Select;
+Select.propTypes = propTypes;
