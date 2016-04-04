@@ -23,7 +23,7 @@ export default class StudentImage extends React.Component {
     this.setSource();
   }
 
-  componentWillReceiveProps() {
+  componentDidUpdate() {
     this.setSource();
   }
 

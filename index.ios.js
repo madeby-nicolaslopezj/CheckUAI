@@ -8,7 +8,7 @@ import Settings from './components/views/settings/index';
 import Orientation from 'react-native-orientation';
 import {getSetting} from './components/api/settings';
 
-const debug = true && __DEV__;
+const debug = false && __DEV__;
 
 var {
   AppRegistry,
