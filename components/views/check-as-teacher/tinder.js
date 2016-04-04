@@ -87,6 +87,12 @@ export default class CheckAsTeacherTinderView extends React.Component {
         sessionId: this.props.sessionId,
       });
 
+      if (students.length == 0) {
+        console.log('No students fetched');
+        this.props.navigator.pop();
+        return;
+      }
+
       this.setState({
         students: students,
         pendingStudents: students,

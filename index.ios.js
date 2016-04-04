@@ -6,6 +6,7 @@ import CheckAsTeacherTinderView from './components/views/check-as-teacher/tinder
 import CheckAsStudentView from './components/views/check-as-student/base';
 import Settings from './components/views/settings/index';
 import Orientation from 'react-native-orientation';
+import {getSetting} from './components/api/settings';
 
 const debug = true && __DEV__;
 
@@ -17,7 +18,7 @@ var {
 
 var CheckUAI = React.createClass({
 
-  componentDidMount() {
+  async componentDidMount() {
     //Orientation.lockToPortrait();
   },
 
