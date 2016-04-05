@@ -3,8 +3,8 @@ var UAI = require('../../api/base');
 var LoadingView = require('../loading');
 var Spinner = require('../spinner');
 var CheckAsTeacherTinderView = require('../check-as-teacher/tinder');
-var Select = require('./select');
 var MK = require('react-native-material-kit');
+import Select from './select';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import layouts from '../../styles/layouts';
 import inputs from '../../styles/inputs';
@@ -225,7 +225,7 @@ export default class TeacherPrepareView extends React.Component {
     });
     return (
       <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
-        <Text style={[texts.subtitle, { marginLeft: 10 }]}>{'Selecciona el tipo'}</Text>
+        <Text style={[texts.subtitle, { marginLeft: 10 }]}>Selecciona el tipo</Text>
         <Select options={activitiesOptions} selected={this.state.selectedActivity} onSelect={(activityType) => {
           this.setState({ selectedActivity: activityType });
         }} />
