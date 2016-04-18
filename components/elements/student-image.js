@@ -32,6 +32,10 @@ export default class StudentImage extends React.Component {
     this.forceUpdate();
   }
 
+  onError(error) {
+    console.log('Error fetching image:', error);
+  }
+
   render() {
     var token = encodeURIComponent(this.props.token);
     var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`;
@@ -40,6 +44,7 @@ export default class StudentImage extends React.Component {
       <Image
       key={this.props.student.idExpediente}
       source={{ uri: source }}
+      onError={this.onError.bind(this)}
       style={{
         width: 300,
         height: 300,
