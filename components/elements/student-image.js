@@ -2,7 +2,7 @@ var React = require('react-native');
 var Image = require('react-native-image-progress');
 var Progress = require('react-native-progress');
 import { getSetting } from '../api/settings';
-
+var Icon = require('react-native-vector-icons/MaterialIcons');
 
 var {
   View,
@@ -40,6 +40,17 @@ export default class StudentImage extends React.Component {
     var token = encodeURIComponent(this.props.token);
     var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`;
     console.log('Fetching image:', source);
+    return (
+      <View style={{
+        width: 300,
+        height: 300,
+        marginRight: 16,
+        paddingTop: 100,
+        alignItems: 'center',
+      }}>
+        <Icon name='person' size={120} color='#333' />
+      </View>
+    )
     return (
       <Image
       key={this.props.student.idExpediente}
