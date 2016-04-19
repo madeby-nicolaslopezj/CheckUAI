@@ -13,6 +13,13 @@ var {
 const propTypes = {
   token: React.PropTypes.string.isRequired,
   student: React.PropTypes.object.isRequired,
+  width: React.PropTypes.number,
+  height: React.PropTypes.number,
+};
+
+const defaultProps = {
+  width: 300,
+  height: 300,
 };
 
 export default class StudentImage extends React.Component {
@@ -41,28 +48,19 @@ export default class StudentImage extends React.Component {
     var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`;
     console.log('Fetching image:', source);
     return (
-      <View style={{
-        width: 300,
-        height: 300,
-        marginRight: 16,
-        paddingTop: 100,
-        alignItems: 'center',
-      }}>
-        <Icon name='person' size={120} color='#333' />
-      </View>
-    )
-    return (
       <Image
       key={this.props.student.idExpediente}
       source={{ uri: source }}
       onError={this.onError.bind(this)}
       style={{
-        width: 300,
-        height: 300,
-        marginRight: 16,
+        width: this.props.width,
+        height: this.props.height,
+        borderRadius: this.props.width / 2,
+        margin: 16,
       }}/>
     );
   }
 };
 
 StudentImage.propTypes = propTypes;
+StudentImage.defaultProps = defaultProps;

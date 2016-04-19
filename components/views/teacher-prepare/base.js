@@ -106,7 +106,7 @@ export default class TeacherPrepareView extends React.Component {
 
     this.props.navigator.push({
       index: 1,
-      id: 'check-as-teacher-tinder',
+      id: 'check-as-teacher',
       token: this.props.token,
       activityType: this.state.selectedActivity,
       sessionId: this.state.selectedSession,

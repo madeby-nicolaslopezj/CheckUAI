@@ -2,7 +2,7 @@ import React from 'react-native';
 import theme from './components/styles/theme';
 import TeacherLoginView from './components/views/teacher-login/base';
 import TeacherPrepareView from './components/views/teacher-prepare/base';
-import CheckAsTeacherTinderView from './components/views/check-as-teacher/tinder';
+import CheckAsTeacher from './components/views/check-as-teacher/list';
 import CheckAsStudentView from './components/views/check-as-student/base';
 import Settings from './components/views/settings/index';
 import Orientation from 'react-native-orientation';
@@ -31,8 +31,8 @@ var CheckUAI = React.createClass({
         return <TeacherLoginView debug={debug} navigator={navigator} />;
       case 'teacher-prepare':
         return <TeacherPrepareView debug={debug} navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} />;
-      case 'check-as-teacher-tinder':
-        return <CheckAsTeacherTinderView debug={debug} navigator={navigator} token={route.token} activityType={route.activityType} sessionId={route.sessionId}/>;
+      case 'check-as-teacher':
+        return <CheckAsTeacher debug={debug} navigator={navigator} token={route.token} activityType={route.activityType} sessionId={route.sessionId}/>;
       case 'check-as-student':
         return <CheckAsStudentView debug={debug} navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} activityType={route.activityType} sessionId={route.sessionId}/>;
       default:
