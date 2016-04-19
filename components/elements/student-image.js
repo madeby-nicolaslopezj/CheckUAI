@@ -26,11 +26,14 @@ export default class StudentImage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { baseUrl: 'http://webapi.uai.cl/' };
+    this.state = { baseUrl: 'http://webapi.uai.cl/', hasErrors: false };
     this.setBaseUrl();
   }
 
    shouldComponentUpdate(nextProps, nextState) {
+     if (this.state.hasErrors != nextState.hasErrors) {
+       return true;
+     }
      if (this.state.baseUrl != nextState.baseUrl) {
        return true;
      }
@@ -50,18 +53,38 @@ export default class StudentImage extends React.Component {
 
   onError(error) {
     console.log('Error fetching image:', error);
+    this.setState({ hasErrors: true });
   }
 
   render() {
     var token = encodeURIComponent(this.props.token);
     var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`;
     console.log('Fetching image:', source);
+    if (this.state.hasErrors) {
+      return (
+        <View style={{
+        width: this.props.width,
+        height: this.props.height,
+        borderRadius: this.props.width / 2,
+        borderColor: '#aaa',
+        borderWidth: 0.5,
+        margin: 16,
+        overflow: 'hidden',
+        backgroundColor: '#ddd',
+        alignItems: 'center',
+        }}>
+          <Icon name='person' size={this.props.height * 0.8} style={{ marginTop: this.props.height * 0.07 }} color='#333' />
+        </View>
+      );
+    }
     return (
       <Image
       key={this.props.student.idExpediente}
       source={{ uri: source }}
       onError={this.onError.bind(this)}
       style={{
+        borderColor: '#aaa',
+        borderWidth: 0.5,
         width: this.props.width,
         height: this.props.height,
         borderRadius: this.props.width / 2,

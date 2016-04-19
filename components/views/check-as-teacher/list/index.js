@@ -7,6 +7,7 @@ import images from '../../../styles/images';
 import texts from '../../../styles/texts';
 import _ from 'underscore';
 import Dimensions from 'Dimensions';
+import { BlurView, VibrancyView } from 'react-native-blur';
 
 import Student from './student';
 
@@ -16,6 +17,7 @@ const {
   AlertIOS,
   ScrollView,
   TouchableHighlight,
+  ListView,
 } = React;
 
 const propTypes = {
@@ -29,9 +31,24 @@ export default class CheckAsTeacherList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+
     this.yesStudents = [];
     this.noStudents = [];
+    this.state = {};
+
+    this.datasource = new ListView.DataSource({
+      rowHasChanged: (row1, row2) => {
+        return row1 !== row2;
+      }
+    });
+
+    const students = props.students.map(student => {
+      student.yes = _.contains(this.yesStudents, student.idExpediente)
+      student.no = _.contains(this.noStudents, student.idExpediente)
+      return student;
+    });
+
+    this.state.dataSource = this.datasource.cloneWithRows(students);
   }
 
   async componentDidMount() {
@@ -51,13 +68,13 @@ export default class CheckAsTeacherList extends React.Component {
   async markAssistance(assist, student) {
     if (assist) {
       this.noStudents = _.without(this.noStudents, student.idExpediente);
-      this.yesStudents.push(student.idExpediente);
+      this.yesStudents = _.union(this.yesStudents, [student.idExpediente]);
     } else {
       this.yesStudents = _.without(this.yesStudents, student.idExpediente);
-      this.noStudents.push(student.idExpediente);
+      this.noStudents = _.union(this.noStudents, [student.idExpediente]);
     }
 
-    this.forceUpdate();
+    this.updateList();
 
     const response = await UAI.markStudentAssistance({
       assist: assist,
@@ -74,7 +91,7 @@ export default class CheckAsTeacherList extends React.Component {
         this.noStudents = _.without(this.noStudents, student.idExpediente);
       }
 
-      this.forceUpdate();
+      this.updateList();
 
       if (response.respuesta) {
         Toast.showShortCenter(`Error al marcar asistencia la asistencia de ${student.nombre} ${student.apellidoPaterno}: ${response.respuesta}`);
@@ -84,16 +101,28 @@ export default class CheckAsTeacherList extends React.Component {
     }
   }
 
+  updateList() {
+    const students = this.props.students.map(student => {
+      student.yes = _.contains(this.yesStudents, student.idExpediente)
+      student.no = _.contains(this.noStudents, student.idExpediente)
+      return student;
+    });
+    this.setState({
+      dataSource: this.datasource.cloneWithRows(students),
+    });
+  }
+
   renderStudents() {
-    return this.props.students.map(student => {
-      return <Student
+    return <ListView
+    style={{ marginTop: 20, marginBottom: 70, overflow: 'visible' }}
+    dataSource={this.state.dataSource}
+    renderRow={(student) => <Student
       token={this.props.token}
-      key={student.idExpediente}
-      yes={_.contains(this.yesStudents, student.idExpediente)}
-      no={_.contains(this.noStudents, student.idExpediente)}
+      yes={student.yes}
+      no={student.no}
       mark={this.markAssistance.bind(this)}
-      student={student} />;
-    })
+      student={student} />}
+    />
   }
 
   renderBackButton() {
@@ -130,21 +159,33 @@ export default class CheckAsTeacherList extends React.Component {
       );
     }
     const statusHeight = 70;
+    const shadowOpacity = 0.2;
     return (
-      <View style={{ height: Dimensions.get('window').height }}>
-        <ScrollView style={layouts.scrollView} contentContainerStyle={layouts.scrollViewContent}>
-          {this.renderStudents()}
-        </ScrollView>
-        <View style={{ height: statusHeight, shadowOffset:{
-            width: 0,
-            height: 0,
-          },
-          shadowColor: 'black',
-          shadowOpacity: 0.2,
+      <View style={{ height: Dimensions.get('window').height, backgroundColor: '#eee' }}>
+        {this.renderStudents()}
+        <View style={{
+          height: 20,
+          width: Dimensions.get('window').width,
+          position: 'absolute',
+          top: 0,
+          borderBottomColor: '#ccc',
+          borderBottomWidth: 0.5,
           backgroundColor: '#eee'
+        }}/>
+
+        <View style={{
+          position: 'absolute',
+          height: statusHeight,
+          borderTopColor: '#ccc',
+          borderTopWidth: 0.5,
+          bottom: 0,
+          width: Dimensions.get('window').width,
          }}>
-          {this.renderStatus()}
+          <BlurView blurType='xlight' style={{ height: statusHeight }}>
+            {this.renderStatus()}
+          </BlurView>
         </View>
+
       </View>
     );
   }

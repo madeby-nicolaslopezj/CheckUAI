@@ -30,7 +30,7 @@ var CheckUAI = React.createClass({
       case 'teacher-login':
         return <TeacherLoginView debug={debug} navigator={navigator} />;
       case 'teacher-prepare':
-        return <TeacherPrepareView debug={debug} navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} />;
+        return <TeacherPrepareView debug={debug} navigator={navigator} {...route} />;
       case 'check-as-teacher':
         return <CheckAsTeacher debug={debug} navigator={navigator} {...route}/>;
       case 'check-as-student':
