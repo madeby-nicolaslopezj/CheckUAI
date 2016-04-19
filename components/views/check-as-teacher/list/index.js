@@ -87,7 +87,7 @@ export default class CheckAsTeacherList extends React.Component {
   renderStudents() {
     return this.props.students.map(student => {
       return <Student
-      {...this.props}
+      token={this.props.token}
       key={student.idExpediente}
       yes={_.contains(this.yesStudents, student.idExpediente)}
       no={_.contains(this.noStudents, student.idExpediente)}

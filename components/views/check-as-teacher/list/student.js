@@ -8,6 +8,7 @@ import texts from '../../../styles/texts';
 import StudentImage from '../../../elements/student-image';
 import {prettifyText} from '../../../api/helpers';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import _ from 'underscore';
 
 const {
   View,
@@ -19,15 +20,29 @@ const {
 
 const propTypes = {
   student: React.PropTypes.object.isRequired,
-  sessionId: React.PropTypes.number.isRequired,
-  token: React.PropTypes.string.isRequired,
-  activityType: React.PropTypes.string.isRequired,
   mark: React.PropTypes.func.isRequired,
   yes: React.PropTypes.bool.isRequired,
   no: React.PropTypes.bool.isRequired,
+  token: React.PropTypes.string.isRequired,
 };
 
 export default class CheckAsTeacherStudent extends React.Component {
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!_.isEqual(this.props.student, nextProps.student)) {
+      return true;
+    }
+    if (this.props.yes !== nextProps.yes) {
+      return true;
+    }
+    if (this.props.no !== nextProps.no) {
+      return true;
+    }
+    if (this.props.token !== nextProps.token) {
+      return true;
+    }
+    return false;
+  }
 
   notPresent() {
     this.props.mark(false, this.props.student);
