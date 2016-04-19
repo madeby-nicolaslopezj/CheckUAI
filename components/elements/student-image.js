@@ -30,6 +30,13 @@ export default class StudentImage extends React.Component {
     this.setBaseUrl();
   }
 
+   shouldComponentUpdate(nextProps, nextState) {
+     if (this.state.baseUrl !== nextState.baseUrl) return true;
+     if (this.props.student.idExpediente !== nextProps.idExpediente) return true;
+     if (this.props.student.token !== nextProps.token) return true;
+     return false;
+   }
+
   async setBaseUrl() {
     const baseUrl = await getSetting('apiUrl');
     this.setState({baseUrl});

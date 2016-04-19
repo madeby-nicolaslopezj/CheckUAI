@@ -22,16 +22,14 @@ const propTypes = {
   sessionId: React.PropTypes.number.isRequired,
   token: React.PropTypes.string.isRequired,
   activityType: React.PropTypes.string.isRequired,
+  students: React.PropTypes.arrayOf(React.PropTypes.object),
 };
 
 export default class CheckAsTeacherList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      isLoading: true,
-      students: [],
-    };
+    this.state = {};
     this.yesStudents = [];
     this.noStudents = [];
   }
@@ -41,8 +39,6 @@ export default class CheckAsTeacherList extends React.Component {
       token: this.props.token,
       sessionId: this.props.sessionId,
     });
-
-    this.fetchStudents();
   }
 
   async componentWillUnmount() {
@@ -50,33 +46,6 @@ export default class CheckAsTeacherList extends React.Component {
       token: this.props.token,
       sessionId: this.props.sessionId,
     });
-  }
-
-  async fetchStudents() {
-    try {
-      var students = await UAI.getSessionStudents({
-        token: this.props.token,
-        sessionId: this.props.sessionId,
-      });
-
-      if (students.length == 0) {
-        AlertIOS.alert('Error', 'No hay alumnos para esta clase');
-        console.log('No students found');
-        this.props.navigator.pop();
-        return;
-      }
-
-      const sorted = _.sortBy(students, student => student.apellidoPaterno);
-
-      this.setState({
-        students: sorted,
-        isLoading: false,
-      });
-
-    } catch (error) {
-      AlertIOS.alert('Error', error.message);
-      this.setState({ isLoading: false });
-    }
   }
 
   async markAssistance(assist, student) {
@@ -116,8 +85,7 @@ export default class CheckAsTeacherList extends React.Component {
   }
 
   renderStudents() {
-    return this.state.students.map(student => {
-
+    return this.props.students.map(student => {
       return <Student
       {...this.props}
       key={student.idExpediente}

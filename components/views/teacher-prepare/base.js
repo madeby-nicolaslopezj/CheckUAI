@@ -11,6 +11,7 @@ import inputs from '../../styles/inputs';
 import buttons from '../../styles/buttons';
 import images from '../../styles/images';
 import texts from '../../styles/texts';
+import _ from 'underscore';
 
 var {
   MKTextField,
@@ -27,6 +28,7 @@ var {
   AlertIOS,
   TouchableHighlight,
   ScrollView,
+  ActivityIndicatorIOS,
 } = React;
 
 const propTypes = {
@@ -101,8 +103,32 @@ export default class TeacherPrepareView extends React.Component {
     this.props.navigator.pop();
   }
 
-  asTeacher() {
+  async asTeacher() {
     if (!this.state.selectedActivity || !this.state.selectedSession) return;
+    this.setState({ isLoadingStudents: true });
+
+    var sorted = [];
+
+    try {
+      var students = await UAI.getSessionStudents({
+        token: this.props.token,
+        sessionId: this.state.selectedSession,
+      });
+
+      this.setState({ isLoadingStudents: false });
+
+      if (students.length == 0) {
+        AlertIOS.alert('Error', 'No hay alumnos para esta clase');
+        console.log('No students found');
+        return;
+      }
+
+      sorted = _.sortBy(students, student => student.apellidoPaterno);
+    } catch (error) {
+      AlertIOS.alert('Error', error.message);
+      this.setState({ isLoadingStudents: false });
+      return;
+    }
 
     this.props.navigator.push({
       index: 1,
@@ -110,6 +136,7 @@ export default class TeacherPrepareView extends React.Component {
       token: this.props.token,
       activityType: this.state.selectedActivity,
       sessionId: this.state.selectedSession,
+      students: sorted,
     });
   }
 
@@ -154,6 +181,16 @@ export default class TeacherPrepareView extends React.Component {
   }
 
   renderButtons() {
+    var teacherContent = <Text pointerEvents='none' style={texts.button}>PROFESOR</Text>;
+    if (this.state.isLoadingStudents) {
+      teacherContent = (
+        <ActivityIndicatorIOS
+          animating={this.state.isLoadingStudents}
+          style={[]}
+          color='white'
+        />
+      );
+    }
     return (
       <View style={[cardStyles, { marginTop: 20, padding: 30 }]}>
         <Text style={texts.subtitle}>{'Marcar asistencia como'}</Text>
@@ -164,11 +201,8 @@ export default class TeacherPrepareView extends React.Component {
             shadowOpacity={.5}
             shadowColor='black'
             onPress={this.asTeacher.bind(this)}
-            style={[buttons.base, layouts.col, { marginRight: 10 }]}
-            >
-            <Text pointerEvents='none' style={texts.button}>
-              PROFESOR
-            </Text>
+            style={[buttons.base, layouts.col, { marginRight: 10 }]}>
+            {teacherContent}
           </MKButton>
           <MKButton
             backgroundColor={MKColor.BlueGrey}

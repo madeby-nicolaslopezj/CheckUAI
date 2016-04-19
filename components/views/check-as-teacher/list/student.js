@@ -57,14 +57,14 @@ export default class CheckAsTeacherStudent extends React.Component {
   renderButtons() {
     return (
       <View>
-        <View style={[layouts.row, { width: 50, marginRight: 16 }]}>
+        <View style={[layouts.row, { width: 70, marginRight: 16 }]}>
           <TouchableHighlight
             underlayColor={'transparent'}
             activeOpacity={0.6}
             onPress={this.notPresent.bind(this)}
             style={{ marginRight: 5 }}>
             <View>
-              <Icon name='clear' size={25} style={{  }} color={this.props.no ? '#F44336' : '#E0E0E0'} />
+              <Icon name='clear' size={35} style={{  }} color={this.props.no ? '#F44336' : '#E0E0E0'} />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -73,7 +73,7 @@ export default class CheckAsTeacherStudent extends React.Component {
             onPress={this.present.bind(this)}
             style={{ marginRight: 5 }}>
             <View>
-              <Icon name='check' size={25} style={{}} color={this.props.yes ? '#4CAF50' : '#E0E0E0'} />
+              <Icon name='check' size={35} style={{}} color={this.props.yes ? '#4CAF50' : '#E0E0E0'} />
             </View>
           </TouchableHighlight>
         </View>

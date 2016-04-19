@@ -32,7 +32,7 @@ var CheckUAI = React.createClass({
       case 'teacher-prepare':
         return <TeacherPrepareView debug={debug} navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} />;
       case 'check-as-teacher':
-        return <CheckAsTeacher debug={debug} navigator={navigator} token={route.token} activityType={route.activityType} sessionId={route.sessionId}/>;
+        return <CheckAsTeacher debug={debug} navigator={navigator} {...route}/>;
       case 'check-as-student':
         return <CheckAsStudentView debug={debug} navigator={navigator} token={route.token} password={route.password} isTeacher={route.isTeacher} rut={route.rut} activityType={route.activityType} sessionId={route.sessionId}/>;
       default:
