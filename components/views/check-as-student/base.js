@@ -187,17 +187,17 @@ export default class CheckAsTeacherStudentView extends React.Component {
 
   renderActionButton() {
     if (this.state.photo) {
+      const hiddenButton = <TouchableHighlight
+        underlayColor={'transparent'}
+        activeOpacity={0.6}
+        onPress={this.cancelPhoto.bind(this)}
+        style={{ marginBottom: 10 }}>
+        <View>
+          <Icon name='replay' size={30} color='#333' />
+        </View>
+      </TouchableHighlight>;
       return (
         <View>
-          <TouchableHighlight
-            underlayColor={'transparent'}
-            activeOpacity={0.6}
-            onPress={this.cancelPhoto.bind(this)}
-            style={{ marginBottom: 10 }}>
-            <View>
-              <Icon name='replay' size={30} color='#333' />
-            </View>
-          </TouchableHighlight>
           <TouchableHighlight
             underlayColor={'transparent'}
             activeOpacity={0.6}

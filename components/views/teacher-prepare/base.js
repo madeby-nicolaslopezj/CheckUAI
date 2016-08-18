@@ -62,7 +62,7 @@ export default class TeacherPrepareView extends React.Component {
     this.fetchData();
   }
 
-  goNext(sessions) {
+  selectFirst(sessions) {
     if (!sessions[0] || !this.state.activities[0]) return;
     this.setState({ selectedSession: sessions[0].idSeccion });
     this.setState({ selectedActivity: this.state.activities[0].id });
@@ -89,9 +89,7 @@ export default class TeacherPrepareView extends React.Component {
 
       this.setState({ sessions, isLoading: false });
       setTimeout(() => {
-        if (this.props.debug) {
-          this.goNext(sessions);
-        }
+        this.selectFirst(sessions);
       }, 400);
     } catch (error) {
       AlertIOS.alert('Error', error.message);

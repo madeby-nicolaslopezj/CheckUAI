@@ -18,6 +18,7 @@ const {
   ScrollView,
   TouchableHighlight,
   ListView,
+  StatusBar,
 } = React;
 
 const propTypes = {
@@ -113,6 +114,9 @@ export default class CheckAsTeacherList extends React.Component {
   }
 
   renderStudents() {
+    const diff = Dimensions.get('window').width - 375;
+    const multiplier = 1 + (diff / 700);
+    console.log(multiplier, diff);
     return <ListView
     style={{ marginTop: 20, marginBottom: 70, overflow: 'visible' }}
     dataSource={this.state.dataSource}
@@ -120,6 +124,7 @@ export default class CheckAsTeacherList extends React.Component {
       token={this.props.token}
       yes={student.yes}
       no={student.no}
+      multiplier={multiplier}
       mark={this.markAssistance.bind(this)}
       student={student} />}
     />
@@ -162,6 +167,7 @@ export default class CheckAsTeacherList extends React.Component {
     const shadowOpacity = 0.2;
     return (
       <View style={{ height: Dimensions.get('window').height, backgroundColor: '#eee' }}>
+        <StatusBar backgroundColor="white" barStyle="default" />
         {this.renderStudents()}
         <View style={{
           height: 20,
