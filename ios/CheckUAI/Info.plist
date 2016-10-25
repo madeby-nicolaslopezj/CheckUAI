@@ -15,11 +15,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.10.0</string>
+	<string>0.10.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>28</string>
+	<string>31</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -32,7 +32,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Take photos to upload checks</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>To save the location of the check</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To record videos with audio</string>
 	<key>UIAppFonts</key>
