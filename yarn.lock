@@ -855,6 +855,10 @@ camelcase@^2.0.0, camelcase@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-2.1.1.tgz#7c1d16d679a1bbe59ca02cacecfb011e201f5a1f"
 
+camelcase@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/camelcase/-/camelcase-3.0.0.tgz#32fc4b9fcdaf845fcdf7e73bb97cac2261f0ab0a"
+
 capture-stack-trace@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/capture-stack-trace/-/capture-stack-trace-1.0.0.tgz#4a6fa07399c26bba47f0b2496b4d0fb408c5550d"
@@ -933,7 +937,7 @@ cliui@^2.1.0:
     right-align "^0.1.1"
     wordwrap "0.0.2"
 
-cliui@^3.0.3:
+cliui@^3.0.3, cliui@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/cliui/-/cliui-3.2.0.tgz#120601537a916d29940f934da3b48d585a39213d"
   dependencies:
@@ -1738,6 +1742,10 @@ gauge@~1.2.5:
     lodash.padend "^4.1.0"
     lodash.padstart "^4.1.0"
 
+get-caller-file@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
+
 get-proxy@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/get-proxy/-/get-proxy-1.1.0.tgz#894854491bc591b0f147d7ae570f5c678b7256eb"
@@ -2416,6 +2424,10 @@ lodash._root@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/lodash._root/-/lodash._root-3.0.1.tgz#fba1c4524c19ee9a5f8136b4609f017cf4ded692"
 
+lodash.assign@^4.0.3, lodash.assign@^4.0.6:
+  version "4.2.0"
+  resolved "https://registry.npmjs.org/lodash.assign/-/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
+
 lodash.escape@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/lodash.escape/-/lodash.escape-3.2.0.tgz#995ee0dc18c1b48cc92effae71a10aab5b487698"
@@ -2441,6 +2453,10 @@ lodash.keys@^3.0.0:
     lodash._getnative "^3.0.0"
     lodash.isarguments "^3.0.0"
     lodash.isarray "^3.0.0"
+
+lodash.merge@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.0.tgz#69884ba144ac33fe699737a6086deffadd0f89c5"
 
 lodash.pad@^4.1.0:
   version "4.5.1"
@@ -3171,62 +3187,48 @@ react-native:
     yeoman-environment "1.5.3"
     yeoman-generator "0.21.2"
 
-react-native-animatable@^0.5.1:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-0.5.2.tgz#efdba6aefae71fc87974c7293f2b59049c6a1bee"
+react-native-blur@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/react-native-blur/-/react-native-blur-1.0.1.tgz#c81e48f631489a87a86a0c58674f6283d7dc15a7"
 
-react-native-blur@^0.7.8:
-  version "0.7.11"
-  resolved "https://registry.yarnpkg.com/react-native-blur/-/react-native-blur-0.7.11.tgz#a553331d0ff41ccf12e2644c24c81cdcc5ebbe14"
-
-react-native-button@latest:
+react-native-button@^1.7.1:
   version "1.7.1"
-  resolved "https://registry.yarnpkg.com/react-native-button/-/react-native-button-1.7.1.tgz#0c3fb34e7f99dc2c9a8166094be878eb7cb3c36e"
+  resolved "https://registry.npmjs.org/react-native-button/-/react-native-button-1.7.1.tgz#0c3fb34e7f99dc2c9a8166094be878eb7cb3c36e"
 
-react-native-flexbox-grid@0.0.11:
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/react-native-flexbox-grid/-/react-native-flexbox-grid-0.0.11.tgz#466cc3ad6a5afdbe9a41c5e8d75cdece29c4018a"
+react-native-flexbox-grid@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/react-native-flexbox-grid/-/react-native-flexbox-grid-0.2.2.tgz#8ae2955e65d9c6713bdd2096fae7df61c034b7b7"
 
-react-native-icons@^0.7.0:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/react-native-icons/-/react-native-icons-0.7.1.tgz#a05c6c87bff7bfd883903bb9b7156f5ba568f977"
+react-native-image-progress@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.npmjs.org/react-native-image-progress/-/react-native-image-progress-0.6.0.tgz#14614add12beaa247a052e5a52e6a9fee0fb8c67"
 
-react-native-image-progress@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-image-progress/-/react-native-image-progress-0.4.0.tgz#ab97c98d58c68ad73a3474404cc83849bbb4f73f"
-
-react-native-material-kit@^0.3.0:
+react-native-material-kit@^0.3.3:
   version "0.3.3"
-  resolved "https://registry.yarnpkg.com/react-native-material-kit/-/react-native-material-kit-0.3.3.tgz#5471c7171c40a2d27cf03cb3d1bdacd54b69e00a"
+  resolved "https://registry.npmjs.org/react-native-material-kit/-/react-native-material-kit-0.3.3.tgz#5471c7171c40a2d27cf03cb3d1bdacd54b69e00a"
   dependencies:
     ramda "~0.21.0"
 
-react-native-material-switch@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/react-native-material-switch/-/react-native-material-switch-0.0.4.tgz#ef96290a835cd999cd51107e744bad0f1445c358"
-
-react-native-orientation@^1.14.0:
+react-native-orientation:
   version "1.17.0"
-  resolved "https://registry.yarnpkg.com/react-native-orientation/-/react-native-orientation-1.17.0.tgz#bfbeba17e20f7f96d09042e31fbe5d479f1d5b94"
+  resolved "https://registry.npmjs.org/react-native-orientation/-/react-native-orientation-1.17.0.tgz#bfbeba17e20f7f96d09042e31fbe5d479f1d5b94"
 
-react-native-progress@^2.2.1:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-2.2.2.tgz#3968a04fda44bbbdfb0d7ab73ad66c70bcd9921b"
+react-native-progress@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/react-native-progress/-/react-native-progress-3.1.0.tgz#775d69fceda3ebbf6b1cdafdf9342c1fbccb8216"
 
-react-native-simple-store@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-simple-store/-/react-native-simple-store-0.1.0.tgz#02f8e58e95a86ec84eaeb2f823124bd3e62eee1d"
+react-native-simple-store@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/react-native-simple-store/-/react-native-simple-store-1.1.0.tgz#69e91d6b91d362cd4ea12b0486df3eaf2f628b04"
+  dependencies:
+    lodash.merge "^4.6.0"
 
-react-native-tableview-simple@^0.4.0:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/react-native-tableview-simple/-/react-native-tableview-simple-0.4.1.tgz#97d222fe0030f1f3952a83bcfaa0304366a38585"
-
-react-native-vector-icons@^1.3.2:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-1.3.4.tgz#a204227a677da844ad6467b9d01cb5c2eb7d1f13"
+react-native-vector-icons@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-2.1.0.tgz#37ff40e2fc753a56624846e7471282b818b92edc"
   dependencies:
     lodash "^4.0.0"
-    yargs "^3.31.0"
+    yargs "^4.7.0"
 
 react-proxy@^1.1.7:
   version "1.1.8"
@@ -3245,10 +3247,6 @@ react-transform-hmr@^1.0.4:
   dependencies:
     global "^4.3.0"
     react-proxy "^1.1.7"
-
-react-utils@alexcurtis/react-utils:
-  version "1.0.0"
-  resolved "https://codeload.github.com/alexcurtis/react-utils/tar.gz/93939bb60f004f983a846cf39540667a277e875c"
 
 read-all-stream@^3.0.0:
   version "3.1.0"
@@ -3405,6 +3403,14 @@ replace-ext@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-0.0.1.tgz#29bbd92078a739f0bcce2b4ee41e837953522924"
 
+require-directory@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
+
+require-main-filename@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/require-main-filename/-/require-main-filename-1.0.1.tgz#97f717b69d48784f5f526a6c5aa8ffdda055a4d1"
+
 resolve@^1.1.3, resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
@@ -3438,12 +3444,6 @@ rimraf@^2.2.0, rimraf@^2.2.8:
 rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
-
-rn-focalpoint@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/rn-focalpoint/-/rn-focalpoint-1.0.1.tgz#f85daeb702bc4c456a733c8197b57e32719509ba"
-  dependencies:
-    react-utils alexcurtis/react-utils
 
 rndm@1.2.0:
   version "1.2.0"
@@ -3537,6 +3537,10 @@ serve-static@~1.10.0:
     escape-html "~1.0.3"
     parseurl "~1.3.1"
     send "0.13.2"
+
+set-blocking@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
 
 set-immediate-shim@^1.0.0:
   version "1.0.1"
@@ -4083,6 +4087,10 @@ whatwg-fetch@^1.0.0, whatwg-fetch@>=0.10.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-1.0.0.tgz#01c2ac4df40e236aaa18480e3be74bd5c8eb798e"
 
+which-module@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/which-module/-/which-module-1.0.0.tgz#bba63ca861948994ff307736089e3b96026c2a4f"
+
 which@^1.2.8, which@^1.2.9:
   version "1.2.11"
   resolved "https://registry.yarnpkg.com/which/-/which-1.2.11.tgz#c8b2eeea6b8c1659fa7c1dd4fdaabe9533dc5e8b"
@@ -4092,6 +4100,10 @@ which@^1.2.8, which@^1.2.9:
 window-size@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.4.tgz#f8e1aa1ee5a53ec5bf151ffa09742a6ad7697876"
+
+window-size@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/window-size/-/window-size-0.2.0.tgz#b4315bb4214a3d7058ebeee892e13fa24d98b075"
 
 window-size@0.1.0:
   version "0.1.0"
@@ -4177,7 +4189,7 @@ xtend@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-3.0.0.tgz#5cce7407baf642cba7becda568111c493f59665a"
 
-y18n@^3.2.0:
+y18n@^3.2.0, y18n@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.1.tgz#6d15fba884c08679c0d77e88e7759e811e07fa41"
 
@@ -4185,7 +4197,14 @@ yallist@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-2.0.0.tgz#306c543835f09ee1a4cb23b7bce9ab341c91cdd4"
 
-yargs@^3.24.0, yargs@^3.31.0:
+yargs-parser@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.npmjs.org/yargs-parser/-/yargs-parser-2.4.1.tgz#85568de3cf150ff49fa51825f03a8c880ddcc5c4"
+  dependencies:
+    camelcase "^3.0.0"
+    lodash.assign "^4.0.6"
+
+yargs@^3.24.0:
   version "3.32.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-3.32.0.tgz#03088e9ebf9e756b69751611d2a5ef591482c995"
   dependencies:
@@ -4196,6 +4215,25 @@ yargs@^3.24.0, yargs@^3.31.0:
     string-width "^1.0.1"
     window-size "^0.1.4"
     y18n "^3.2.0"
+
+yargs@^4.7.0:
+  version "4.8.1"
+  resolved "https://registry.npmjs.org/yargs/-/yargs-4.8.1.tgz#c0c42924ca4aaa6b0e6da1739dfb216439f9ddc0"
+  dependencies:
+    cliui "^3.2.0"
+    decamelize "^1.1.1"
+    get-caller-file "^1.0.1"
+    lodash.assign "^4.0.3"
+    os-locale "^1.4.0"
+    read-pkg-up "^1.0.1"
+    require-directory "^2.1.1"
+    require-main-filename "^1.0.1"
+    set-blocking "^2.0.0"
+    string-width "^1.0.1"
+    which-module "^1.0.0"
+    window-size "^0.2.0"
+    y18n "^3.2.1"
+    yargs-parser "^2.4.1"
 
 yargs@~3.10.0:
   version "3.10.0"

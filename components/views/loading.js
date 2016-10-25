@@ -5,14 +5,14 @@ import layouts from '../styles/layouts';
 import {
   View,
   StyleSheet,
-  ActivityIndicatorIOS,
+  ActivityIndicator,
 } from 'react-native';
 
 var LoadingView = React.createClass({
   render() {
     return (
       <View style={layouts.centerContainer}>
-        <ActivityIndicatorIOS
+        <ActivityIndicator
           animating={true}
           style={[]}
           color='white'

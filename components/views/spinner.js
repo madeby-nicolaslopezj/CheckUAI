@@ -6,14 +6,14 @@ import {
   Text,
   View,
   StyleSheet,
-  ActivityIndicatorIOS,
+  ActivityIndicator
 } from 'react-native';
 
 var Spinner = React.createClass({
   render() {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicatorIOS
+        <ActivityIndicator
           animating={true}
           style={[]}
           color='black'

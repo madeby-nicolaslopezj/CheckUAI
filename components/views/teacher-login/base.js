@@ -29,7 +29,7 @@ import {
   AlertIOS,
   TextInput,
   TouchableHighlight,
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   Image,
   Navigator,
   NativeModules,
@@ -145,7 +145,7 @@ export default class Login extends React.Component {
           style={inputs.textfield}
           placeholder='Contraseña'
           highlightColor={MKColor.BlueGrey}
-          secureTextEntry={true}
+          password
           onChangeText={(password) => this.setState({ password })}
           value={this.state.password}
         />
@@ -171,7 +171,7 @@ export default class Login extends React.Component {
           style={inputs.textfield}
           placeholder='Contraseña'
           highlightColor={MKColor.BlueGrey}
-          secureTextEntry={true}
+          password
           onChangeText={(password) => this.setState({ password })}
           value={this.state.password}
         />
@@ -195,7 +195,7 @@ export default class Login extends React.Component {
     var content = <Text style={buttons.text}>ENTRAR</Text>;
     if (this.state.isLoading) {
       content = (
-        <ActivityIndicatorIOS
+        <ActivityIndicator
           animating={this.state.isLoading}
           style={[]}
           color='white'

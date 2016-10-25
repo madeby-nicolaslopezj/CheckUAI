@@ -247,7 +247,7 @@ export default class CheckAsTeacherStudentView extends React.Component {
                     style={inputs.textfield}
                     tintColor={MKColor.BlueGrey}
                     placeholder='Contraseña'
-                    secureTextEntry={true}
+                    password
                     value={this.state.password}
                     onChangeText={(password) => this.setState({ password })}
                   />

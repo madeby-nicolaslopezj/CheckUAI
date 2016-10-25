@@ -28,7 +28,7 @@ import {
   AlertIOS,
   TouchableHighlight,
   ScrollView,
-  ActivityIndicatorIOS,
+  ActivityIndicator
 } from 'react-native';
 
 const propTypes = {
@@ -182,7 +182,7 @@ export default class TeacherPrepareView extends React.Component {
     var teacherContent = <Text pointerEvents='none' style={texts.button}>PROFESOR</Text>;
     if (this.state.isLoadingStudents) {
       teacherContent = (
-        <ActivityIndicatorIOS
+        <ActivityIndicator
           animating={this.state.isLoadingStudents}
           style={[]}
           color='white'
