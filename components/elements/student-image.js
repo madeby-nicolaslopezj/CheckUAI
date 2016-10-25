@@ -1,14 +1,14 @@
-var React = require('react-native');
+import React from 'react'
 var Image = require('react-native-image-progress');
 var Progress = require('react-native-progress');
 import { getSetting } from '../api/settings';
 var Icon = require('react-native-vector-icons/MaterialIcons');
 
-var {
+import {
   View,
   StyleSheet,
   Text,
-} = React;
+} from 'react-native';
 
 const propTypes = {
   token: React.PropTypes.string.isRequired,

@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from 'react'
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import layouts from '../../styles/layouts';
 import inputs from '../../styles/inputs';
@@ -13,11 +13,11 @@ import {
   MKColor,
 } from 'react-native-material-kit';
 
-var {
+import {
   View,
   Text,
   StatusBar
-} = React;
+} from 'react-native';
 
 export default class Settings extends React.Component {
 

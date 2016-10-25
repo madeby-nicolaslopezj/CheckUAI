@@ -1,12 +1,12 @@
+import React from 'react'
 var Progress = require('react-native-progress');
-var React = require('react-native');
 import layouts from '../styles/layouts';
 
-var {
+import {
   View,
   StyleSheet,
   ActivityIndicatorIOS,
-} = React;
+} from 'react-native';
 
 var LoadingView = React.createClass({
   render() {

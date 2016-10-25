@@ -1,4 +1,4 @@
-var React = require('react-native');
+import React from 'react'
 var Image = require('react-native-image-progress');
 var Progress = require('react-native-progress');
 import StudentImage from '../../elements/student-image';
@@ -15,12 +15,12 @@ var {
   MKColor,
 } = MK;
 
-var {
+import {
   View,
   StyleSheet,
   Text,
   Switch,
-} = React;
+} from 'react-native';
 
 const propTypes = {
   student: React.PropTypes.object.isRequired,

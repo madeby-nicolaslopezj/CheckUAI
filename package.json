@@ -6,28 +6,25 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@nitrog7/react-native-camera": "^0.3.9",
     "@remobile/react-native-toast": "^1.0.4",
     "clamp": "^1.0.1",
     "fbemitter": "^2.0.0",
     "fbjs": "^0.6.0",
-    "react": "^0.14.8",
+    "react": "^15.3.2",
     "react-apple-easing": "0.0.2",
-    "react-native": "^0.22.2",
-    "react-native-animatable": "^0.5.1",
-    "react-native-blur": "^0.7.8",
-    "react-native-button": "latest",
-    "react-native-camera": "^0.3.8",
-    "react-native-flexbox-grid": "0.0.11",
-    "react-native-icons": "^0.7.0",
-    "react-native-image-progress": "^0.4.0",
-    "react-native-material-kit": "^0.3.0",
-    "react-native-material-switch": "0.0.4",
-    "react-native-orientation": "^1.14.0",
-    "react-native-progress": "^2.2.1",
-    "react-native-simple-store": "^0.1.0",
-    "react-native-tableview-simple": "^0.4.0",
-    "react-native-vector-icons": "^1.3.2",
-    "rn-focalpoint": "^1.0.1",
+    "react-native": "^0.35.0",
+    "react-native-blur": "^1.0.1",
+    "react-native-button": "^1.7.1",
+    "react-native-flexbox-grid": "^0.2.2",
+    "react-native-image-progress": "^0.6.0",
+    "react-native-material-kit": "^0.3.3",
+    "react-native-progress": "^2.2.2",
+    "react-native-simple-store": "^1.1.0",
+    "react-native-vector-icons": "^2.1.0",
     "underscore": "^1.8.3"
+  },
+  "standard": {
+    "parser": "babel-eslint"
   }
 }

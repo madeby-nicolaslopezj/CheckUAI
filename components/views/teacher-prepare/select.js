@@ -1,4 +1,4 @@
-var React = require('react-native');
+import React from 'react'
 var theme = require('../../styles/theme');
 const MK = require('react-native-material-kit');
 import { Column as Col, Row } from 'react-native-flexbox-grid';
@@ -17,12 +17,12 @@ const {
   MKRadioButton,
 } = MK;
 
-var {
+import {
   View,
   StyleSheet,
   Text,
   TouchableHighlight,
-} = React;
+} from 'react-native';
 
 const propTypes = {
   options: React.PropTypes.array.isRequired,

@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from 'react'
 import UAI from '../../../api/base';
 import layouts from '../../../styles/layouts';
 import inputs from '../../../styles/inputs';
@@ -10,13 +10,13 @@ import {prettifyText} from '../../../api/helpers';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import _ from 'underscore';
 
-const {
+import {
   View,
   Text,
   AlertIOS,
   ScrollView,
   TouchableHighlight,
-} = React;
+} from 'react-native'
 
 const propTypes = {
   student: React.PropTypes.object.isRequired,

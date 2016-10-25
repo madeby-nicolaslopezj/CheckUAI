@@ -1,8 +1,7 @@
-import React from 'react-native';
+import React from 'react'
 import UAI from '../../api/base';
 import Progress from 'react-native-progress';
 import Button from 'react-native-button';
-import RNFocal from 'rn-focalpoint';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import Switch from './switch';
 import layouts from '../../styles/layouts';
@@ -23,7 +22,7 @@ import cardStyles from '../../styles/card';
 import imageTest from './image.js';
 import image2Test from './image2.js';
 
-var {
+import {
   StyleSheet,
   Text,
   View,
@@ -37,7 +36,7 @@ var {
   Animated,
   Easing,
   StatusBar,
-} = React;
+} from 'react-native';
 
 var {
   FaceDetector,

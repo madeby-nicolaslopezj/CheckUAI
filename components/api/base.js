@@ -1,11 +1,11 @@
-import React from 'react-native';
+import React from 'react'
 import { getSetting } from './settings';
 
-var {
+import {
   StyleSheet,
   Text,
   View,
-} = React;
+} from 'react-native';
 
 var UAI = {};
 

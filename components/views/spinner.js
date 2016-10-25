@@ -1,13 +1,13 @@
+import React from 'react'
 var Progress = require('react-native-progress');
-var React = require('react-native');
 var theme = require('../styles/theme');
 
-var {
+import {
   Text,
   View,
   StyleSheet,
   ActivityIndicatorIOS,
-} = React;
+} from 'react-native';
 
 var Spinner = React.createClass({
   render() {

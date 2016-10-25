@@ -1,4 +1,4 @@
-var React = require('react-native');
+import React from 'react'
 var theme = require('../../styles/theme');
 const MK = require('react-native-material-kit');
 var Icon = require('react-native-vector-icons/MaterialIcons');
@@ -11,14 +11,14 @@ const {
   MKCheckbox,
 } = MK;
 
-var {
+import {
   View,
   StyleSheet,
   Text,
   TouchableHighlight,
   Switch,
   SegmentedControlIOS,
-} = React;
+} from 'react-native';
 
 module.exports = React.createClass({
   propTypes: {

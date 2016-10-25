@@ -1,4 +1,4 @@
-var React = require('react-native');
+import React from 'react'
 var UAI = require('../../api/base');
 var LoadingView = require('../loading');
 var Spinner = require('../spinner');
@@ -21,7 +21,7 @@ var {
 
 import cardStyles from '../../styles/card';
 
-var {
+import {
   StyleSheet,
   Text,
   View,
@@ -29,7 +29,7 @@ var {
   TouchableHighlight,
   ScrollView,
   ActivityIndicatorIOS,
-} = React;
+} from 'react-native';
 
 const propTypes = {
   isTeacher: React.PropTypes.bool.isRequired,

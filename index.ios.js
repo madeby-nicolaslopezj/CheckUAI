@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from 'react'
 import theme from './components/styles/theme';
 import TeacherLoginView from './components/views/teacher-login/base';
 import TeacherPrepareView from './components/views/teacher-prepare/base';
@@ -10,11 +10,11 @@ import {getSetting} from './components/api/settings';
 
 const debug = true && __DEV__;
 
-var {
+import {
   AppRegistry,
   Navigator,
   StyleSheet,
-} = React;
+} from 'react-native';
 
 var CheckUAI = React.createClass({
 

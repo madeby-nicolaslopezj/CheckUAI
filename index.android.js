@@ -4,13 +4,13 @@
  */
 'use strict';
 
-var React = require('react-native');
-var {
+import React from 'react'
+import {
   AppRegistry,
   StyleSheet,
   Text,
   View,
-} = React;
+} from 'react-native';
 
 var CheckUAI = React.createClass({
   render: function() {

@@ -1,4 +1,4 @@
-var React = require('react-native');
+import React from 'react'
 var UAI = require('../../api/base');
 var LoadingView = require('../loading');
 import Student from './student-tinder';
@@ -21,7 +21,7 @@ var {
   MKColor,
 } = MK;
 
-var {
+import {
   StyleSheet,
   Text,
   View,
@@ -32,7 +32,7 @@ var {
   PanResponder,
   Dimensions,
   TouchableHighlight,
-} = React;
+} from 'react-native';
 
 function sleep(ms = 0) {
   return new Promise(r => setTimeout(r, ms));
