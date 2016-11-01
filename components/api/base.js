@@ -73,7 +73,7 @@ UAI.getColaboratorSessions = async function ({ token, rut }) {
 }
 
 UAI.getSessionStudents = async function ({ token, sessionId }) {
-  var response = await makeCall({
+  const response = await makeCall({
     method: 'POST',
     path: 'Asistencia/AlumnosSeccion',
     params: {
@@ -120,7 +120,7 @@ UAI.endSession = async function ({ token, sessionId }) {
   return response
 }
 
-UAI.markStudentAssistance = async function ({ assist, token, studentId, activityType, sessionId }) {
+UAI.markStudentAssistance = async function ({ assist, token, studentId, activityType, sessionId, module }) {
   var response = await makeCall({
     method: 'POST',
     path: 'Asistencia/CheckAlumno',
@@ -129,13 +129,14 @@ UAI.markStudentAssistance = async function ({ assist, token, studentId, activity
       idExpediente: Number(studentId),
       tipoAsistencia: String(activityType),
       asistencia: assist,
-      seccionId: Number(sessionId)
+      seccionId: Number(sessionId),
+      modulo: module
     }
   })
   return response
 }
 
-UAI.markManualStudentAssistance = async function ({ assist, token, activityType, sessionId, email, password, photo }) {
+UAI.markManualStudentAssistance = async function ({ assist, token, activityType, sessionId, email, password, photo, module }) {
   var response = await makeCall({
     method: 'POST',
     path: 'Asistencia/CheckManualAlumno',
@@ -146,7 +147,8 @@ UAI.markManualStudentAssistance = async function ({ assist, token, activityType,
       seccionId: Number(sessionId),
       email: email,
       password: password,
-      foto: photo
+      foto: photo,
+      modulo: module
     }
   })
   return response
@@ -166,11 +168,11 @@ const fetchRequest = async function({ method, path, params, addToken }) {
   }
 
   var url = `${baseUrl}${path}`
-  console.log(`Making request to: ${url}`, params)
+  console.log(`Making request to: ${url}`, params, JSON.stringify(params))
 
   await sleep(1000)
-
-  return await global.fetch(url, {
+  console.log('will make request')
+  const result = await global.fetch(url, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -178,6 +180,9 @@ const fetchRequest = async function({ method, path, params, addToken }) {
     },
     body: JSON.stringify(params)
   })
+  console.log('did made request')
+
+  return result
 }
 
 const getJSON = async function(response) {

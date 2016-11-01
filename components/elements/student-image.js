@@ -59,7 +59,7 @@ export default class StudentImage extends React.Component {
   render() {
     var token = encodeURIComponent(this.props.token);
     var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`;
-    console.log('Fetching image:', source);
+    // console.log('Fetching image:', source);
     if (this.state.hasErrors) {
       return (
         <View style={{
@@ -83,8 +83,6 @@ export default class StudentImage extends React.Component {
       source={{ uri: source }}
       onError={this.onError.bind(this)}
       style={{
-        borderColor: '#aaa',
-        borderWidth: 0.5,
         width: this.props.width,
         height: this.props.height,
         borderRadius: this.props.width / 2,

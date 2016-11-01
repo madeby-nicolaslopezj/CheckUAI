@@ -80,7 +80,8 @@ export default class CheckAsTeacherList extends React.Component {
       studentId: student.idExpediente,
       token: this.props.token,
       activityType: this.props.activityType,
-      sessionId: this.props.sessionId
+      sessionId: this.props.sessionId,
+      module: this.props.module
     })
 
     if (!response.Resultado) {
@@ -142,10 +143,11 @@ export default class CheckAsTeacherList extends React.Component {
   }
 
   renderStatus () {
+    /* {this.yesStudents.length} asistente{this.yesStudents.length === 1 ? '' : 's'} -*/
     return (
       <View style={{ paddingTop: 10 }}>
-        <Text style={{ fontFamily: 'Roboto', fontSize: 18, marginBottom: 0, textAlign: 'center' }}>
-          {this.yesStudents.length} asistente{this.yesStudents.length === 1 ? '' : 's'} - {this.noStudents.length} ausente{this.noStudents.length === 1 ? '' : 's'}
+        <Text style={{ fontSize: 18, marginBottom: 0, textAlign: 'center', fontWeight: '700' }}>
+          {this.noStudents.length} ausente{this.noStudents.length === 1 ? '' : 's'}
         </Text>
         {this.renderBackButton()}
       </View>
@@ -163,7 +165,7 @@ export default class CheckAsTeacherList extends React.Component {
     }
     const statusHeight = 70
     return (
-      <View style={{ height: Dimensions.get('window').height, backgroundColor: '#eee' }}>
+      <View style={{ height: Dimensions.get('window').height, backgroundColor: '#fff' }}>
         <StatusBar backgroundColor='white' barStyle='default' />
         {this.renderStudents()}
         <View style={{
@@ -171,9 +173,9 @@ export default class CheckAsTeacherList extends React.Component {
           width: Dimensions.get('window').width,
           position: 'absolute',
           top: 0,
-          borderBottomColor: '#ccc',
+          borderBottomColor: '#eee',
           borderBottomWidth: 0.5,
-          backgroundColor: '#eee'
+          backgroundColor: '#fff'
         }}/>
 
         <View style={{
@@ -188,7 +190,6 @@ export default class CheckAsTeacherList extends React.Component {
             {this.renderStatus()}
           </BlurView>
         </View>
-
       </View>
     )
   }

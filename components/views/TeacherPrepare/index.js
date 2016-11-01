@@ -1,5 +1,5 @@
 import React from 'react'
-import UAI from '../../api/base'
+import {getTeacherSessions, getColaboratorSessions, getSessionStudents} from '../../api/base'
 import Spinner from '../spinner'
 import Select from './select'
 import { Column as Col, Row } from 'react-native-flexbox-grid'
@@ -16,8 +16,7 @@ import {
   View,
   AlertIOS,
   TouchableHighlight,
-  ScrollView,
-  ActivityIndicator
+  ScrollView
 } from 'react-native'
 
 export default class TeacherPrepareView extends React.Component {
@@ -68,11 +67,11 @@ export default class TeacherPrepareView extends React.Component {
       var sessions = []
 
       if (this.props.isTeacher) {
-        sessions = await UAI.getTeacherSessions({
+        sessions = await getTeacherSessions({
           token: this.props.token
         })
       } else {
-        sessions = await UAI.getColaboratorSessions({
+        sessions = await getColaboratorSessions({
           token: this.props.token,
           rut: this.props.rut
         })
@@ -93,16 +92,16 @@ export default class TeacherPrepareView extends React.Component {
   }
 
   async asTeacher () {
-    if (!this.state.selectedActivity || !this.state.selectedSession) return
-    this.setState({ isLoadingStudents: true })
-
-    var sorted = []
-
     try {
-      var students = await UAI.getSessionStudents({
+      if (!this.state.selectedActivity || !this.state.selectedSession) return
+      this.setState({ isLoadingStudents: true })
+
+      const students = await getSessionStudents({
         token: this.props.token,
         sessionId: this.state.selectedSession
       })
+
+      console.log('students', students)
 
       this.setState({ isLoadingStudents: false })
 
@@ -112,22 +111,20 @@ export default class TeacherPrepareView extends React.Component {
         return
       }
 
-      sorted = _.sortBy(students, student => student.apellidoPaterno)
+      this.props.navigator.push({
+        index: 1,
+        id: 'check-as-teacher',
+        token: this.props.token,
+        activityType: this.state.selectedActivity,
+        sessionId: this.state.selectedSession,
+        module: this.state.selectedModule,
+        students: _.sortBy(students, student => student.apellidoPaterno)
+      })
     } catch (error) {
       AlertIOS.alert('Error', error.message)
       this.setState({ isLoadingStudents: false })
       return
     }
-
-    this.props.navigator.push({
-      index: 1,
-      id: 'check-as-teacher',
-      token: this.props.token,
-      activityType: this.state.selectedActivity,
-      sessionId: this.state.selectedSession,
-      module: this.state.selectedModule,
-      students: sorted
-    })
   }
 
   asStudent () {
@@ -151,24 +148,15 @@ export default class TeacherPrepareView extends React.Component {
   }
 
   renderButtons () {
-    let teacherContent = 'Profesor'
-    if (this.state.isLoadingStudents) {
-      teacherContent = (
-        <ActivityIndicator
-          animating={this.state.isLoadingStudents}
-          style={[]}
-          color='white'
-        />
-      )
-    }
     return (
       <View style={{ marginTop: 40 }}>
-        <Text style={texts.subtitle}>{'Marcar asistencia como'}</Text>
+        <Text style={texts.subtitle}>Marcar asistencia como</Text>
         <View style={layouts.row}>
           <Button
+          disabled={this.state.isLoadingStudents}
           onPress={this.asTeacher.bind(this)}
           style={[buttons.base, layouts.col, { marginRight: 10 }]}>
-            {teacherContent}
+            Profesor
           </Button>
           <Button
           onPress={this.asStudent.bind(this)}
