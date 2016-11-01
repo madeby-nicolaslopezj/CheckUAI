@@ -1,122 +1,119 @@
 import React from 'react'
-import UAI from '../../../api/base';
-import layouts from '../../../styles/layouts';
-import inputs from '../../../styles/inputs';
-import buttons from '../../../styles/buttons';
-import images from '../../../styles/images';
-import texts from '../../../styles/texts';
-import _ from 'underscore';
-import Dimensions from 'Dimensions';
-import { BlurView, VibrancyView } from 'react-native-blur';
+import {startSession, endSession, markStudentAssistance} from '../../api/base'
+import layouts from '../../styles/layouts'
+import texts from '../../styles/texts'
+import _ from 'underscore'
+import Dimensions from 'Dimensions'
+import { BlurView } from 'react-native-blur'
+import Toast from '@remobile/react-native-toast'
 
-import Student from './student';
+import Student from './student'
 
 import {
   View,
   Text,
-  AlertIOS,
-  ScrollView,
   TouchableHighlight,
   ListView,
-  StatusBar,
-} from 'react-native';
+  StatusBar
+} from 'react-native'
 
 const propTypes = {
   sessionId: React.PropTypes.number.isRequired,
   token: React.PropTypes.string.isRequired,
   activityType: React.PropTypes.string.isRequired,
+  module: React.PropTypes.string.isRequired,
   students: React.PropTypes.arrayOf(React.PropTypes.object),
-};
+  navigator: React.PropTypes.object
+}
 
 export default class CheckAsTeacherList extends React.Component {
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
-    this.yesStudents = [];
-    this.noStudents = [];
-    this.state = {};
+    this.yesStudents = []
+    this.noStudents = []
+    this.state = {}
 
     this.datasource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => {
-        return row1 !== row2;
+        return row1 !== row2
       }
-    });
+    })
 
     const students = props.students.map(student => {
       student.yes = _.contains(this.yesStudents, student.idExpediente)
       student.no = _.contains(this.noStudents, student.idExpediente)
-      return student;
-    });
+      return student
+    })
 
-    this.state.dataSource = this.datasource.cloneWithRows(students);
+    this.state.dataSource = this.datasource.cloneWithRows(students)
   }
 
-  async componentDidMount() {
-    var response = await UAI.startSession({
+  async componentDidMount () {
+    await startSession({
       token: this.props.token,
-      sessionId: this.props.sessionId,
-    });
+      sessionId: this.props.sessionId
+    })
   }
 
-  async componentWillUnmount() {
-    var response = await UAI.endSession({
+  async componentWillUnmount () {
+    await endSession({
       token: this.props.token,
-      sessionId: this.props.sessionId,
-    });
+      sessionId: this.props.sessionId
+    })
   }
 
-  async markAssistance(assist, student) {
+  async markAssistance (assist, student) {
     if (assist) {
-      this.noStudents = _.without(this.noStudents, student.idExpediente);
-      this.yesStudents = _.union(this.yesStudents, [student.idExpediente]);
+      this.noStudents = _.without(this.noStudents, student.idExpediente)
+      this.yesStudents = _.union(this.yesStudents, [student.idExpediente])
     } else {
-      this.yesStudents = _.without(this.yesStudents, student.idExpediente);
-      this.noStudents = _.union(this.noStudents, [student.idExpediente]);
+      this.yesStudents = _.without(this.yesStudents, student.idExpediente)
+      this.noStudents = _.union(this.noStudents, [student.idExpediente])
     }
 
-    this.updateList();
+    this.updateList()
 
-    const response = await UAI.markStudentAssistance({
+    const response = await markStudentAssistance({
       assist: assist,
       studentId: student.idExpediente,
       token: this.props.token,
       activityType: this.props.activityType,
-      sessionId: this.props.sessionId,
-    });
+      sessionId: this.props.sessionId
+    })
 
     if (!response.Resultado) {
       if (assist) {
-        this.yesStudents = _.without(this.yesStudents, student.idExpediente);
+        this.yesStudents = _.without(this.yesStudents, student.idExpediente)
       } else {
-        this.noStudents = _.without(this.noStudents, student.idExpediente);
+        this.noStudents = _.without(this.noStudents, student.idExpediente)
       }
 
-      this.updateList();
+      this.updateList()
 
       if (response.respuesta) {
-        Toast.showShortCenter(`Error al marcar asistencia la asistencia de ${student.nombre} ${student.apellidoPaterno}: ${response.respuesta}`);
+        Toast.showShortCenter(`Error al marcar asistencia la asistencia de ${student.nombre} ${student.apellidoPaterno}: ${response.respuesta}`)
       } else {
-        Toast.showShortCenter(`Error al marcar asistencia la asistencia de ${student.nombre} ${student.apellidoPaterno}`);
+        Toast.showShortCenter(`Error al marcar asistencia la asistencia de ${student.nombre} ${student.apellidoPaterno}`)
       }
     }
   }
 
-  updateList() {
+  updateList () {
     const students = this.props.students.map(student => {
       student.yes = _.contains(this.yesStudents, student.idExpediente)
       student.no = _.contains(this.noStudents, student.idExpediente)
-      return student;
-    });
+      return student
+    })
     this.setState({
-      dataSource: this.datasource.cloneWithRows(students),
-    });
+      dataSource: this.datasource.cloneWithRows(students)
+    })
   }
 
-  renderStudents() {
-    const diff = Dimensions.get('window').width - 375;
-    const multiplier = 1 + (diff / 700);
-    console.log(multiplier, diff);
+  renderStudents () {
+    const diff = Dimensions.get('window').width - 375
+    const multiplier = 1 + (diff / 700)
     return <ListView
     style={{ marginTop: 20, marginBottom: 70, overflow: 'visible' }}
     dataSource={this.state.dataSource}
@@ -130,7 +127,7 @@ export default class CheckAsTeacherList extends React.Component {
     />
   }
 
-  renderBackButton() {
+  renderBackButton () {
     return (
       <TouchableHighlight
         underlayColor={'transparent'}
@@ -141,33 +138,33 @@ export default class CheckAsTeacherList extends React.Component {
           Salir
         </Text>
       </TouchableHighlight>
-    );
+    )
   }
 
-  renderStatus() {
+  renderStatus () {
     return (
       <View style={{ paddingTop: 10 }}>
         <Text style={{ fontFamily: 'Roboto', fontSize: 18, marginBottom: 0, textAlign: 'center' }}>
-          {this.yesStudents.length} asistente{this.yesStudents.length == 1 ? '' : 's'} - {this.noStudents.length} ausente{this.noStudents.length == 1 ? '' : 's'}
+          {this.yesStudents.length} asistente{this.yesStudents.length === 1 ? '' : 's'} - {this.noStudents.length} ausente{this.noStudents.length === 1 ? '' : 's'}
         </Text>
         {this.renderBackButton()}
       </View>
     )
   }
 
-  render() {
+  render () {
+    console.log('hello')
     if (this.state.isLoading) {
       return (
         <View style={layouts.centerContainer}>
           <Text>Cargando...</Text>
         </View>
-      );
+      )
     }
-    const statusHeight = 70;
-    const shadowOpacity = 0.2;
+    const statusHeight = 70
     return (
       <View style={{ height: Dimensions.get('window').height, backgroundColor: '#eee' }}>
-        <StatusBar backgroundColor="white" barStyle="default" />
+        <StatusBar backgroundColor='white' barStyle='default' />
         {this.renderStudents()}
         <View style={{
           height: 20,
@@ -185,16 +182,16 @@ export default class CheckAsTeacherList extends React.Component {
           borderTopColor: '#ccc',
           borderTopWidth: 0.5,
           bottom: 0,
-          width: Dimensions.get('window').width,
-         }}>
+          width: Dimensions.get('window').width
+        }}>
           <BlurView blurType='xlight' style={{ height: statusHeight }}>
             {this.renderStatus()}
           </BlurView>
         </View>
 
       </View>
-    );
+    )
   }
 }
 
-CheckAsTeacherList.propTypes = propTypes;
+CheckAsTeacherList.propTypes = propTypes

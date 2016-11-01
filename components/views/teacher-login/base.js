@@ -244,10 +244,10 @@ export default class Login extends React.Component {
     ).start();
   }
 
-  render() {
+  render () {
     return (
       <View style={layouts.centerContainer}>
-        <StatusBar backgroundColor="white" barStyle="default" />
+        <StatusBar backgroundColor='white' barStyle='default' />
         <Row>
           <Col smOffset={1} sm={10} mdOffset={3} md={6} lgOffset={4} lg={4}>
             <Animated.View style={{ opacity: this.state.fadeAnim }}>
@@ -258,6 +258,6 @@ export default class Login extends React.Component {
           </Col>
         </Row>
       </View>
-    );
+    )
   }
-};
+}

@@ -17,12 +17,10 @@ export default StyleSheet.create({
   },
   settingsText: {
     color: 'black',
-    fontFamily: 'Roboto-Bold',
     fontSize: 14,
   },
   text: {
     color: 'white',
-    fontFamily: 'Roboto-Bold',
     fontSize: 16,
   },
   base: {

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const backgroundColor = '#eee';
+const backgroundColor = '#fff';
 
 export default StyleSheet.create({
   centerContainer: {

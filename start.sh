@@ -1,1 +1,1 @@
-react-native run-ios --simulator="iPhone 6s"
+react-native run-ios --simulator="iPad Air 2"

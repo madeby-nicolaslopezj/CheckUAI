@@ -7,18 +7,15 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 20,
+    fontSize: 24,
     marginBottom: 15,
-    fontFamily: 'Roboto',
-    fontWeight: 'bold',
+    fontWeight: '700'
   },
   normal: {
-    fontSize: 16,
-    fontFamily: 'Roboto',
+    fontSize: 16
   },
   button: {
     color: 'white',
-    fontFamily: 'Roboto-Bold',
     fontSize: 16,
   },
   buttonClean: {
@@ -26,11 +23,18 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   select: {
-    fontFamily: 'Roboto',
-    fontSize: 18,
+    fontSize: 20,
+    flex: 1,
+    paddingTop: 4,
+    paddingBottom: 7,
+    marginBottom: 5
+  },
+  selectSubtitle: {
+    fontSize: 14,
+    color: '#888',
     flex: 1,
     paddingTop: 7,
     paddingBottom: 7,
-    marginBottom: 10,
-  },
+    marginTop: -10
+  }
 })
