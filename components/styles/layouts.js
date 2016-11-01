@@ -1,31 +1,33 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native'
 
-const backgroundColor = '#fff';
+const backgroundColor = '#fff'
 
 export default StyleSheet.create({
   centerContainer: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor,
+    backgroundColor
   },
   small: {
-    width: 300,
+    width: 300
   },
   scrollView: {
     flex: 1,
+    backgroundColor
   },
   row: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   col: {
-    flex: 1,
+    flex: 1
   },
   scrollViewContent: {
     paddingVertical: 30,
     justifyContent: 'center',
     backgroundColor,
+    padding: 20
   },
   bottomIndicator: {
     position: 'absolute',
@@ -35,10 +37,10 @@ export default StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   center: {
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 })

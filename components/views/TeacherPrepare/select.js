@@ -44,7 +44,7 @@ export default class Select extends React.Component {
   renderOptions () {
     return this.props.options.map((option, index) => {
       return (
-        <View key={option.value + index} style={layouts.row}>
+        <View key={option.value + index}>
           <TouchableHighlight
             underlayColor={'transparent'}
             activeOpacity={0.6}

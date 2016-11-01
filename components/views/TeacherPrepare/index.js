@@ -208,7 +208,7 @@ export default class TeacherPrepareView extends React.Component {
       }} />
     )
     return (
-      <View style={{ marginTop: 40 }}>
+      <View style={{ marginTop: 10 }}>
         <Text style={texts.subtitle}>Selecciona una clase</Text>
         {this.state.isLoading ? <Spinner /> : select}
       </View>

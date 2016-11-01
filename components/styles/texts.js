@@ -23,16 +23,14 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   select: {
-    fontSize: 20,
-    flex: 1,
-    paddingTop: 4,
+    fontSize: 16,
+    paddingTop: 7,
     paddingBottom: 7,
     marginBottom: 5
   },
   selectSubtitle: {
     fontSize: 14,
     color: '#888',
-    flex: 1,
     paddingTop: 7,
     paddingBottom: 7,
     marginTop: -10
