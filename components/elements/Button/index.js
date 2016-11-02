@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableHighlight, Text} from 'react-native'
+import {TouchableHighlight, Text, ActivityIndicator, View} from 'react-native'
 import styles from './styles'
 import autobind from 'autobind-decorator'
 
@@ -9,7 +9,8 @@ export default class Button extends React.Component {
     onPress: React.PropTypes.func,
     children: React.PropTypes.any,
     disabled: React.PropTypes.bool,
-    style: React.PropTypes.oneOf(React.PropTypes.array, React.PropTypes.object)
+    loading: React.PropTypes.bool,
+    style: React.PropTypes.any
   }
 
   @autobind
@@ -22,7 +23,7 @@ export default class Button extends React.Component {
     const style = []
     style.push(styles.container)
 
-    if (this.props.disabled) {
+    if (this.props.disabled || this.props.loading) {
       style.push(styles.disabled)
     }
 
@@ -53,6 +54,15 @@ export default class Button extends React.Component {
   }
 
   renderText () {
+    if (this.props.loading) {
+      return (
+        <View>
+          <ActivityIndicator
+          animating
+          color='black' />
+        </View>
+      )
+    }
     if (typeof this.props.children === 'string') {
       return (
         <Text style={this.getTextStyle()}>

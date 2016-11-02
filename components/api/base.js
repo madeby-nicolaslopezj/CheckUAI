@@ -1,5 +1,5 @@
 import { getSetting } from './settings'
-import sleep from './sleep'
+// import sleep from './sleep'
 
 const UAI = {}
 
@@ -170,7 +170,7 @@ const fetchRequest = async function({ method, path, params, addToken }) {
   var url = `${baseUrl}${path}`
   console.log(`Making request to: ${url}`, params, JSON.stringify(params))
 
-  await sleep(1000)
+  // await sleep(1000)
   console.log('will make request')
   const result = await global.fetch(url, {
     method: 'POST',

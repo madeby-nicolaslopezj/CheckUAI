@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text} from 'react-native'
+import {View, Text, ScrollView} from 'react-native'
 import Title from '../../elements/Title'
 import styles from './styles'
 import {Form, Field} from 'simple-react-form'
@@ -10,6 +10,7 @@ import Button from '../../elements/Button'
 import {loginTeacher, loginColaborator} from '../../api/base'
 import sleep from '../../api/sleep'
 import Container from '../../elements/Container'
+import layouts from '../../styles/layouts'
 
 export default class Login extends React.Component {
 
@@ -18,8 +19,8 @@ export default class Login extends React.Component {
   }
 
   state = {
-    email: 'salvador.yanez@uai.cl',
-    password: '1234',
+    email: '',
+    password: '',
     type: 'Profesor',
     isLoading: false
   }
@@ -80,39 +81,41 @@ export default class Login extends React.Component {
 
   render () {
     return (
-      <View style={styles.container}>
-        <Container>
-          <Title>Login</Title>
-          <Text style={styles.description}>
-            {this.renderDescription()}
-          </Text>
-          {this.renderError()}
-          <View style={{height: 15}}/>
-          <Form useFormTag={false} state={this.state} onChange={changes => this.setState(changes)}>
-            <View>
-              <Field
-              fieldName={this.state.type === 'Profesor' ? 'email' : 'rut'}
-              type={TextField}
-              placeholder={this.state.type === 'Profesor' ? 'Email' : 'Rut'}
-              autoCapitalize='none'
-              autoCorrect={false}/>
-              <Field
-              fieldName='password'
-              type={TextField}
-              placeholder='Contraseña'
-              secureTextEntry />
-              <Field
-              fieldName='type'
-              options={['Profesor', 'Colaborador']}
-              type={SegmentedControl}/>
-            </View>
-          </Form>
-          <View style={{height: 10}}/>
-          <Button disabled={this.state.isLoading} onPress={this.login}>
-            Entrar
-          </Button>
-        </Container>
-      </View>
+      <ScrollView style={layouts.scrollView} contentContainerStyle={layouts.scrollViewContent}>
+        <View style={styles.container}>
+          <Container>
+            <Title>Login</Title>
+            <Text style={styles.description}>
+              {this.renderDescription()}
+            </Text>
+            {this.renderError()}
+            <View style={{height: 15}}/>
+            <Form useFormTag={false} state={this.state} onChange={changes => this.setState(changes)}>
+              <View>
+                <Field
+                fieldName={this.state.type === 'Profesor' ? 'email' : 'rut'}
+                type={TextField}
+                placeholder={this.state.type === 'Profesor' ? 'Email' : 'Rut'}
+                autoCapitalize='none'
+                autoCorrect={false}/>
+                <Field
+                fieldName='password'
+                type={TextField}
+                placeholder='Contraseña'
+                secureTextEntry />
+                <Field
+                fieldName='type'
+                options={['Profesor', 'Colaborador']}
+                type={SegmentedControl}/>
+              </View>
+            </Form>
+            <View style={{height: 10}}/>
+            <Button loading={this.state.isLoading} onPress={this.login}>
+              Entrar
+            </Button>
+          </Container>
+        </View>
+      </ScrollView>
     )
   }
 

@@ -26,8 +26,8 @@ export default class CheckAsStudentNoPic extends React.Component {
   }
 
   state = {
-    email: 'salvador.yanez@uai.cl',
-    password: '1234',
+    email: '',
+    password: '',
     isLoading: false
   }
 
@@ -118,7 +118,7 @@ export default class CheckAsStudentNoPic extends React.Component {
               </View>
             </Form>
             <View style={{height: 10}}/>
-            <Button disabled={this.state.isLoading} onPress={this.check}>
+            <Button loading={this.state.isLoading} onPress={this.check}>
               Entrar
             </Button>
             <TouchableHighlight
