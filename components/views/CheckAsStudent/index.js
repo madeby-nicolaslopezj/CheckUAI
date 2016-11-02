@@ -1,118 +1,110 @@
 import {
-  Text,
   View,
   AlertIOS,
   Animated,
-  DeviceEventEmitter,
+  Keyboard,
   TouchableHighlight,
   NativeModules,
   Image,
   StatusBar
 } from 'react-native'
 import React from 'react'
-var UAI = require('../../api/base')
+import UAI from '../../api/base'
 import { getSetting } from '../../api/settings'
-var MK = require('react-native-material-kit')
-var Camera = require('@nitrog7/react-native-camera')
-var RNBlur = require('react-native-blur')
-var AppleEasing = require('react-apple-easing')
-var Icon = require('react-native-vector-icons/MaterialIcons')
-var Spinner = require('../spinner')
+import {
+  MKTextField,
+  MKColor
+} from 'react-native-material-kit'
+import Camera from '@nitrog7/react-native-camera'
+import {BlurView} from 'react-native-blur'
+import AppleEasing from 'react-apple-easing'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import Spinner from '../spinner'
 import Toast from '@remobile/react-native-toast'
 import layouts from '../../styles/layouts'
 import inputs from '../../styles/inputs'
 
-var {
-  BlurView,
-  VibrancyView
-} = RNBlur
-
-var {
-  MKCardStyles,
-  MKTextField,
-  MKButton,
-  MKColor,
-} = MK
-
-var {
-  FaceDetector,
+const {
+  FaceDetector
 } = NativeModules
 
-function sleep(ms = 0) {
-  return new Promise(r => setTimeout(r, ms))
-}
+export default class CheckAsStudent extends React.Component {
 
-const propTypes = {
-  sessionId: React.PropTypes.number.isRequired,
-  token: React.PropTypes.string.isRequired,
-  activityType: React.PropTypes.string.isRequired,
-  password: React.PropTypes.string.isRequired,
-  rut: React.PropTypes.string,
-}
+  static propTypes = {
+    sessionId: React.PropTypes.number.isRequired,
+    token: React.PropTypes.string.isRequired,
+    activityType: React.PropTypes.string.isRequired,
+    password: React.PropTypes.string.isRequired,
+    rut: React.PropTypes.string,
+    module: React.PropTypes.string.isRequired,
+    navigator: React.PropTypes.object,
+    debug: React.PropTypes.bool
+  }
 
-export default class CheckAsTeacherStudentView extends React.Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       isLoading: false,
       keyboardHeight: new Animated.Value(0),
-      photo: null,
+      photo: null
     }
   }
 
-  componentWillMount() {
-    DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
-    DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
+  componentWillMount () {
+    this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
+    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
   }
 
-  async componentDidMount() {
-    var response = await UAI.startSession({
+  async componentWillUnmount () {
+    this.keyboardWillShowListener.remove()
+    this.keyboardWillHideListener.remove()
+    await UAI.endSession({
       token: this.props.token,
-      sessionId: this.props.sessionId,
+      sessionId: this.props.sessionId
     })
   }
 
-  async componentWillUnmount() {
-    var response = await UAI.endSession({
+  async componentDidMount () {
+    await UAI.startSession({
       token: this.props.token,
-      sessionId: this.props.sessionId,
+      sessionId: this.props.sessionId
     })
   }
 
-  keyboardWillShow(e) {
+  keyboardWillShow (e) {
     Animated.timing(this.state.keyboardHeight, {
       toValue: e.endCoordinates.height - 5,
       duration: 250,
-      easing: AppleEasing.easeOut,
+      easing: AppleEasing.easeOut
     }).start()
   }
 
-  keyboardWillHide(e) {
+  keyboardWillHide (e) {
     Animated.timing(this.state.keyboardHeight, {
       toValue: 0,
       duration: 250,
-      easing: AppleEasing.easeOut,
+      easing: AppleEasing.easeOut
     }).start()
   }
 
-  goBack() {
+  goBack () {
     AlertIOS.prompt('Introduce la contraseña', null, [
       { text: 'Cancelar', style: 'cancel' },
       { text: 'Salir', type: 'secure-text', onPress: async (text) => {
         const masterPassword = await getSetting('masterPassword')
-        if (masterPassword && text == masterPassword) {
+        if (masterPassword && text === masterPassword) {
           this.props.navigator.pop()
-        } else if (text == this.props.password) {
+        } else if (text === this.props.password) {
           this.props.navigator.pop()
         } else {
           AlertIOS.alert('Contraseña incorrecta', null, [{ text: 'Ok', style: 'cancel' }])
         }
-      }, },
+      } }
     ], 'secure-text')
   }
 
-  async check() {
+  async check () {
+    console.log('will check')
     this.setState({ isLoading: true })
     var response = await UAI.markManualStudentAssistance({
       assist: true,
@@ -122,6 +114,7 @@ export default class CheckAsTeacherStudentView extends React.Component {
       email: this.state.email,
       password: this.state.password,
       photo: this.state.photo,
+      module: this.props.module
     })
 
     if (response.Resultado) {
@@ -137,41 +130,49 @@ export default class CheckAsTeacherStudentView extends React.Component {
     }
   }
 
-  async photo() {
-    var data = this.refs.camera.capture({ rotation: 270 }, async (error, base64) => {
+  async photo () {
+    this.refs.camera.capture({ rotation: 270 }, async (error, base64) => {
       if (!error) {
-        FaceDetector.numFaces(base64, (response) => {
-          if (response) {
-            this.setState({ photo: base64 })
-          } else if (this.props.debug) {
-            Toast.showShortCenter('No se detectó tu cara, pero estamos en pruebas')
-            this.setState({ photo: base64 })
-          } else {
-            Toast.showShortCenter('No se detectó tu cara, intentalo nuevamente')
-          }
-        })
+        this.didTakePhoto(base64)
       }
     })
   }
 
-  checkEmailUAI() {
+  didTakePhoto (base64) {
+    FaceDetector.numFaces(base64, (response) => {
+      console.log(response, 'caras en la foto')
+      /* else if (this.props.debug) {
+        Toast.showShortCenter('No se detectó tu cara, pero estamos en pruebas')
+        this.setState({ photo: base64 })
+      } */
+      if (response === 1) {
+        this.setState({ photo: base64 })
+      } else if (response > 1) {
+        Toast.showShortCenter('Solo tienes que salir tú en la foto, intentalo nuevamente')
+      } else {
+        Toast.showShortCenter('No se detectó tu cara, intentalo nuevamente')
+      }
+    })
+  }
+
+  checkEmailUAI () {
     if (this.state.email && !this.state.email.includes('@')) {
       this.setState({ email: this.state.email + '@alumnos.uai.cl' })
     }
   }
 
-  cancelPhoto() {
+  cancelPhoto () {
     this.setState({ photo: null })
   }
 
-  renderPhoto() {
+  renderPhoto () {
     if (!this.state.photo) return null
-    return <Image source={{ isStatic: true, uri: `data:image/jpegbase64,${this.state.photo}` }} style={[layouts.centerContainer, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]} />
+    return <Image source={{ isStatic: true, uri: `data:image/jpeg;base64,${this.state.photo}` }} style={[layouts.centerContainer, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]} />
   }
 
-  renderActionButton() {
+  renderActionButton () {
     if (this.state.photo) {
-      const hiddenButton = <TouchableHighlight
+      /* const hiddenButton = <TouchableHighlight
         underlayColor={'transparent'}
         activeOpacity={0.6}
         onPress={this.cancelPhoto.bind(this)}
@@ -179,7 +180,7 @@ export default class CheckAsTeacherStudentView extends React.Component {
         <View>
           <Icon name='replay' size={30} color='#333' />
         </View>
-      </TouchableHighlight>
+      </TouchableHighlight> */
       return (
         <View>
           <TouchableHighlight
@@ -208,13 +209,15 @@ export default class CheckAsTeacherStudentView extends React.Component {
     )
   }
 
-  render() {
+  render () {
     return (
       <View style={[layouts.centerContainer, { backgroundColor: 'transparent' }]}>
-        <StatusBar hidden={true} />
-        <Camera ref='camera' captureTarget={Camera.constants.CaptureTarget.memory} type={Camera.constants.Type.front} style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
-          <Text></Text>
-        </Camera>
+        <StatusBar hidden />
+        <Camera
+        ref='camera'
+        captureTarget={Camera.constants.CaptureTarget.memory}
+        type={Camera.constants.Type.front}
+        style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}/>
         {this.renderPhoto()}
         <View style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
           <Animated.View style={[layouts.bottomIndicator, { bottom: this.state.keyboardHeight, padding: 0 }]}>
@@ -254,9 +257,9 @@ export default class CheckAsTeacherStudentView extends React.Component {
                 </View>
                 <View style={[{ flex: 0.2 }, layouts.center]}>
                   {
-                    (this.state.isLoading) ?
-                    <Spinner /> :
-                    this.renderActionButton()
+                    (this.state.isLoading)
+                    ? <Spinner />
+                    : this.renderActionButton()
                   }
                 </View>
               </View>

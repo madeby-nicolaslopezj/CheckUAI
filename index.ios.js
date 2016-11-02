@@ -3,8 +3,8 @@ import theme from './components/styles/theme'
 import Login from './components/views/Login'
 import TeacherPrepare from './components/views/TeacherPrepare'
 import CheckAsTeacher from './components/views/CheckAsTeacher'
-import CheckAsStudentView from './components/views/check-as-student/base'
-import Settings from './components/views/settings/index'
+import CheckAsStudentView from './components/views/CheckAsStudent'
+import Settings from './components/views/Settings'
 
 const debug = true && __DEV__
 
