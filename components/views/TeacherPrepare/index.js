@@ -143,6 +143,22 @@ export default class TeacherPrepareView extends React.Component {
     })
   }
 
+  asStudentNoPic () {
+    if (!this.state.selectedActivity || !this.state.selectedSession) return
+
+    this.props.navigator.push({
+      index: 1,
+      id: 'check-as-student-no-pic',
+      token: this.props.token,
+      activityType: this.state.selectedActivity,
+      sessionId: this.state.selectedSession,
+      password: this.props.password,
+      module: this.state.selectedModule,
+      rut: this.props.rut,
+      isTeacher: this.props.isTeacher
+    })
+  }
+
   viewAssistants () {
 
   }
@@ -151,17 +167,22 @@ export default class TeacherPrepareView extends React.Component {
     return (
       <View style={{ marginTop: 40 }}>
         <Text style={texts.subtitle}>Marcar asistencia como</Text>
+        <Button
+        disabled={this.state.isLoadingStudents}
+        onPress={this.asTeacher.bind(this)}
+        style={[{ marginBottom: 10 }]}>
+          Profesor
+        </Button>
         <View style={layouts.row}>
           <Button
-          disabled={this.state.isLoadingStudents}
-          onPress={this.asTeacher.bind(this)}
-          style={[buttons.base, layouts.col, { marginRight: 10 }]}>
-            Profesor
+          onPress={this.asStudent.bind(this)}
+          style={[buttons.base, layouts.col]}>
+            Alumno Con Foto
           </Button>
           <Button
-          onPress={this.asStudent.bind(this)}
+          onPress={this.asStudentNoPic.bind(this)}
           style={[buttons.base, layouts.col, { marginLeft: 10 }]}>
-            Alumnos
+            Alumno Sin Foto
           </Button>
         </View>
       </View>

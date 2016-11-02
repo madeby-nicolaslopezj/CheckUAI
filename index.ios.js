@@ -3,7 +3,8 @@ import theme from './components/styles/theme'
 import Login from './components/views/Login'
 import TeacherPrepare from './components/views/TeacherPrepare'
 import CheckAsTeacher from './components/views/CheckAsTeacher'
-import CheckAsStudentView from './components/views/CheckAsStudent'
+import CheckAsStudent from './components/views/CheckAsStudent'
+import CheckAsStudentNoPic from './components/views/CheckAsStudentNoPic'
 import Settings from './components/views/Settings'
 
 const debug = true && __DEV__
@@ -13,6 +14,13 @@ import {
   AppRegistry,
   Navigator
 } from 'react-native'
+
+const NoBackSwipe = {
+  ...Navigator.SceneConfigs.FloatFromBottom,
+  gestures: {
+    pop: {}
+  }
+}
 
 var CheckUAI = React.createClass({
 
@@ -32,7 +40,9 @@ var CheckUAI = React.createClass({
       case 'check-as-teacher':
         return <CheckAsTeacher debug={debug} navigator={navigator} {...route}/>
       case 'check-as-student':
-        return <CheckAsStudentView debug={debug} navigator={navigator} {...route}/>
+        return <CheckAsStudent debug={debug} navigator={navigator} {...route}/>
+      case 'check-as-student-no-pic':
+        return <CheckAsStudentNoPic debug={debug} navigator={navigator} {...route}/>
       default:
         return <Text>View not found</Text>
     }
@@ -42,10 +52,10 @@ var CheckUAI = React.createClass({
     switch (route.id) {
       case 'settings':
         return Navigator.SceneConfigs.VerticalDownSwipeJump
-      case 'check-as-teacher-tinder':
-        return Navigator.SceneConfigs.FloatFromBottom
       case 'check-as-student':
-        return Navigator.SceneConfigs.FloatFromBottom
+        return NoBackSwipe
+      case 'check-as-student-no-pic':
+        return NoBackSwipe
       default:
         return Navigator.SceneConfigs.FloatFromRight
     }

@@ -94,7 +94,8 @@ export default class Login extends React.Component {
               fieldName={this.state.type === 'Profesor' ? 'email' : 'rut'}
               type={TextField}
               placeholder={this.state.type === 'Profesor' ? 'Email' : 'Rut'}
-              autoCapitalize='none'/>
+              autoCapitalize='none'
+              autoCorrect={false}/>
               <Field
               fieldName='password'
               type={TextField}
