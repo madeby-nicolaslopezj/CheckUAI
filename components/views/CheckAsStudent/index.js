@@ -11,18 +11,16 @@ import {
 import React from 'react'
 import UAI from '../../api/base'
 import { getSetting } from '../../api/settings'
-import {
-  MKTextField,
-  MKColor
-} from 'react-native-material-kit'
-import Camera from '@nitrog7/react-native-camera'
+import Camera from 'nicolaslopezj-react-native-camera'
 import {BlurView} from 'react-native-blur'
 import AppleEasing from 'react-apple-easing'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from '../spinner'
 import Toast from '@remobile/react-native-toast'
 import layouts from '../../styles/layouts'
-import inputs from '../../styles/inputs'
+import {Form, Field} from 'simple-react-form'
+import TextField from '../../elements/Text'
+import autobind from 'autobind-decorator'
 
 const {
   FaceDetector
@@ -52,7 +50,7 @@ export default class CheckAsStudent extends React.Component {
 
   componentWillMount () {
     this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
-    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
+    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
   }
 
   async componentWillUnmount () {
@@ -72,6 +70,7 @@ export default class CheckAsStudent extends React.Component {
   }
 
   keyboardWillShow (e) {
+    console.log('keyboard will show')
     Animated.timing(this.state.keyboardHeight, {
       toValue: e.endCoordinates.height - 5,
       duration: 250,
@@ -80,6 +79,7 @@ export default class CheckAsStudent extends React.Component {
   }
 
   keyboardWillHide (e) {
+    console.log('keyboard will hide')
     Animated.timing(this.state.keyboardHeight, {
       toValue: 0,
       duration: 250,
@@ -103,6 +103,7 @@ export default class CheckAsStudent extends React.Component {
     ], 'secure-text')
   }
 
+  @autobind
   async check () {
     console.log('will check')
     this.setState({ isLoading: true })
@@ -130,12 +131,16 @@ export default class CheckAsStudent extends React.Component {
     }
   }
 
-  async photo () {
-    this.refs.camera.capture({ rotation: 270 }, async (error, base64) => {
-      if (!error) {
-        this.didTakePhoto(base64)
-      }
-    })
+  @autobind
+  async takePhoto () {
+    console.log('will take photo')
+    try {
+      const {data} = await this.refs.camera.capture({ rotation: 270 })
+      console.log('photo taken')
+      this.didTakePhoto(data)
+    } catch (error) {
+      console.log('error taking photo', error)
+    }
   }
 
   didTakePhoto (base64) {
@@ -170,6 +175,13 @@ export default class CheckAsStudent extends React.Component {
     return <Image source={{ isStatic: true, uri: `data:image/jpeg;base64,${this.state.photo}` }} style={[layouts.centerContainer, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]} />
   }
 
+  @autobind
+  onEmailBlur () {
+    if (this.state.email && !this.state.email.includes('@')) {
+      this.setState({ email: this.state.email + '@alumnos.uai.cl' })
+    }
+  }
+
   renderActionButton () {
     if (this.state.photo) {
       /* const hiddenButton = <TouchableHighlight
@@ -186,7 +198,7 @@ export default class CheckAsStudent extends React.Component {
           <TouchableHighlight
             underlayColor={'transparent'}
             activeOpacity={0.6}
-            onPress={this.check.bind(this)}
+            onPress={this.check}
             style={{ marginTop: 10 }}>
             <View>
               <Icon name='check' size={30} color='#333' />
@@ -200,7 +212,7 @@ export default class CheckAsStudent extends React.Component {
       <TouchableHighlight
         underlayColor={'transparent'}
         activeOpacity={0.6}
-        onPress={this.photo.bind(this)}
+        onPress={this.takePhoto}
         style={{ marginTop: 10 }}>
         <View>
           <Icon name='photo-camera' size={30} color='#333' />
@@ -217,6 +229,8 @@ export default class CheckAsStudent extends React.Component {
         ref='camera'
         captureTarget={Camera.constants.CaptureTarget.memory}
         type={Camera.constants.Type.front}
+        aspect={Camera.constants.Aspect.fill}
+        captureAudio={false}
         style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}/>
         {this.renderPhoto()}
         <View style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}>
@@ -235,25 +249,24 @@ export default class CheckAsStudent extends React.Component {
                   </TouchableHighlight>
                 </View>
                 <View style={{ flex: 0.6 }}>
-                  <MKTextField
-                    style={inputs.textfield}
-                    tintColor={MKColor.BlueGrey}
-                    placeholder='Email'
-                    autoCapitalize='none'
-                    keyboardType='email-address'
-                    autoCorrect={false}
-                    onBlur={this.checkEmailUAI.bind(this)}
-                    value={this.state.email}
-                    onChangeText={(email) => this.setState({ email })}
-                  />
-                  <MKTextField
-                    style={inputs.textfield}
-                    tintColor={MKColor.BlueGrey}
-                    placeholder='Contraseña'
-                    password
-                    value={this.state.password}
-                    onChangeText={(password) => this.setState({ password })}
-                  />
+                  <Form useFormTag={false} state={this.state} onChange={changes => this.setState(changes)}>
+                    <View>
+                      <Field
+                      fieldName='email'
+                      type={TextField}
+                      placeholder='Email'
+                      autoCapitalize='none'
+                      autoCorrect={false}
+                      onBlur={this.onEmailBlur}
+                      blur/>
+                      <Field
+                      fieldName='password'
+                      type={TextField}
+                      placeholder='Contraseña'
+                      secureTextEntry
+                      blur/>
+                    </View>
+                  </Form>
                 </View>
                 <View style={[{ flex: 0.2 }, layouts.center]}>
                   {

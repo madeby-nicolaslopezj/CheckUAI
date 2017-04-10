@@ -1,6 +1,5 @@
 import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import layouts from '../../styles/layouts'
 import buttons from '../../styles/buttons'
 import texts from '../../styles/texts'
 

@@ -26,7 +26,8 @@ export default StyleSheet.create({
     fontSize: 16,
     paddingTop: 7,
     paddingBottom: 7,
-    marginBottom: 5
+    marginBottom: 5,
+    fontWeight: '500'
   },
   selectSubtitle: {
     fontSize: 14,

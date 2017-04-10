@@ -37,8 +37,6 @@ RCT_EXPORT_METHOD(numFaces:(NSString *)base64 response:(RCTResponseSenderBlock)c
   } else {
     callback(@[[NSNull null]]);
   }
-  
-  
 }
 
 @end

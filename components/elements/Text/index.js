@@ -7,14 +7,22 @@ export default class TextFieldComponent extends React.Component {
   static propTypes = {
     onChange: React.PropTypes.func,
     value: React.PropTypes.string,
-    passProps: React.PropTypes.object
+    passProps: React.PropTypes.object,
+    blur: React.PropTypes.bool
+  }
+
+  getStyle () {
+    if (this.props.blur) {
+      return styles.blur
+    }
+    return styles.input
   }
 
   render () {
     return (
       <View>
         <TextInput
-        style={styles.input}
+        style={this.getStyle()}
         onChangeText={this.props.onChange}
         value={this.props.value}
         {...this.props.passProps}/>
