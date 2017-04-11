@@ -1,71 +1,52 @@
 import React from 'react'
 var Image = require('react-native-image-progress')
-var Progress = require('react-native-progress')
 import { getSetting } from '../api/settings'
 var Icon = require('react-native-vector-icons/MaterialIcons')
 
-import {
-  View,
-  StyleSheet,
-  Text,
-} from 'react-native'
+import { View } from 'react-native'
 
 const propTypes = {
   token: React.PropTypes.string.isRequired,
   student: React.PropTypes.object.isRequired,
   width: React.PropTypes.number,
-  height: React.PropTypes.number,
+  height: React.PropTypes.number
 }
 
-const defaultProps = {
-  width: 300,
-  height: 300
-}
+const defaultProps = { width: 300, height: 300 }
 
 export default class StudentImage extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = { baseUrl: 'http://webapi.uai.cl/', hasErrors: false }
-    this.setBaseUrl()
+    this.state = {}
+    this.onError = this.onError.bind(this)
   }
 
-   shouldComponentUpdate (nextProps, nextState) {
-     if (this.state.hasErrors != nextState.hasErrors) {
-       return true
-     }
-     if (this.state.baseUrl != nextState.baseUrl) {
-       return true
-     }
-     if (this.props.student.idExpediente != nextProps.student.idExpediente) {
-       return true
-     }
-     if (this.props.token != nextProps.token) {
-       return true
-     }
-     return false
-   }
-
-  async setBaseUrl () {
+  async componentDidMount () {
     const baseUrl = await getSetting('apiUrl')
-    this.setState({baseUrl})
+    console.log('base url is', baseUrl)
+    this.setState({ baseUrl })
   }
 
-  onError (error) {
+  shouldComponentUpdate (nextProps, nextState) {
+    if (this.state.hasErrors !== nextState.hasErrors) return true
+    if (this.state.baseUrl !== nextState.baseUrl) return true
+    if (this.props.student.idExpediente !== nextProps.student.idExpediente) return true
+    if (this.props.token !== nextProps.token) return true
+    return true
+  }
+
+  onError () {
     var token = encodeURIComponent(this.props.token)
     var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`
     console.log('Error fetching image:', source)
-    console.log(error)
     this.setState({ hasErrors: true })
   }
 
-  render () {
-    var token = encodeURIComponent(this.props.token)
-    var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`
-    // console.log('Fetching image:', source)
-    if (this.state.hasErrors) {
-      return (
-        <View style={{
+  renderBlank () {
+    return (
+      <View
+        style={{
           width: this.props.width,
           height: this.props.height,
           borderRadius: this.props.width / 2,
@@ -75,22 +56,34 @@ export default class StudentImage extends React.Component {
           overflow: 'hidden',
           backgroundColor: '#ddd',
           alignItems: 'center'
-        }}>
-          <Icon name='person' size={this.props.height * 0.8} style={{ marginTop: this.props.height * 0.07 }} color='#333' />
-        </View>
-      )
-    }
+        }}
+      >
+        <Icon
+          name='person'
+          size={this.props.height * 0.8}
+          style={{ marginTop: this.props.height * 0.07 }}
+          color='#333'
+        />
+      </View>
+    )
+  }
+
+  render () {
+    if (this.state.hasErrors || !this.state.baseUrl) return this.renderBlank()
+    var token = encodeURIComponent(this.props.token)
+    var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`
     return (
       <Image
         key={this.props.student.idExpediente}
         source={{ uri: source }}
-        onError={this.onError.bind(this)}
+        onError={this.onError}
         style={{
           width: this.props.width,
           height: this.props.height,
           borderRadius: this.props.width / 2,
           margin: 16
-        }} />
+        }}
+      />
     )
   }
 }
