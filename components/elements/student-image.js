@@ -24,8 +24,9 @@ export default class StudentImage extends React.Component {
 
   async componentDidMount () {
     const baseUrl = await getSetting('apiUrl')
+    const token = await getSetting('token')
     console.log('base url is', baseUrl)
-    this.setState({ baseUrl })
+    this.setState({ baseUrl, token })
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -37,7 +38,7 @@ export default class StudentImage extends React.Component {
   }
 
   onError () {
-    var token = encodeURIComponent(this.props.token)
+    var token = encodeURIComponent(this.state.token)
     var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`
     console.log('Error fetching image:', source)
     this.setState({ hasErrors: true })
@@ -70,7 +71,7 @@ export default class StudentImage extends React.Component {
 
   render () {
     if (this.state.hasErrors || !this.state.baseUrl) return this.renderBlank()
-    var token = encodeURIComponent(this.props.token)
+    var token = encodeURIComponent(this.state.token)
     var source = `${this.state.baseUrl}Asistencia/fotoalumno?token=${token}&expedienteId=${this.props.student.idExpediente}`
     return (
       <Image
